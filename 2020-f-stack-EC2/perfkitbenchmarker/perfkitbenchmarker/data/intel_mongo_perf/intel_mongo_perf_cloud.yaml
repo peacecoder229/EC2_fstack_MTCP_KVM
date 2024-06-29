@@ -1,0 +1,25 @@
+# example cloud benchmark configuration file
+
+
+worker: &worker
+  AWS:
+    machine_type: c5.9xlarge
+    zone: us-west-2
+    boot_disk_size: 200
+
+client: &client
+  AWS:
+    machine_type: c5.9xlarge
+    zone: us-west-2
+    boot_disk_size: 200
+
+intel_mongo_perf:
+  vm_groups:
+    workers:
+      os_type: ubuntu2004
+      vm_spec: *worker
+      vm_count: 1
+    clients:
+      os_type: ubuntu2004
+      vm_spec: *client
+      vm_count: 1

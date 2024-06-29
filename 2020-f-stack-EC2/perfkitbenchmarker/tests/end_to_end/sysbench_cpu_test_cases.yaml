@@ -1,0 +1,343 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+      
+  aws-ubuntu-1804: &aws-ubuntu-1804
+    cloud: AWS
+    zone: us-east-1
+    os_type: ubuntu1804
+    machine_type: m5.2xlarge
+    data_disk_type: standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  azure-ubuntu-1804: &azure-ubuntu-1804
+    cloud: Azure
+    zone: westus
+    os_type: ubuntu1804
+    machine_type: Standard_F8s_v2
+    data_disk_type: Standard_LRS
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  gcp-ubuntu-1804: &gcp-ubuntu-1804
+    cloud: GCP
+    zone: us-west2-c
+    os_type: ubuntu1804
+    machine_type: n1-standard-8
+    data_disk_type: pd-standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+    gce_subnet_region: us-west2
+
+  aws-ubuntu-2004: &aws-ubuntu-2004
+    cloud: AWS
+    zone: us-east-1
+    os_type: ubuntu2004
+    machine_type: m5.2xlarge
+    data_disk_type: standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  azure-ubuntu-2004: &azure-ubuntu-2004
+    cloud: Azure
+    zone: westus
+    os_type: ubuntu2004
+    machine_type: Standard_F8s_v2
+    data_disk_type: Standard_LRS
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  gcp-ubuntu-2004: &gcp-ubuntu-2004
+    cloud: GCP
+    zone: us-west2-c
+    os_type: ubuntu2004
+    machine_type: n1-standard-8
+    data_disk_type: pd-standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+    gce_subnet_region: us-west2
+
+  aws-centos-7: &aws-centos-7
+    cloud: AWS
+    zone: us-west-2
+    os_type: centos7
+    machine_type: m5.2xlarge
+    data_disk_type: standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  azure-centos-7: &azure-centos-7
+    cloud: Azure
+    zone: westus
+    os_type: centos7
+    machine_type: Standard_F8s_v2
+    data_disk_type: Standard_LRS
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  gcp-centos-7: &gcp-centos-7
+    cloud: GCP
+    zone: us-west2-c
+    os_type: centos7
+    machine_type: n1-standard-8
+    data_disk_type: pd-standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+    gce_subnet_region: us-west2
+
+  aws-centos-8: &aws-centos-8
+    cloud: AWS
+    zone: us-west-2
+    os_type: centos8
+    machine_type: m5.2xlarge
+    data_disk_type: standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  azure-centos-8: &azure-centos-8
+    cloud: Azure
+    zone: westus
+    os_type: centos8
+    machine_type: Standard_F8s_v2
+    data_disk_type: Standard_LRS
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  gcp-centos-8: &gcp-centos-8
+    cloud: GCP
+    zone: us-west2-c
+    os_type: centos8
+    machine_type: n1-standard-8
+    data_disk_type: pd-standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+    gce_subnet_region: us-west2
+
+  aws-graviton2-ubuntu-2004: &aws-graviton2-ubuntu-2004
+    cloud: AWS
+    os_type: ubuntu2004
+    zone: us-east-1
+    machine_type: m6g.16xlarge
+    image: ami-0ccca293427f70203
+
+  baremetal-ubuntu1604: &baremetal-ubuntu1604
+    benchmark_config_file: sysbench_cpu_baremetal_ubuntu1604_testing.yaml
+    os_type: ubuntu1604
+    http_proxy: "http://proxy-chain.intel.com:911"
+    https_proxy: "http://proxy-chain.intel.com:912"
+
+  baremetal-ubuntu1804: &baremetal-ubuntu1804
+    benchmark_config_file: sysbench_cpu_baremetal_ubuntu1804_testing.yaml
+    os_type: ubuntu1804
+    http_proxy: "http://proxy-chain.intel.com:911"
+    https_proxy: "http://proxy-chain.intel.com:912"
+
+  baremetal-ubuntu2004: &baremetal-ubuntu2004
+    benchmark_config_file: sysbench_cpu_baremetal_ubuntu2004_testing.yaml
+    os_type: ubuntu2004
+    http_proxy: "http://proxy-chain.intel.com:911"
+    https_proxy: "http://proxy-chain.intel.com:912"
+
+  default: *aws-ubuntu-1804
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-no-svrinfo: &pkb-no-svrinfo
+    file_log_level: debug
+    nosvrinfo: True
+
+  pkb-publish: &pkb-publish
+    file_log_level: debug
+    kafka_publish: True
+
+  pkb-collect-svrinfo: &pkb-collect-svrinfo
+    file_log_level: debug
+    svrinfo: True
+
+  pkb-collect-collectd: &pkb-collect-collectd
+    file_log_level: debug
+    collectd: True
+
+  pkb-collect-and-publish: &pkb-collect-and-publish
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+    kafka_publish: True
+
+  pkb-collect-emon: &pkb-collect-emon
+    file_log_level: debug
+    emon: True
+
+################################################################################
+# Benchmark configurations -- Define various useful workload configurations
+################################################################################
+
+benchmark-configurations:
+
+  sysbench_cpu_defaults: &sysbench_cpu_defaults
+    benchmarks: sysbench_cpu
+    sysbench_cpu_time: "60"
+    sysbench_cpu_events: "0"
+    sysbench_cpu_thread_counts: "0,1"
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options
+################################################################################
+
+tests:
+
+  DefaultCSPRun: &DefaultCSPRun
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+
+  NoSvrinfoCSP: &NoSvrinfoCSP
+    pkb: *pkb-no-svrinfo
+    benchmark: *sysbench_cpu_defaults
+
+  Ubuntu1804AWS: &Ubuntu1804AWS
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *aws-ubuntu-1804
+
+  Ubuntu1804Azure: &Ubuntu1804Azure
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *azure-ubuntu-1804   
+
+  Ubuntu1804GCP: &Ubuntu1804GCP
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *gcp-ubuntu-1804
+
+  Ubuntu2004AWS: &Ubuntu2004AWS
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004Azure: &Ubuntu2004Azure
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *azure-ubuntu-2004   
+
+  Ubuntu2004GCP: &Ubuntu2004GCP
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *gcp-ubuntu-2004
+
+  Centos7AWS: &Centos7AWS
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *aws-centos-7
+
+  Centos7Azure: &Centos7Azure
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *azure-centos-7   
+
+  Centos7GCP: &Centos7GCP
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *gcp-centos-7
+
+  Centos8AWS: &Centos8AWS
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *aws-centos-8
+
+  Centos8Azure: &Centos8Azure
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *azure-centos-8   
+
+  Centos8GCP: &Centos8GCP
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *gcp-centos-8
+
+  Ubuntu1604Baremetal: &Ubuntu1604Baremetal
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *baremetal-ubuntu1604
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/sysbench_cpu/baremetal_ubuntu1604_testing.yaml
+
+  Ubuntu1804Baremetal: &Ubuntu1804Baremetal
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *baremetal-ubuntu1804
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/sysbench_cpu/baremetal_ubuntu1804_testing.yaml
+
+  Ubuntu2004Baremetal: &Ubuntu2004Baremetal
+    pkb: *pkb-basic
+    benchmark: *sysbench_cpu_defaults
+    platform: *baremetal-ubuntu2004
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/sysbench_cpu/baremetal_ubuntu2004_testing.yaml
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options
+################################################################################
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+
+test-suites:
+
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  
+  developer:
+    NoSvrinfoCSP: *NoSvrinfoCSP
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  
+  benchmark:
+    DefaultCSPRun: *DefaultCSPRun
+    
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  
+  acceptance:
+    Ubuntu1804AWS: *Ubuntu1804AWS
+    Ubuntu1804Azure: *Ubuntu1804Azure
+    Ubuntu1804GCP: *Ubuntu1804GCP
+    Ubuntu1604Baremetal: *Ubuntu1604Baremetal
+    Ubuntu1804Baremetal: *Ubuntu1804Baremetal
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004Azure: *Ubuntu2004Azure
+    Ubuntu2004GCP: *Ubuntu2004GCP
+    Ubuntu2004Baremetal: *Ubuntu2004Baremetal
+
+################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  
+  regression:
+    Ubuntu1804AWS: *Ubuntu1804AWS
+    Ubuntu1804Azure: *Ubuntu1804Azure
+    Ubuntu1804GCP: *Ubuntu1804GCP
+    Ubuntu1604Baremetal: *Ubuntu1604Baremetal
+    Ubuntu1804Baremetal: *Ubuntu1804Baremetal
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004Azure: *Ubuntu2004Azure
+    Ubuntu2004GCP: *Ubuntu2004GCP
+    Ubuntu2004Baremetal: *Ubuntu2004Baremetal
+    Centos7AWS: *Centos7AWS
+    Centos7Azure: *Centos7Azure
+    Centos7GCP: *Centos7GCP
+    Centos8AWS: *Centos8AWS
+    Centos8Azure: *Centos8Azure
+    Centos8GCP: *Centos8GCP

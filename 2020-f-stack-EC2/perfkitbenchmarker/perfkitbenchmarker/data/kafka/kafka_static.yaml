@@ -1,0 +1,63 @@
+# Example static config file for the kafka benchmark
+
+static_vms: 
+ - &vm0
+    ip_address: xxxx.xxx.xx.x 
+    user_name: username
+    ssh_private_key: ~/id_rsa_server  
+    internal_ip: xxxx.xxx.xx.x
+    additional_ips: xx.xx.xx.xxx,xx.xx.xx.xxx
+    disk_specs:
+      - mount_point: /home/data/
+ - &vm1
+    ip_address: xxxx.xxx.xx.x
+    user_name: useranme
+    ssh_private_key: ~/id_rsa_client
+    internal_ip: xxxx.xxx.xx.x
+    disk_specs:
+      - mount_point: /home/data/
+ - &vm2
+    ip_address: xxxx.xxx.xx.x
+    user_name: useranme
+    ssh_private_key: ~/id_rsa_client
+    internal_ip: xxxx.xxx.xx.x
+    disk_specs:
+      - mount_point: /home/data/
+ - &vm3
+    ip_address: xxxx.xxx.xx.x 
+    user_name: username
+    ssh_private_key: ~/id_rsa_server  
+    internal_ip: xxxx.xxx.xx.x
+    disk_specs:
+      - mount_point: /home/data/
+ - &vm4
+    ip_address: xxxx.xxx.xx.x
+    user_name: useranme
+    ssh_private_key: ~/id_rsa_client
+    internal_ip: xxxx.xxx.xx.x
+    disk_specs:
+      - mount_point: /home/data/
+
+kafka:
+  flags:
+    kafka_broker_vms: 1
+    kafka_producer_vms: 2
+    kafka_consumer_vms: 2
+  vm_groups:
+    brokers:
+      os_type: ubuntu2004
+      vm_count: 1
+      static_vms:
+        - *vm0
+    producers:
+      os_type: ubuntu2004
+      vm_count: 2
+      static_vms:
+        - *vm1
+        - *vm2
+    consumers:
+      os_type: ubuntu2004
+      vm_count: 2
+      static_vms:
+        - *vm3
+        - *vm4

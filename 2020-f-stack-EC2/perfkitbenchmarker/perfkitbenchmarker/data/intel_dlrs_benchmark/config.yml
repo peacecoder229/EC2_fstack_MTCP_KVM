@@ -1,0 +1,19 @@
+data_format: NHWC
+model: resnet50
+docker_runtime: runc
+train: False
+repeat_count: 1
+batch_sizes: [128]
+dataset_link: "https://cumulus.s3.us-east-2.amazonaws.com/dlaas/imageNet100perClass.tgz"
+dataset_S3Uri: "s3://cumulus/dlaas/imageNet100perClass.tgz"
+intel_resnet50_int8_pretrained_model: "https://storage.googleapis.com/intel-optimized-tensorflow/models/resnet50_int8_pretrained_model.pb"
+intel_resnet50_fp32_pretrained_model: "https://storage.googleapis.com/intel-optimized-tensorflow/models/resnet50_fp32_pretrained_model.pb"
+images:
+  tensorflow_eigen_image: "clearlinux/stacks-dlrs-oss@sha256:381f4b604537b2cb7fb5b583a8a847a50c4ed776f8e677e2354932eb82f18898"
+  tensorflow_mkl_image: "clearlinux/stacks-dlrs-mkl@sha256:b6e9f25f90c71c4e76c5109b94dc6d56fb8c7204e68d4d262bbc40c5d7b943dc"
+  tensorflow_mkl_vnni_image: "clearlinux/stacks-dlrs-mkl-vnni@sha256:1db6216fc339e733330d3222a4afbdb4b1f203985b0e64fdae84ea9331c02cc6"
+  pytorch_openblas_image: "clearlinux/stacks-pytorch-oss@sha256:c12cf1e941363f8be254597c497acaa4a518a9d47a7b4ed810774b891ce4374d"
+  pytorch_mkl_image: "clearlinux/stacks-pytorch-mkl@sha256:9f45c9f5f8f9f845415216de327aff1ceb528bfbbaf0d79bc31ce096c058af2a"
+  tensorflow_mkl_aixprt: "177285167832.dkr.ecr.us-east-2.amazonaws.com/dlrs@sha256:0f546e527ba8036c27cad2293d1464e6f6dd23c12e83f465391dbf7d79dfa28e"
+
+image_to_use: tensorflow_mkl_image

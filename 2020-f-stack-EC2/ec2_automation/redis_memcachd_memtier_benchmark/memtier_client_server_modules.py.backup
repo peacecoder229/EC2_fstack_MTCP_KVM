@@ -1,0 +1,221 @@
+#!/usr/bin/python3
+import os
+import csv
+import sys
+import optparse
+import subprocess
+import time
+import re
+#from pexpect import pxssh
+#fd = open('Log.txt', "a")
+def get_core_list(corecount=8, cores=None):
+    corelist=list()
+    if cores:
+      core_slices=cores.split(",")
+      for i in core_slices:
+        (start,end)=i.split("-")
+        k = int(start)
+        while(k <= int(end)):
+          corelist.append(k)
+          k=k+1
+      return corelist
+    else:
+      k = 1
+      while(k <= int(corecount)):
+        corelist.append(k)
+        k=k+1
+      return corelist
+
+def run_redis_server(options):
+    """
+    start redis server on the host
+    """
+    cores = get_core_list(corecount=options.loop, cores=options.servercores)
+    core_rev_list = list(reversed(cores))
+    corenum = len(cores)
+    mtcp = options.mtcpconfig
+
+    if options.primeclient:
+
+      if(options.ratio=="1:4" or options.ratio=="1:0"):
+          if(options.host_ip == "127.0.0.1"):
+              os.system("pkill redis")
+          elif not mtcp:
+              send_cmd_to_remote(options.host_ip, "pkill redis")
+          else:
+              send_cmd_to_remote("10.242.51.171", "pkill -9 redis-server")
+    time.sleep(3)
+    for port in range(9001, 9001+corenum):
+        core=str(core_rev_list.pop())
+        # changed --save to none cmd = "taskset -c %s redis-server --bind %s --port %s --save "" &"  % (core,options.host_ip,port)
+        if not mtcp:
+           cmd = "taskset -c %s redis-server --bind %s --port %s   --maxclients 20000 --tcp-backlog 65536"" &"  % (core,options.host_ip,port)
+        else:
+           cmd = "export MTCP_CONFIG=/pnpdata/redis-intel/src/config/mtcp.conf ; ulimit -n 1024 ; export MTCP_CORE_ID=%s ; cd /pnpdata/redis-intel/src ; ./redis-server --bind %s --port %s "  % (core,options.host_ip,port)
+ 
+        m = re.search(r'192.168.(.*)', options.host_ip)
+        subnet = m.group(1)
+        print("Subnet is " + subnet)
+        if(subnet == "1.99" or subnet == "2.99" or subnet == "3.99" or subnet == "4.99"):
+            print("Client32 servers launched")
+            send_cmd_to_remote("192.168.7.99", cmd)
+        elif((options.host_ip != "127.0.0.1") and (not mtcp)):
+            send_cmd_to_remote(options.host_ip, cmd)
+            time.sleep(1)
+
+        #elif(not mtcp):
+        #    os.system(cmd)
+        #    time.sleep(1)
+        else:
+            print('Inside MTCP  and cmd is ' + cmd)
+            send_cmd_to_remote2('10.242.51.171', cmd)
+            time.sleep(2)
+        #fd.write("server launch: " + cmd + "\n")
+
+def send_cmd_to_remote(ip, cmd):
+    #s = pxssh.pxssh(timeout=100)
+    #s.login(remote_ip, 'root', '123456')
+    #s.sendline(cmd)   # run a command
+    #s.prompt()             # match the prompt
+    #print(s.before)        # print everything before the prompt.
+    #s.logout()
+    os.system("ssh %s  %s " % (ip, cmd))
+
+def send_cmd_to_remote2(ip, cmd):
+    time.sleep(15) 
+    #s = pxssh.pxssh(timeout=100)
+    #s.login(remote_ip, 'root', '123456')
+    #s.sendline(cmd)   # run a command
+    #s.prompt()             # match the prompt
+    #print(s.before)        # print everything before the prompt.
+    #s.logout()
+    os.system('ssh -f  %s  "%s" ' % (ip, cmd))
+
+def run_memtier(options):
+    #emon_name = options.mark_name+ options.ratio
+    #print(emon_name)
+    #os.system("/root/emon/run_emon.sh %s &" % emon_name )
+    core = 22
+    #os.system("rm -rf ip*prt*.txt")
+    benchmark_process = []
+    if options.serverport:
+      servport = int(options.serverport)
+    else:
+      servport = 9001	
+    servercores = get_core_list(corecount=options.loop, cores=options.servercores)
+    clientcores = get_core_list(corecount=options.loop, cores=options.clientcores)
+    corenum = len(servercores)
+    #no of ports which clients need to use
+    if options.percentport == "half_top":
+      if corenum % 2 == 0:
+        startport = servport
+        endport = servport + (corenum / 2)
+      else:
+        startport = servport
+        endport = servport + ((corenum -1)/2) + 1
+    elif options.percentport == "half_bottom":
+      if corenum % 2 == 0:
+        startport = servport + (corenum / 2)
+        endport = servport + corenum
+      else:
+        startport = servport + ((corenum -1)/2) + 1
+        endport = servport + corenum
+    else:
+      startport = servport
+      endport = servport + corenum
+    if options.protocol:
+       proto = options.protocol
+    else:
+       proto = redis
+# Chnages on March18/2019
+#old code for port in range(int(startport), int(endport)): core = clientcores.pop()
+# So go through strat s port to end and launch a benchmark with a client core.
+#change -> for each server port . launch a mem benchmark from each ccore  by popping a core
+# Below loop launches a memtier benchmark from each client core to each serverport         
+    for port in range(startport, endport):
+      tmp_ccore=clientcores[:]
+      while len(tmp_ccore) > 0:
+        core = tmp_ccore.pop()
+        cmd = "taskset -c " + str(core) + " memtier_benchmark -p " + str(port) +  " -s " + options.host_ip + " -d " + options.data + " -c " +  str(options.connection) + " --ratio=" + options.ratio + " --key-pattern G:G --key-maximum " + str(options.key_max) + " -P " + str(proto) +  " -n " + str(options.num) + " --thread=1 --pipeline=" + str((options.pipeline))
+        #fd.write("clients launch: " + cmd + "\n")
+        print(cmd)
+        with open("ip"+options.host_ip+"prt"+str(port)+"cc"+str(core)+".txt", "w") as outfile:
+            benchmark_process.append(subprocess.Popen(cmd, stdout=outfile, shell=True))
+            print(cmd)
+            #print(str(startport) + " " + str(endport))
+    return benchmark_process
+
+def csv_write_row(filename, header, row):
+    with open(filename, 'a') as csvfile:
+        csvWriter = csv.DictWriter(csvfile, fieldnames=header)
+        csvWriter.writerow(row)
+
+def csv_write_header(filename, header):
+    with open(filename, 'a') as csvfile:
+        fieldnames = header
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+
+def generate_report(process_group, options):
+    """
+    generate result csv
+    """
+    header = [options.mark_name,"set_qps", "set_lat", "sbw","get_qps", "get_lat", "gbw", "IP", "port"]
+    summary_report_name = "memtier_" + options.mark_name + options.ratio + ".csv"
+    csv_write_header(summary_report_name, header)
+    index = 0
+    data =[]
+    while len(process_group) > 0 :
+        for process in process_group:
+            if (process.poll()!=None):
+                cmd = format(process.args).split(" ")
+                print("*******************"+format(process.args))
+                port_num = cmd[5]
+                server = cmd[7]
+                ccore = cmd[2]
+                print(port_num)
+                with open("ip"+server+"prt"+port_num+"cc"+ccore+".txt") as logfile:
+                    data_per_instance = {}
+                    for line in logfile:
+                        if line.find("Sets ") > -1 :
+                            operation = line.split()[1]
+                            lat = line.split()[4]
+                            bw = line.split()[5]
+                            data_per_instance['set_qps'] = operation
+                            data_per_instance['set_lat'] = lat
+                            data_per_instance['sbw'] = bw
+                        if line.find("Gets ") > -1 :
+                            operation = line.split()[1]
+                            lat = line.split()[4]
+                            bw = line.split()[5]
+                            data_per_instance['get_qps'] = operation
+                            data_per_instance['get_lat'] = lat
+                            data_per_instance['gbw'] = bw
+
+                    index = index + 1
+                    data_per_instance[options.mark_name] = index
+                    data_per_instance["IP"] = server
+                    data_per_instance["port"] = port_num
+                    data.append(data_per_instance)
+                    csv_write_row(summary_report_name,header,  data_per_instance)
+                    print(data_per_instance)
+
+                    process_group.remove(process)
+            else:
+                time.sleep(1)
+                #pass
+
+    #os.system("/root/emon/stop_emon.sh")
+#    data_total = {}
+#    data_total["get_qps"] = sum(float(i["get_qps"]) for i in data)
+#    data_total["set_qps"] = sum(float(i["set_qps"]) for i in data)
+#    data_total["set_lat"] = sum([float(i["set_lat"]) for i in data])/float(len(data))
+#    data_total["get_lat"] = sum([float(i["get_lat"]) for i in data])/float(len(data))
+#    data_total["instances"] = summary_report_name + options.mark_name
+#    header = ["instances",  "set_qps", "set_lat", "get_qps", "get_lat"]
+#    csv_write_row(summary_report_name, header, data_total)
+#    csv_write_row("memtier_total.csv", header, data_total)
+
+
+

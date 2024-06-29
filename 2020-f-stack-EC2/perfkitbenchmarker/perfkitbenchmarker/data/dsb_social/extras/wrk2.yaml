@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wrk2
+  labels:
+    death-star-project: social-network
+    app: wrk2
+  namespace: social-network
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      death-star-project: social-network
+      app: wrk2
+  template:
+    metadata:
+      labels:
+        death-star-project: social-network
+        app: wrk2
+      name: wrk2
+    spec:
+      containers:
+      - name: wrk2
+        image: cesgsw/dsb-wrk2:v1.0
+      restartPolicy: Always

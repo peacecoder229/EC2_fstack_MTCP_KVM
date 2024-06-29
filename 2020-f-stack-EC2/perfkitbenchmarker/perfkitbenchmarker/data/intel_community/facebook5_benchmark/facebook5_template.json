@@ -1,0 +1,88 @@
+{
+    "workload1": {
+        "metadata": {
+            "metadata_name": "facebook5",
+            "metadata_type": "workload category - synthetic",
+            "metadata_load": "Unknown"
+        },
+        "vm_groups": [{
+            "name": "vm_group1",
+            "deps": [{
+                "os": {
+                    "os_name": "Ubuntu",
+                    "os_ver": "18.04",
+                    "os_kernel": "5.3.0-40-generic"
+                },
+                "packages": [{
+                        "name": "tar",
+                        "ver": "",
+                        "type": "OS",
+                        "custom_install": "",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    },
+                    {
+                        "name": "ansible",
+                        "ver": "",
+                        "type": "custom",
+                        "custom_install": "./install_ansible.sh",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    },
+                    {
+                        "name": "python-setuptools",
+                        "ver": "",
+                        "type": "OS",
+                        "custom_install": "",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    },
+                    {
+                        "name": "numactl",
+                        "ver": "",
+                        "type": "OS",
+                        "custom_install": "",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    }
+                ]
+            }]
+        }],
+        "run_local": {
+            "cmd": ""
+        },
+        "weightage": "",
+        "install": [{
+                "target": "vm_group1[0]",
+                "cmd": "./install_facebook5_wl.bash ",
+                "internal_resources": [
+                        {
+                            "name": "Facebook5 Workload Project",
+                            "url":  "https://cumulus.s3.us-east-2.amazonaws.com/facebook5/facebook5.tar.gz"
+                        }
+					]
+                }
+        ],
+        "run": {
+            "target": "vm_group1[0]",
+            "run_command": "./measure_facebook5_performance.bash "
+        },
+        "output_dir": {
+            "output_dir_path": "/opt/speccpu/result",
+            "output_dir_target": "vm_group1[0]"
+        },
+        "metric": [
+        {
+            "name": "Ratio ",
+            "goal": "Increase",
+            "read": "cat /opt/speccpu/result/CINT2006.001.ref.csv | grep 'SPECint_rate_base2006' | awk -F',' '{ print $2 }'",
+            "target": "vm_group1[0]",
+            "unit": "Ratio"
+        }
+        ],
+        "cleanup": [{
+            "target": "vm_group1[0]",
+            "cmd": "echo cleaning up work directories && sudo rm -rf /opt/speccpu"
+        }]
+    }
+}

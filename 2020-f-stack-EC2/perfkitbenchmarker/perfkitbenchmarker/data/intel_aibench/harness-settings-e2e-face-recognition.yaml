@@ -1,0 +1,72 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /tmp
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  e2e-face-inference:
+    repeat-count: 1                                   # number of instances to launch
+    #cores: 0-55                                      # number of cores (divided uniformly among all instances)
+    services: ssh                                     # opens port 22
+    env:
+      KAFKA_BROKER: e2e-kafkabroker-0                 # comma separated list of kafka brokers
+      INFER_TOPIC_NAME: topic_if
+      DISPLAY_TOPIC_NAME: topic_dp
+      KMP_BLOCKTIME: 1
+      INFER_TIMEOUT_MS: 50000
+      IMAGE_SIZE: 160
+      MODEL: ${shares.shared-storage-partition}/Data/e2e-face-inference/20170512-110547/20170512-110547.pb
+      PKL_FILE: ${shares.shared-storage-partition}/Data/e2e-face-inference/pkl_file/limited_dataset_classifier.pkl
+      DISPLAY_REQUIRED: 'false'
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: INFO                                 # INFO or DEBUG, use DEBUG for detailed event collection
+
+  e2e-kafkabroker:
+    repeat-count: 1
+    #cores: 0-55
+    services: ssh,kafka
+    env:
+      MAX_KAFKA_MSG_SIZE_BYTES: 1200000000           # max message size in bytes
+      DELAY_TIME_S: 0                                # to be used to introduce delay between start of multiple brokers
+      KAFKA_BROKER: e2e-kafkabroker-0                # kafka broker service name
+      ZOOKEEPER_SERVER: e2e-kafkabroker-0            # zookeeper server service name, use same zookeeper server for all brokers
+      ZOOKEEPER_ID: 1                                # ID of the zookeeper server
+      KAFKA_TOPIC_REPLICATION_FACTOR: 1              # should not be greater than the number of consumers
+      KAFKA_PORT: 9092
+      TOPIC_PARTITIONS: 1                            # change to match max number of consumers per broker
+      BROKER_LOG_DIR: ${shares.disk1-storage}/kafka-logs
+      ZOOKEEPER_TIMEOUT_MS: 6000                     # zookeeper timeout
+      ZOOKEEPER_LOG_DIR: /tmp/zookeeper
+      ZOOKEEPER_PORT: 2080
+      ZOOKEEPER_PORT_1: 2888
+      ZOOKEEPER_PORT_2: 3888
+
+  e2e-face-decode-detection:
+    repeat-count: 1
+    #cores: 0-55
+    services: ssh
+    env:
+      DELAY_TIME: 12
+      FACENET_DET_DIR: ${shares.shared-storage-partition}/Data/e2e-face-decode-detection/facenet/src/align
+      KMP_BLOCKTIME: 1
+      DISPLAY_REQUIRED: 'false'
+      DATA_DIR: ${shares.shared-storage-partition}/Data/e2e-face-decode-detection/mp4/intel_approved.mp4   # Intel approved video
+      INFER_TOPIC_NAME: topic_if
+      KAFKA_BROKER: e2e-kafkabroker-0               # comma separated list of kafka brokers
+      MAX_QUEUE_DEPTH: 1
+      SKIP_FRAMES: 0
+      FRAME_RATE_S: 0.0
+      IMAGE_SIZE: 160
+      MARGIN: 32
+      MINSIZE: 50
+      THRESHOLD: "'0.5 0.5 0.7'"
+      FACTOR: 0.7
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: INFO                                
+
+scenarios:
+  e2e-face-recognition:
+    virtual-instances: e2e-face-inference,e2e-face-decode-detection,e2e-kafkabroker     # list of virtual instances required to run the workload
+    parser: parser-fr.py

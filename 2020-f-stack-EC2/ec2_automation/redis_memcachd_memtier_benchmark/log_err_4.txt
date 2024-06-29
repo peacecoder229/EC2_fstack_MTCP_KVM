@@ -1,0 +1,16 @@
+./client_memt.sh: line 17: cd: 0-13: No such file or directory
+
+Ram-cache and Swap Cleared
+Host key verification failed.
+Host key verification failed.
+Traceback (most recent call last):
+  File "./run_client_and_server_memtier_r1p1_emon.py", line 80, in <module>
+    process = run_memtier(options)
+  File "/root/redis_memcachd_memtier_benchmark/memtier_client_server_modules.py", line 111, in run_memtier
+    servercores = get_core_list(corecount=options.loop, cores=options.servercores)
+  File "/root/redis_memcachd_memtier_benchmark/memtier_client_server_modules.py", line 16, in get_core_list
+    (start,end)=i.split("-")
+ValueError: not enough values to unpack (expected 2, got 1)
+mv: cannot stat 'ip192.168.*': No such file or directory
+mv: cannot stat 'memtier_ip*': No such file or directory
+CLINT1 DONE!!!!

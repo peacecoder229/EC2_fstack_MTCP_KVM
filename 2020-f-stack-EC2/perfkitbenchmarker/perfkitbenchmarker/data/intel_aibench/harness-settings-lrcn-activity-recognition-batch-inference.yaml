@@ -1,0 +1,26 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /mnt/nvme_local
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  lrcn-activity-recognition-batch-inference:
+      #cores: 0-55                                       # number of cores (divided uniformly among all instances)
+      repeat-count: 1                                    # number of instances to launch
+      services: ssh
+      env:             
+        KMP_BLOCKTIME: 1
+        DATA_DIR: ${shares.shared-storage-partition}/Data/lrcn-activity-recognition-batch-inference/170804_B_Lombok_086.mp4  # online video
+        RGB_FRAME_DIR: /RGB_frames
+        LSTM_model_prototxt: ${shares.shared-storage-partition}/Data/lrcn-activity-recognition-batch-inference/deploy_lstm.prototxt
+        RGB_LSTM_model: ${shares.shared-storage-partition}/Data/lrcn-activity-recognition-batch-inference/RGB_lstm_model_iter_30000.caffemodel
+        Activity_label_hash: ${shares.shared-storage-partition}/Data/lrcn-activity-recognition-batch-inference/action_hash_rev.p
+        FPS: 30
+        LOGSTASH_HOST: db-server-0.aibench-static
+        LOGSTASH_PORT: 5959
+        LOG_LEVEL: INFO                                  # INFO or DEBUG, use DEBUG for detailed event collection
+
+scenarios:
+  lrcn-activity-recognition-batch-inference:
+    virtual-instances: lrcn-activity-recognition-batch-inference
+    parser: parser-lrcn.py

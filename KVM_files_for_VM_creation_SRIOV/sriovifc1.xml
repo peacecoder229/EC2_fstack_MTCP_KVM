@@ -1,0 +1,5 @@
+<interface type='hostdev' managed='yes'>
+	<source>
+		<address type='pci' domain='0' bus='109' slot='10' function='1'/>
+	</source>
+</interface>

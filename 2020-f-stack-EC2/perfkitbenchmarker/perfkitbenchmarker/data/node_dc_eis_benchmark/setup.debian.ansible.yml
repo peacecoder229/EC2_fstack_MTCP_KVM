@@ -1,0 +1,46 @@
+---
+- name: Install Node-DC-EIS workload
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+
+  vars:
+    basic_packages_to_install: [
+      "curl",
+      "git",
+      "mongodb-org",
+      "python-numpy",
+      "python-eventlet",
+      "python-requests",
+      "python-matplotlib",
+      "python-tk"
+    ]
+  
+  tasks:
+  - name: compute release- and arch-specific needs
+    set_fact:
+      ubuntu_release: "{{ (ansible_architecture == 'aarch64') | ternary('xenial', 'bionic') }}"
+      aarch_packages: "{{ (ansible_architecture == 'aarch64') | ternary(['libcurl3'], []) }}"
+
+  - name: compute final list of packages
+    set_fact:
+      packages_to_install: "{{ basic_packages_to_install + aarch_packages }}"
+
+  - name: Add mongodb repo key
+    become: true
+    apt_key:
+      url: https://www.mongodb.org/static/pgp/server-4.2.asc
+
+  - name: Add mongodb repository
+    become: true
+    apt_repository:
+      repo: 'deb http://repo.mongodb.org/apt/ubuntu {{ ubuntu_release }}/mongodb-org/4.2 multiverse'
+
+  - name: Install packages
+    become: true
+    package:
+      name: "{{ packages_to_install }}"
+      state: present
+
+  - name: Run Node.js-related tasks
+    include_tasks: "node_tasks.ansible.yml"

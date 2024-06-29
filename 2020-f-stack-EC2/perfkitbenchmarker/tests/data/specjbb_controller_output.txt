@@ -1,0 +1,88 @@
+ 5818s:
+  5818s: Failing in a row, point 2 of 3
+  5818s: (73%)   IR = 149165 ?..?....??.?......?..?... (rIR:aIR:PR = 149165:27297:113057) (tPR = 1684513) [IR is under limit] [PR is under limit]
+  5849s: Performance info:
+         Transaction,    Success,    Partial,     Failed,   Receipts, AvgBarcode,
+             Overall,    3172302,          0,          0,    3020086,      59.48,
+         Response times:
+             Request,    Success,    Partial,     Failed,   SkipFail,     Probes,    Samples,      min,      p50,      p90,      p95,      p99,      max,
+       TotalPurchase,     738915,          0,          0,          0,       1923,     355381,   338000,  1800000,  4500000,  6200000, 11000000, 60000000,
+     InStorePurchase,     394379,          0,          0,          0,        947,     186535,   338000,  2000000,  4600000,  7400000, 11000000, 60000000,
+      OnlinePurchase,     268936,          0,          0,          0,        866,     130688,   354000,  1600000,  4300000,  5500000,  8300000, 60000000,
+        InstPurchase,      75600,          0,          0,          0,        110,      38158,   930000,  1400000,  2600000,  3100000, 19000000, 44000000,
+          AssocOfCat,       1167,          0,          0,          0,        298,       1977,   583000,  2100000,  5300000,  7000000, 13000000, 60000000,
+      AssocOfProduct,       7873,          0,          0,          0,         18,       3814,  1100000,  1400000,  2400000,  4800000,  4800000, 49000000,
+      BusinessReport,       2165,          0,          0,          0,        257,       1478,   650000,  2000000,  7100000, 13000000, 14000000, 18000000,
+          CustBuyBeh,       8311,          0,          0,          0,         18,       3830,   840000,  1900000,  3000000,  3100000,  5400000, 60000000,
+       ProductReturn,      19231,          0,          0,          0,        257,      10240,   890000,  1600000,  3800000,  9200000, 10000000, 60000000,
+
+  5849s:
+  5849s: Failing in a row, point 3 of 3
+  5849s: (74%)   IR = 151208 .?....?....?........... (rIR:aIR:PR = 151208:86425:110253) (tPR = 1619922) [IR is under limit] [PR is under limit]
+  5879s: Performance info:
+         Transaction,    Success,    Partial,     Failed,   Receipts, AvgBarcode,
+             Overall,    3203904,          0,          0,    3033452,      59.47,
+         Response times:
+             Request,    Success,    Partial,     Failed,   SkipFail,     Probes,    Samples,      min,      p50,      p90,      p95,      p99,      max,
+       TotalPurchase,    2385889,          0,          0,          0,       3059,     351844,   119000,  1500000,  4600000,  6800000, 12000000, 25000000,
+     InStorePurchase,    1260665,          0,          0,          0,       1725,     185718,   154000,  1400000,  4500000,  6400000, 12000000, 20000000,
+      OnlinePurchase,     870595,          0,          0,          0,       1039,     129126,   123000,  1600000,  4900000,  7100000, 12000000, 25000000,
+        InstPurchase,     254629,          0,          0,          0,        295,      37000,   119000,  1500000,  4300000,  8100000, 12000000, 13000000,
+          AssocOfCat,       2968,          0,          0,          0,        315,       2019,   561000,  2200000,  5100000,  7000000, 14000000, 15000000,
+      AssocOfProduct,      24896,          0,          0,          0,        399,       4371,   213000,  1500000,  5700000,  7400000, 11000000, 60000000,
+      BusinessReport,       6688,          0,          0,          0,        233,       1662,   660000,  2200000,  5700000,  9300000, 15000000, 19000000,
+          CustBuyBeh,      24346,          0,          0,          0,        439,       4354,   236000,  1500000,  5000000,  8900000, 15000000, 60000000,
+       ProductReturn,      68762,          0,          0,          0,        107,       9563,   395000,  1400000,  3560000,  4800000,  5800000, 60000000,
+
+  5879s: Ending RT curve measurement because max-jOPS reached (too many failed points in a row)
+  5879s: max-jOPS is presumably 143034
+  5879s:
+  5879s: Settling (term) (init) ... OK
+  5885s:
+  5885s: Running for validation
+  5885s: (load =  0%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+  5898s: (load = 10%) ....|.......... (rIR:aIR:PR = 14303:14318:14274) (tPR = 217456) [OK]
+  5912s: (load = 20%) ......|.......... (rIR:aIR:PR = 28607:28305:28315) (tPR = 427350) [OK]
+  5928s: (load = 30%) ....|.......... (rIR:aIR:PR = 42910:43234:43281) (tPR = 641115) [OK]
+  5943s: (load = 40%) ....|.......... (rIR:aIR:PR = 57214:57401:57390) (tPR = 850263) [OK]
+  5957s: (load = 50%) ....|.......... (rIR:aIR:PR = 71517:71985:72618) (tPR = 1042215) [OK]
+  5971s: (load = 60%) ....|.......... (rIR:aIR:PR = 85820:86007:85988) (tPR = 1274140) [OK]
+  5985s: (load = 70%) ....|.......... (rIR:aIR:PR = 100124:100532:100352) (tPR = 1497165) [OK]
+  5999s: (load = 80%) ....|.......... (rIR:aIR:PR = 114427:114089:113370) (tPR = 1680257) [OK]
+  6013s: (load = 90%) ....|.......... (rIR:aIR:PR = 128731:128995:128934) (tPR = 1910843) [OK]
+  6027s: (load = 100%) ....|.......... (rIR:aIR:PR = 143034:142423:142338) (tPR = 2098808) [OK]
+  6041s: Validating... (quiescence.....) (stop TxI) (stop BE) (saving... 416726 Kb) (validation=PASSED)(term) (init) ... ...completed!
+  6055s: Restarting (term) (init) ... OK
+  6060s:
+  6060s:
+  6060s: Profiling....|.............................. (rIR:aIR:PR = 14303:14277:14277) (tPR = 212425) [OK]
+  6095s:  OK
+  6095s: (term... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+  6098s: ) Waiting for Agents to complete log sending...
+  6099s: Copying logs from Agents completed
+  6099s: Tests are skipped.
+  6099s:
+  6099s: Generating level 0 report from ./specjbb2015-M-20200826-00001.data.gz
+
+SPECjbb2015 Java Business Benchmark
+ (c) Standard Performance Evaluation Corporation, 2015
+
+Preparing to launch SPECjbb2015 reporter.
+
+Reading property file: /opt/pkb/SPECjbb2015/jbb103/./config/specjbb2015.props
+Report directory is result/specjbb2015-M-20200826-00001/report-00001
+  6099s: Building report...
+
+      1105 msec: Pre-reading source
+         0 msec: Validation
+         8 msec: Dump run logs
+         5 msec: Printing JbbProperties
+         0 msec: Controller time verification
+         9 msec: Build report with HW/SW parameters
+        49 msec: Building throughput - response time curve
+        53 msec: Parsing attributes
+         9 msec: Parsing agent names
+RUN RESULT: hbIR (max attempted) = 204335, hbIR (settled) = 170313, max-jOPS = 143034, critical-jOPS = 66401
+        36 msec: Primary metrics calculation
+        88 msec: Render Allowed Failures
+       262 msec: [FAILED] Render IR/PR Accuracy

@@ -1,0 +1,38 @@
+# Example static/on-prem benchmark config file for the intel_memcached benchmark
+static_vms:
+  - &server
+     ip_address: xx.xx.xx.xxx
+     internal_ip: xx.xx.xx.xxx
+     additional_ips: xx.xx.xx.xxx,xx.xx.xx.xxx
+     os_type: ubuntu1804
+     user_name: pkb
+     ssh_private_key: ~/.ssh/id_rsa
+  - &client1
+     ip_address: xx.xx.xx.xxx
+     internal_ip: xx.xx.xx.xxx
+     os_type: ubuntu1804
+     user_name: pkb
+     ssh_private_key: ~/.ssh/id_rsa
+  - &client2
+     ip_address: xx.xx.xx.xxx
+     internal_ip: xx.xx.xx.xxx
+     os_type: ubuntu1804
+     user_name: pkb
+     ssh_private_key: ~/.ssh/id_rsa
+
+intel_memcached:
+   vm_groups:
+     servers:
+       static_vms:
+         - *server
+     clients:
+       vm_count: 2
+       static_vms:
+         - *client1
+         - *client2
+ 
+flags:
+  ycsb_client_vms: 2                    # use this number of client vms/machines
+  # Reduce the two values below if target machine does not have enough memory to support 25GB memcached instance
+  # intel_memcached_size_mb: 25000              # Memcached will use up to this much memory for its cache
+  # ycsb_record_count: 20000000           # Load this many records into Memcached's cache

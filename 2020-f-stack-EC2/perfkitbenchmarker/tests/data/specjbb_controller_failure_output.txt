@@ -1,0 +1,60 @@
+
+   678s: ( 1%)   IR =   2043 .............................. (rIR:aIR:PR = 2043:2041:2023) (tPR = 29656) [Submit errors]
+   708s: Performance info:
+         Transaction,    Success,    Partial,     Failed,   Receipts, AvgBarcode,
+             Overall,      40640,          0,        391,      38572,      59.47,
+         Response times:
+             Request,    Success,    Partial,     Failed,   SkipFail,     Probes,    Samples,      min,      p50,      p90,      p95,      p99,      max,
+       TotalPurchase,      38581,          0,        380,          0,      37601,      56190,     1100,     3200,     4300,     4600,     6200,    67000,
+     InStorePurchase,      20293,          0,        198,          0,      19917,      29699,     1100,     3100,     4200,     4500,     5900,    67000,
+      OnlinePurchase,      14240,          0,        144,          0,      13838,      20557,     1100,     3300,     4400,     4700,     6500,    67000,
+        InstPurchase,       4048,          0,         38,          0,       3846,       5934,     1300,     3300,     4300,     4600,     6500,    64000,
+          AssocOfCat,         41,          0,          0,          0,         41,         60,    17000,    22000,    24000,    24000,    24000,    24000,
+      AssocOfProduct,        411,          0,          0,          0,        341,        565,     1600,     3100,     4100,     4300,     4734,     5200,
+      BusinessReport,        101,          0,          0,          0,         70,        140,    19100,    23000,    25000,    25950,    29770,    31000,
+          CustBuyBeh,        412,          0,          0,          0,        345,        605,     1100,     2500,     3900,     4200,     4600,     5100,
+       ProductReturn,       1080,          0,          0,          0,        992,       1616,     1000,     2300,     3600,     3900,     4400,    46000,
+
+   708s:
+   708s: max-jOPS may not be valid because some unexpected error happened during response time curve building
+   708s: max-jOPS is presumably 0
+   708s:
+   708s: Settling (term) (init) ... OK
+   713s:
+   713s: Running for validation
+   713s: (load =  0%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   726s: (load = 10%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   739s: (load = 20%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   752s: (load = 30%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   765s: (load = 40%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   778s: (load = 50%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   791s: (load = 60%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   804s: (load = 70%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   817s: (load = 80%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   830s: (load = 90%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   843s: (load = 100%) ...|.......... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+   856s: Validating... (quiescence.....) (stop TxI) (stop BE) (saving... 178429 Kb) (validation=PASSED)(term) (init) ... ...completed!
+   867s: Settling (term) (init) ... OK
+   872s:
+   872s: Performing load levels
+   872s: (load = 95%) ...|............................................................................................................................................................................................................................................................................................................ (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+  1175s: Performance info:
+         Transaction,    Success,    Partial,     Failed,   Receipts, AvgBarcode,
+         Response times:
+             Request,    Success,    Partial,     Failed,   SkipFail,     Probes,    Samples,      min,      p50,      p90,      p95,      p99,      max,
+
+  1175s: (load = -5%) ...|............................................................................................................................................................................................................................................................................................................ (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+  1479s: Performance info:
+         Transaction,    Success,    Partial,     Failed,   Receipts, AvgBarcode,
+         Response times:
+             Request,    Success,    Partial,     Failed,   SkipFail,     Probes,    Samples,      min,      p50,      p90,      p95,      p99,      max,
+
+  1479s: Restarting (term) (init) ... OK
+  1484s:
+  1484s:
+  1484s: Profiling...|.............................. (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+  1517s:  OK
+  1517s: (term... (rIR:aIR:PR = 0:0:0) (tPR = 0) [OK]
+  1520s: ) Waiting for Agents to complete log sending...
+  1521s: Copying logs from Agents completed
+  1521s:

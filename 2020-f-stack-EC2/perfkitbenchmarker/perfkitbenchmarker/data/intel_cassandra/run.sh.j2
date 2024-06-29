@@ -1,0 +1,4 @@
+cas_dir="{{ cassandra_dir }}"
+conf="{{ cassandra_cql }}"
+
+${cas_dir}/tools/bin/cassandra-stress user profile=${cas_dir}/tools/${conf} ops\(insert={{ write_percent }},simple1={{ read_percent }}\) no-warmup cl=ONE duration={{ duration }} -mode native cql3  -pop dist=uniform\(1..{{num_rows}}\) -node {{ server_internal_ip }} -rate threads={{ rate_threads }} -graph file={{ graph_out }}

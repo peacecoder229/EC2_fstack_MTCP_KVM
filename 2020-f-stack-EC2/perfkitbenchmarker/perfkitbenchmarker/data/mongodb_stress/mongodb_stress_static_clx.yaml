@@ -1,0 +1,33 @@
+# Example static/on-prem config file for the mongodb_stress benchmark.
+
+static_vms:
+  - &clx
+    ip_address: 10.54.27.73
+    internal_ip: 10.54.27.73
+    user_name: root
+    os_type: ubuntu2004 
+    ssh_private_key: /root/Perkitbenchmarker-Mongodb/ssh-keys/id_rsa_wfsdp13
+    disk_specs:
+      - mount_point: /root
+  - &client
+    ip_address: 10.54.27.63
+    user_name: root
+    os_type: ubuntu2004
+    ssh_private_key: /root/Perkitbenchmarker-Mongodb/ssh-keys/id_rsa_wfsdp3
+    disk_specs:
+      - mount_point: /root
+    internal_ip: 10.54.27.63
+
+mongodb_stress:
+   vm_groups:
+     workers:
+       static_vms:
+         - *client
+     clients:
+       vm_count: 1
+       static_vms:
+         - *clx
+
+flags:
+  ycsb_client_vms: 1                    # use this number of client vms/machines
+  

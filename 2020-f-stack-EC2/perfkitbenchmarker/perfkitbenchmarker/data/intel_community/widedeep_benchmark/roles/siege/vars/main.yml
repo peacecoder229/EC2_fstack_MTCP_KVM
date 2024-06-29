@@ -1,0 +1,4 @@
+---
+siege_dir: siege-2.78
+siege_pk_name: "{{siege_dir}}.tar.gz"
+siege_patch: siege-patch

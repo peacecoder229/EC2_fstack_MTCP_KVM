@@ -1,0 +1,42 @@
+# Example benchmark config file for the intel_memcached benchmark
+worker: &worker
+  AWS:
+    machine_type: m5.12xlarge
+    zone: us-east-1
+    boot_disk_size: 200
+  GCP:
+    machine_type: n1-standard-4
+    zone: us-west1-a
+    min_cpu_platform: skylake
+    boot_disk_size: 200
+  Azure:
+    machine_type: Standard_F72s_v2
+    zone: westus
+    boot_disk_size: 200
+
+client: &client 
+  AWS:
+    zone: us-east-1
+    machine_type: m5.12xlarge
+    boot_disk_size: 200
+  GCP:
+    machine_type: n1-standard-16
+    zone: us-west1-a
+    min_cpu_platform: skylake
+    boot_disk_size: 200
+  Azure:
+    machine_type: Standard_F72s_v2
+    zone: westus
+    boot_disk_size: 200
+
+intel_memcached:
+  vm_groups:
+    servers:
+      vm_spec: *worker
+      os_type: ubuntu1804
+    clients:
+      vm_spec: *client
+      os_type: ubuntu1804
+
+flags:
+  ycsb_client_vms: 2                    # use this number of client vms/machines

@@ -1,0 +1,19 @@
+#
+# This example configuration demonstrates how to use the VP9 codec. 
+#
+# The VP9 codec does not have any presets, so the 'preset' field is not required in
+# VP9 configurations. Since, the 'preset' field is not present, neither is the 'tune' 
+# field, which further specifies the tuning parameters for the particular preset.
+#
+
+vp9-example:
+  description: '1080p input to 1080p output using vp9'
+  input_files: crowd_run_1080p50.mp4
+  input_format: 1080P
+  output_mode:
+    type: 1:1/LIVE
+    fps_threshold: 60
+  video_codec:
+    codec: vpx-vp9
+    args: >-
+      -b:v 2M 1080p.mp4

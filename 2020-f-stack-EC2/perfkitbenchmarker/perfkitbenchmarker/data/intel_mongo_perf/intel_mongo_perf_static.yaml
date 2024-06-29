@@ -1,0 +1,28 @@
+# example static/on-prem benchmark configuration file
+
+static_vms: 
+  - &worker_machine
+    os_type: ubuntu2004
+    ip_address: xx.xxx.xx.xxx
+    internal_ip: xx.xxx.xx.xxx
+    user_name: pkb
+    ssh_private_key: ~/.ssh/id_rsa
+  - &client_machine
+    os_type: ubuntu2004
+    ip_address: xx.xxx.xx.xxx
+    internal_ip: xx.xxx.xx.xxx
+    user_name: pkb
+    ssh_private_key: ~/.ssh/id_rsa
+
+intel_mongo_perf:
+  description: DeathStarBench Social Network
+  vm_groups:
+    workers:
+      static_vms:
+        - *worker_machine
+    clients:
+      static_vms:
+        - *client_machine
+  flags:
+    http_proxy: 'http://proxy-chain.intel.com:911'
+    https_proxy: 'http://proxy-chain.intel.com:912'

@@ -1,0 +1,18 @@
+#
+# This example configuration demonstrates how to use the codec binaries directly, without the ffmpeg front-end
+#
+
+direct_example_x264:
+  description: '1080p input to 1080P output using x264/medium'
+  input_files: crowd_run_1080p50.y4m
+  input_format: 1080P
+  output_mode:
+    type: 1:1/LIVE
+    fps_threshold: 60
+  video_codec:
+    codec: x264
+    direct: True
+    args: >-
+      --profile main --preset veryfast --bframes 4 --b-pyramid strict --ref 3 --keyint 60 --threads 12 --frames 1600 --min-keyint 60
+      --bitrate 5500 --vbv-maxrate 5500 --vbv-bufsize 11000 --scenecut 0 --rc-lookahead 60 --crf 23.0 --tune=psnr --b-adapt=0 -o 1080p.264
+

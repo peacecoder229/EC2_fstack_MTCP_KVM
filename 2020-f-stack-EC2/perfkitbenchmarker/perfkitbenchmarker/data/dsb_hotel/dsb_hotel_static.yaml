@@ -1,0 +1,60 @@
+# Example static configuration file
+# Notes: 
+# - client_machine and controller_machine can be same
+# - must have at least one worker
+# - client is optional if running client in the cluster (as a POD)
+
+static_vms: 
+  - &client_machine
+    os_type: ubuntu2004
+    ip_address: xx.xx.xx.xxx
+    internal_ip: xx.xx.xx.xxx
+    user_name: root
+    ssh_private_key: ~/.ssh/id_rsa
+  - &controller_machine
+    os_type: ubuntu2004
+    ip_address: xx.xx.xx.xxx
+    internal_ip: xx.xx.xx.xxx
+    user_name: root
+    ssh_private_key: ~/.ssh/id_rsa
+  - &worker_machine_1
+    os_type: ubuntu2004
+    ip_address: xx.xx.xx.xxx
+    internal_ip: xx.xx.xx.xxx
+    user_name: root
+    ssh_private_key: ~/.ssh/id_rsa
+  - &worker_machine_2
+    os_type: ubuntu2004
+    ip_address: xx.xx.xx.xxx
+    internal_ip: xx.xx.xx.xxx
+    user_name: root
+    ssh_private_key: ~/.ssh/id_rsa
+  - &worker_machine_3
+    os_type: ubuntu2004
+    ip_address: xx.xx.xx.xxx
+    internal_ip: xx.xx.xx.xxx
+    user_name: root
+    ssh_private_key: ~/.ssh/id_rsa
+dsb_hotel:
+  description: DeathStarBench Hotel Reservation
+  vm_groups:
+    client:
+      vm_count: 1
+      static_vms:
+        - *client_machine
+    controller:
+      vm_count: 1
+      static_vms:
+        - *controller_machine
+    worker:
+      vm_count: 3
+      static_vms:
+        - *worker_machine_1
+        - *worker_machine_2
+        - *worker_machine_3
+  flags:
+    kubeconfig: /root/kubeconfig.mycluster  # full path to kubeconfig file on control-plane (client0) node
+    k8s_get_retry_count: 50             # large number of retries to allow time to start up all pods
+    dsb_hotel_image_cache: ""          # don't use Intel CaaS cache if using a cluster without access to Intel network
+    #http_proxy: 'http://proxy-chain.intel.com:911' # set proxy for machines on Intel network that have not been previously configured
+    #https_proxy: 'http://proxy-chain.intel.com:912'# ...

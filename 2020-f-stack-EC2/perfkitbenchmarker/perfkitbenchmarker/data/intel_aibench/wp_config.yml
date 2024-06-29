@@ -1,0 +1,13 @@
+static_vms:
+  - &vm0
+    ip_address: <IP ADDRESS OF VM>
+    user_name: pkb 
+    ssh_private_key: ~/.ssh/id_rsa
+    internal_ip: <IP ADDRESS OF VM>
+    os_type: <OS TYPE>
+  
+intel_aibench:
+  vm_groups:
+    target:
+      static_vms:
+        - *vm0

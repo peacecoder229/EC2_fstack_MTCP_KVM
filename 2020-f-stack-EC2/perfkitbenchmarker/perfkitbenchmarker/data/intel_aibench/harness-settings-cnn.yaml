@@ -1,0 +1,32 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /mnt/nvme_local
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  cnn-inference:
+    repeat-count: 1                                    # number of instances to launch
+    #cores: 0-55                                        # number of cores (divided uniformly among all instances)
+    services: ssh,cnn
+    env:
+      CNN_DATA_DIR: ${shares.shared-storage-partition}/Data/cnn-inference/TF_Imagenet/TF/nfs/pdx/home/ML/imagenet-data    # ImageNet dataset
+      CNN_MODEL: resnet50
+      CNN_ITERATIONS: 100
+      CNN_CPU_FAMILY: skl
+      CNN_DATA_FORMAT: NHWC
+      CNN_INTRA: 56
+      CNN_BATCH_SIZE: 128
+      CNN_INTER: 1
+      CNN_TRAIN_DIR: ${shares.shared-storage-partition}/Data/cnn-inference/Extra/distributedtrain
+      CNN_WORKLOAD_NAME: cnn-inference-${virtual-instances.cnn-inference.env.CNN_MODEL}
+      CNN_EVAL: forward_only
+      CNN_SYNTHETIC: realdata
+      #NUMA_OPTIONS: --membind=0,1
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                                # INFO or DEBUG, use DEBUG for detailed event collection
+ 
+scenarios:
+  cnn:
+    virtual-instances: cnn-inference
+    parser: parser-cnn.py

@@ -1,0 +1,27 @@
+##############################################################################
+# Provide a targets list, it can be the hostname, the ip address or a range:
+# # example-server[001:005].jf.intel.com
+# ip address
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+###############################################################################
+
+[target]
+localhost
+
+
+[target:vars]
+###############################################################################
+# Add here variables coresponding to systems in target group
+###############################################################################
+target_username=pkb
+base_dir="/home/{{target_username}}/wide_deep_large_ds"
+
+###############################################################################
+# According to target system environment, should Intel proxy settings be used
+###############################################################################
+set_internal_proxy=yes

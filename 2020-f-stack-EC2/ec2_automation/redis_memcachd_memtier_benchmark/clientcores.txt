@@ -1,0 +1,55 @@
+client3
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+client4
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+client5
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+client6
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+client7
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+client8
+CPU(s):                32
+NUMA node0 CPU(s):     0-7,16-23
+NUMA node1 CPU(s):     8-15,24-31
+client9
+CPU(s):                16
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+client10
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+client11
+CPU(s):                16
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+client12
+CPU(s):                32
+NUMA node0 CPU(s):     0-7,16-23
+NUMA node1 CPU(s):     8-15,24-31
+client13
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+client14
+CPU(s):                32
+NUMA node0 CPU(s):     0-31
+client15
+CPU(s):                72
+NUMA node0 CPU(s):     0-17,36-53
+NUMA node1 CPU(s):     18-35,54-71
+client16
+CPU(s):                24
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23

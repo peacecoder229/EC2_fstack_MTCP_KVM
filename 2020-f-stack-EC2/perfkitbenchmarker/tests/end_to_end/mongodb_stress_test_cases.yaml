@@ -1,0 +1,149 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+      
+  aws-ubuntu-2004: &aws-ubuntu-2004
+    cloud: AWS
+    zone: us-east-1
+    os_type: ubuntu2004
+    machine_type: m5.2xlarge
+    data_disk_type: standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  gcp-ubuntu-2004: &gcp-ubuntu-2004
+    cloud: GCP
+    zone: us-west2-c
+    os_type: ubuntu2004
+    machine_type: n1-standard-8
+    data_disk_type: pd-standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+    gce_subnet_region: us-west2
+
+  aws-graviton2-ubuntu-2004: &aws-graviton2-ubuntu-2004
+    cloud: AWS
+    os_type: ubuntu2004
+    zone: us-east-1
+    machine_type: m6g.16xlarge
+    image: ami-0ccca293427f70203
+
+  default: *aws-ubuntu-2004
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-publish: &pkb-publish
+    file_log_level: debug
+    kafka_publish: True
+
+  pkb-collect-svrinfo: &pkb-collect-svrinfo
+    file_log_level: debug
+    svrinfo: True
+
+  pkb-collect-collectd: &pkb-collect-collectd
+    file_log_level: debug
+    collectd: True
+
+  pkb-collect-and-publish: &pkb-collect-and-publish
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+    kafka_publish: True
+
+  pkb-collect-emon: &pkb-collect-emon
+    file_log_level: debug
+    emon: True
+
+################################################################################
+# Benchmark configurations -- Define various useful workload configurations
+################################################################################
+
+benchmark-configurations:
+
+  mongodb_stress_defaults: &mongodb_stress_defaults
+    benchmarks: mongodb_stress
+    mongodb_record_count: 1000
+    mongodb_instances_max_limit: 2
+    ycsb_client_vms: "1"
+
+  mongodb_stress_crypto: &mongodb_stress_crypto
+    benchmarks: mongodb_stress
+    mongodb_record_count: 1000
+    mongodb_instances_max_limit: 2
+    ycsb_client_vms: "1"
+    mongodb_enable_encryption: true
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options
+################################################################################
+
+tests:
+
+  DefaultCSPRun: &DefaultCSPRun
+    pkb: *pkb-basic
+    benchmark: *mongodb_stress_defaults
+  
+  Ubuntu2004AWS: &Ubuntu2004AWS
+    pkb: *pkb-basic
+    benchmark: *mongodb_stress_defaults
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004AWSCrypto: &Ubuntu2004AWSCrypto
+    pkb: *pkb-basic
+    benchmark: *mongodb_stress_crypto
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004GCP: &Ubuntu2004GCP
+    pkb: *pkb-basic
+    benchmark: *mongodb_stress_defaults
+    platform: *gcp-ubuntu-2004
+
+################################################################################
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+
+test-suites:
+
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  
+  developer:
+    DefaultCSPRun: *DefaultCSPRun
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  
+  benchmark:
+    DefaultCSPRun: *DefaultCSPRun
+    
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  
+  acceptance:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004AWSCrypto: *Ubuntu2004AWSCrypto
+    Ubuntu2004GCP: *Ubuntu2004GCP
+
+################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  
+  regression:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004AWSCrypto: *Ubuntu2004AWSCrypto
+    Ubuntu2004GCP: *Ubuntu2004GCP
+

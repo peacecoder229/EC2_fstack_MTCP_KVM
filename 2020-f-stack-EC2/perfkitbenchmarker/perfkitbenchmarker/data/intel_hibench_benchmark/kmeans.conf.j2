@@ -1,0 +1,23 @@
+# Custom - HiBench workload code contains a data structure with optimal values for each profile 
+# This will be dynamically written depending on user selection
+hibench.kmeans.{{ hibench_scale_profile }}.num_of_clusters              {{ kmeans_num_of_clusters }}
+hibench.kmeans.{{ hibench_scale_profile }}.dimensions                   {{ kmeans_dimensions }}	
+hibench.kmeans.{{ hibench_scale_profile }}.num_of_samples               {{ kmeans_num_of_samples }}	
+hibench.kmeans.{{ hibench_scale_profile }}.samples_per_inputfile        {{ kmeans_samples_per_inputfile }}	
+hibench.kmeans.{{ hibench_scale_profile }}.max_iteration                {{ kmeans_max_iteration }}	
+hibench.kmeans.{{ hibench_scale_profile }}.k                            {{ kmeans_k }}	
+hibench.kmeans.{{ hibench_scale_profile }}.convergedist                 {{ kmeans_convergedist }}	
+
+hibench.kmeans.num_of_clusters		${hibench.kmeans.${hibench.scale.profile}.num_of_clusters}
+hibench.kmeans.dimensions		${hibench.kmeans.${hibench.scale.profile}.dimensions}
+hibench.kmeans.num_of_samples		${hibench.kmeans.${hibench.scale.profile}.num_of_samples}
+hibench.kmeans.samples_per_inputfile	${hibench.kmeans.${hibench.scale.profile}.samples_per_inputfile}
+hibench.kmeans.max_iteration		${hibench.kmeans.${hibench.scale.profile}.max_iteration}
+hibench.kmeans.k			${hibench.kmeans.${hibench.scale.profile}.k}
+hibench.kmeans.convergedist		${hibench.kmeans.${hibench.scale.profile}.convergedist}
+hibench.kmeans.base.hdfs		${hibench.hdfs.data.dir}/Kmeans
+hibench.kmeans.input.sample		${hibench.workload.input}/samples
+hibench.kmeans.input.cluster		${hibench.workload.input}/cluster
+
+hibench.workload.input			${hibench.hdfs.data.dir}/Kmeans/Input
+hibench.workload.output			${hibench.hdfs.data.dir}/Kmeans/Output

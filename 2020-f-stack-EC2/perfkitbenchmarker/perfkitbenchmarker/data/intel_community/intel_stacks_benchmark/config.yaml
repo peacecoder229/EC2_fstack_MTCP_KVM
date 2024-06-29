@@ -1,0 +1,16 @@
+
+static_vms:
+  - &vm1
+    ip_address: xx.xxx.xxx.xx
+    user_name: xxx
+    os_type: xxx
+    ssh_private_key: /xx/xx/.ssh/id_rsa
+    internal_ip: xx.xxx.xxx.xx
+
+intel_stacks:
+  vm_groups:
+    target:
+      static_vms:
+        - *vm1
+flags:
+  http_proxy: x

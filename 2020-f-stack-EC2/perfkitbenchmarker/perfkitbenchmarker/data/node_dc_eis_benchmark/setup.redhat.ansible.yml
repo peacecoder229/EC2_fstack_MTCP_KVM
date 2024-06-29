@@ -1,0 +1,28 @@
+---
+- name: Install Node-DC-EIS workload
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+
+  tasks:
+  - name: Add mongodb repository
+    become: true
+    yum_repository:
+      name: MongoDB
+      baseurl: https://repo.mongodb.org/yum/redhat/7/mongodb-org/3.6/$basearch/
+      gpgcheck: yes
+      gpgkey: https://www.mongodb.org/static/pgp/server-3.6.asc
+      enabled: yes
+      description: MongoDB repository
+
+  - name: Install packages
+    become: true
+    command: yum -y install git mongodb-org-server numpy python-eventlet python27-requests python27-numpy python-pip curl python-matplotlib python-tk
+
+  - name: Install eventlet via PIP
+    become: true
+    pip:
+      name: eventlet
+
+  - name: Run Node.js-related tasks
+    include_tasks: "node_tasks.ansible.yml"

@@ -1,0 +1,27 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /mnt/nvme_local
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  qanet-inference-va:
+    repeat-count: 1                               # number of instances of the workload to launch
+    #cores: 0-55                                   # number of cores (divided uniformly for all instances)
+    services: ssh
+    env:
+      STANDALONE_INFERENCE: 'True'
+      MODEL: ${shares.shared-storage-partition}/Data/qanet-inference-va/train/FRC/model                                # QANet pre-trained model
+      DATA_DIR: ${shares.shared-storage-partition}/Data/qanet-inference-va/data                                        # all QANet data
+      WORD_VECTORS: ${shares.shared-storage-partition}/Data/qanet-inference-va/vectors/fasttext/wiki-news-300d-1M.vec  # word vectors from Facebook's fastText library 
+      CHAR_VECTORS: ${shares.shared-storage-partition}/Data/qanet-inference-va/vectors/glove/glove.840B.300d-char.txt  # GLoVe character embedding
+      TEST_DATA: ${shares.shared-storage-partition}/Data/qanet-inference-va/dataset/QANetTestSet-500queries.json       # SQuAD dataset (Stanford Question Answering Dataset)
+      KMP_BLOCKTIME: 1
+      #NUMA_OPTIONS: --membind=0,1
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                                                                                  # INFO or DEBUG, use DEBUG for detailed event collection
+
+scenarios:
+  qanet-standalone-inference:
+    virtual-instances: qanet-inference-va
+    parser: parser-qanet.py

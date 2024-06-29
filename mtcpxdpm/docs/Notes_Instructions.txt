@@ -1,0 +1,83 @@
+These are the steps that I am following:
+
+virsh related stuff
+
+
+make a directoy workspace in client 02
+
+git clone ssh://rohantab@git-amr-1.devtools.intel.com:29418/mtcp-source && cd "mtcp-source" && git config user.name "Rohan Tabish" && git config user.email "rohan.tabish@intel.com" && scp -P 29418 rohantab@git-amr-1.devtools.intel.com:hooks/commit-msg .git/hooks/
+
+bash setup_mtcp_dpdk_env.sh
+
+
+scp root@ncc7:/pnpdata/dpdk-mtcp/mtcp-source/mtcp/src/dpdk_module.c mtcp/src/dpdk_module.c
+
+
+scp -r root@192.168.232.2:/root/workspace/mtcp-source .
+
+
+bash setup_mtcp_dpdk_env.sh /root/workspace/mtcp-source/dpdk
+
+
+
+ifconfig dpdk0 192.168.232.155 netmask 255.255.255.0 up
+
+
+seems like there is an issue with the compiler version and fedora version they appear old.
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+VM Related Stuff
+
+1. Creating snapshot: https://www.cyberciti.biz/faq/how-to-create-create-snapshot-in-linux-kvm-vmdomain/
+
+2. 
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+Attach the network interface to the VP
+
+-> virsh attach-interface --domain mtcp-vm --type bridge --source corp --config --live
+-> 
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------------------
+Kernel
+--------------------------------------------------------------------------------------------------------------------
+
+
+cd /usr/src/kernels/
+wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.7.tar.xz
+tar -xvf linux-5.2.7.tar.xz
+cd linux-5.2.7/
+cp /boot/config-uname -r* .config
+uname -r
+cp /boot/config-4.19.8-300.fc29.x86_64 .config
+make oldconfig
+yum install elfutils-libelf-devel.x86_64
+make bzImage -j50
+make modules -j50
+make modules_install
+make modules_install -j50
+make install
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+

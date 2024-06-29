@@ -1,0 +1,28 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /mnt/nvme_local
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  nmt-inference:
+    repeat-count: 1                                        # number of instances to launch
+    #cores: 0-55                                           # number of cores (divided uniformly among all instances)
+    services: ssh
+    env:
+      NMT_ARCHITECTURE: gnmt
+      STANDALONE_INFERENCE: 'True'
+      DATA_DIR: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/data
+      VOCAB_PREFIX: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/data/vocab.bpe.32000
+      HPARAMS_FILE: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/data/standard_hparams/wmt16_gnmt_4_layer.json
+      CHECKPOINT: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/model/ende_gnmt_model_4_layer/translate.ckpt
+      TEST_FILE: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/dataset/newstest2014.100.en    # WMT newstest2014 dataset
+      KMP_BLOCKTIME: 0
+      #NUMA_OPTIONS: --membind=0,1
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                                    # INFO or DEBUG, use DEBUG for detailed event collection 
+
+scenarios:
+  gnmt-standalone-inference:
+    virtual-instances: nmt-inference
+    parser: parser-standalone-nmt.py

@@ -1,0 +1,29 @@
+<device>
+  <name>pci_0000_6d_0a_0</name>
+  <path>/sys/devices/pci0000:64/0000:64:00.0/0000:65:00.0/0000:66:03.0/0000:6d:0a.0</path>
+  <parent>pci_0000_66_03_0</parent>
+  <driver>
+    <name>i40evf</name>
+  </driver>
+  <capability type='pci'>
+    <domain>0</domain>
+    <bus>109</bus>
+    <slot>10</slot>
+    <function>0</function>
+    <product id='0x37cd'>Ethernet Virtual Function 700 Series</product>
+    <vendor id='0x8086'>Intel Corporation</vendor>
+    <capability type='phys_function'>
+      <address domain='0x0000' bus='0x6d' slot='0x00' function='0x2'/>
+    </capability>
+    <iommuGroup number='49'>
+      <address domain='0x0000' bus='0x6d' slot='0x0a' function='0x0'/>
+    </iommuGroup>
+    <numa node='0'/>
+    <pci-express>
+      <link validity='cap' port='0' speed='2.5' width='1'/>
+      <link validity='sta' width='0'/>
+    </pci-express>
+  </capability>
+</device>
+
+

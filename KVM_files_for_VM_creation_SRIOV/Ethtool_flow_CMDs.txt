@@ -1,0 +1,58 @@
+  306  ethtool -i  enp109s0f2
+  832  ethtool -u enp109s0f2
+  833  man ethtool 
+  834  ethtool -N enp109s0f2 flow-type ip4 dst-ip 192.168.232.235 action 0x100000000
+  835  ethtool -N enp109s0f2 flow-type ip4 dst-ip 192.168.233.236 action 0x200000001
+  836  ethtool -u enp109s0f2
+  838  ethtool -u enp109s0f2
+  840  ethtool -N enp109s0f2 flow-type icmp4 dst-ip 192.168.233.236 action 0x200000001
+  841  ethtool -N enp109s0f2 flow-type icmp dst-ip 192.168.233.236 action 0x200000001
+  842  man ethtool
+  843  ethtool -u enp109s0f2
+  844  ethtool -U enp109s0f2 7422 
+  845  ethtool -N enp109s0f2 7422 
+  846  ethtool -U enp109s0f2 delete 7422 
+  847  ethtool -U enp109s0f2 delete 7423 
+  848  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.233.236 action 0x200000001
+  849  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.232.235 action 0x100000000
+  850  ethtool -u enp109s0f2
+  853  ethtool -u enp109s0f2
+  858  ethtool -U enp109s0f2 delete 7423 
+  859  ethtool -U enp109s0f2 delete 7422
+  861  ethtool -N enp109s0f2 flow-type tcp4 action 0x200000001
+  862  ethtool -u enp109s0f2
+  863  ethtool -U enp109s0f2 delete 7423
+  864  ethtool -u enp109s0f2
+  907  history | grep ethtool
+  909  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.232.235 action 0x100000000
+  910  ethtool -u enp109s0f2
+  911  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.233.236 action 0x200000001
+  912  ethtool -u enp109s0f2
+  913  ethtool -U enp109s0f2 delete 7423
+  914  ethtool -U enp109s0f2 delete 7422
+  915  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+  916  ethtool -u enp109s0f2
+  917  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 dst-port 9001 action 0x200000001
+  918  ethtool -U enp109s0f2 delete 7422
+  919  ethtool -U enp109s0f2 delete 7423
+  920  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 dst-port 9001 action 0x200000001
+  921  ethtool -u enp109s0f2
+  932  ethtool -U enp109s0f2 delete 7423
+  933  ethtool -u 00(Gbps), TX:       0(pps),  0.00(Gbps)
+  935  ethtool -u enp109s0f2
+  936  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000002
+  939  ethtool -U enp109s0f2 delete 7423
+  940  ethtool -u enp109s0f2
+  942  ethtool -N enp109s0f2 flow-type ip4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+  944  ethtool -U enp109s0f2 delete 7423
+  945  ethtool -u enp109s0f2
+  951  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+  952  ethtool -u enp109s0f2
+  953  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235 action 0x100000000
+  954  ethtool -u enp109s0f2
+ 1011  history | grep ethtool | grep flow-type
+ 1012  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+ 1013  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235 action 0x100000000
+ 1015  history | grep ethtool
+ 1016  ethtool -u enp109s0f2
+ 1017  history | grep ethtool > Ethtool_flow_CMDs.txt

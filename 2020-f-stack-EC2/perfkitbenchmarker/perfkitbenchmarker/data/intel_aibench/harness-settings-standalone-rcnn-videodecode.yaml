@@ -1,0 +1,27 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /mnt/nvme_local
+  scenario-location: ${shares.shared-storage-partition}/Scenario/$SCENARIONAME/$NAMESPACE
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  standalone-rcnn-videodecode:
+    repeat-count: 1                                    # number of instances to launch
+    services: ssh
+    #cores: 0-55                                       # number of cores (divided uniformly among all instances)
+    env:
+      ASCALEX: 0.5
+      ASCALEY: 0.5
+      DATA_DIR: ${shares.shared-storage-partition}/Data/standalone-rcnn-videodecode/videos/march9.avi   # KITTI dataset video
+      WRITE_TO_DISK: 'false'
+      KMP_AFFINITY: 'granularity=fine,compact,1'
+      KMP_BLOCKTIME: 2
+      SKIP_FRAMES: 0
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                                # INFO or DEBUG, use DEBUG for detailed event collection
+
+scenarios:
+  standalone-rcnn-videodecode:
+    virtual-instances: standalone-rcnn-videodecode
+    parser: parser-rcnn-videodecode.py

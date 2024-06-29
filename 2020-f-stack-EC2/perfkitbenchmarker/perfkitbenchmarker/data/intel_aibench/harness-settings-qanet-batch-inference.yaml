@@ -1,0 +1,26 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /disk1
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  qanet-inference-va:
+    repeat-count: 1                                             # number of instances to launch
+    #cores: 0-55                                                # number of cores (divided uniformly among all instances)
+    services: ssh,qanet
+    env:
+      BATCH_INFERENCE: 'True'
+      QANET_DATA_DIR: ${shares.shared-storage-partition}/Data/qanet-inference-va/
+      QANET_FILE_NAME: ${shares.shared-storage-partition}/Data/config.py
+      QANET_BATCH_SIZE: 32
+      QANET_TEST_FILE: ${shares.shared-storage-partition}/Data/qanet-inference-va/dataset/QANetTestSet.json # SQuAD dataset (Stanford Question Answering Dataset)
+      QANET_WL: qanet-inference
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: INFO                                           # INFO or DEBUG, use DEBUG for detailed event collection
+      KMP_BLOCKTIME: 1
+
+scenarios:
+  qanet-batch-inference:
+    virtual-instances: qanet-inference-va
+    parser: parser-qanet.py

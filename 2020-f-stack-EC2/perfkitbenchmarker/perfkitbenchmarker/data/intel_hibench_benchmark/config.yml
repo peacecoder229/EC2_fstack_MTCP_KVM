@@ -1,0 +1,73 @@
+# The values that are commented out below are dynamically computed by the workload to
+# provide optimal performance on any system. Please de-comment if you want to experiment
+# with different values.
+
+hibench:
+# hibench.scale.profile: tiny  # Automatically calculated by default. Available values: tiny, small, large, huge, gigantic, bigdata 
+# hibench.default.map.parallelism: 280
+# hibench.default.shuffle.parallelism: 768
+spark:
+  hibench.spark.master: yarn-client  # Available values: spark, yarn-client
+# hibench.yarn.executor.num: 56
+# hibench.yarn.executor.cores: 5
+# spark.executor.memory: 8g
+  spark.driver.memory: 4g
+scratch_disks:
+    mountpoints:     # Created automatically on AWS. On bare metal, they need to be already mounted prior to running Hibench
+      - /data/data0
+      - /data/data1
+      - /data/data2
+      - /data/data3
+      - /data/data4
+      - /data/data5
+# Kmeans presets
+# kmeans_num_of_samples gets multiplied by number of datanodes - 1
+kmeans:
+  tiny:
+      kmeans_num_of_clusters: 5
+      kmeans_dimensions: 10
+      kmeans_num_of_samples: 300000000
+      kmeans_samples_per_inputfile: 5000000
+      kmeans_max_iteration: 5
+      kmeans_k: 10
+      kmeans_convergedist: 0.5
+  small:
+      kmeans_num_of_clusters: 5
+      kmeans_dimensions: 10
+      kmeans_num_of_samples: 1200000000
+      kmeans_samples_per_inputfile: 10000000
+      kmeans_max_iteration: 5
+      kmeans_k: 10
+      kmeans_convergedist: 0.5
+  large:
+      kmeans_num_of_clusters: 5
+      kmeans_dimensions: 20
+      kmeans_num_of_samples: 600000000
+      kmeans_samples_per_inputfile: 4000000
+      kmeans_max_iteration: 5
+      kmeans_k: 20
+      kmeans_convergedist: 0.5
+  huge:
+      kmeans_num_of_clusters: 5
+      kmeans_dimensions: 20
+      kmeans_num_of_samples: 1000000000
+      kmeans_samples_per_inputfile: 20000000
+      kmeans_max_iteration: 5
+      kmeans_k: 20
+      kmeans_convergedist: 0.5
+  gigantic:
+      kmeans_num_of_clusters: 5
+      kmeans_dimensions: 20
+      kmeans_num_of_samples: 1200000000
+      kmeans_samples_per_inputfile: 40000000
+      kmeans_max_iteration: 5
+      kmeans_k: 20
+      kmeans_convergedist: 0.5
+  bigdata:
+      kmeans_num_of_clusters: 5
+      kmeans_dimensions: 20
+      kmeans_num_of_samples: 2000000000
+      kmeans_samples_per_inputfile: 40000000
+      kmeans_max_iteration: 5
+      kmeans_k: 40
+      kmeans_convergedist: 0.5

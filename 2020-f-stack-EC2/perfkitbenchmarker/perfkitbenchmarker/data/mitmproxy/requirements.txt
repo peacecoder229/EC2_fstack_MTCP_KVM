@@ -1,0 +1,2 @@
+# Requirements for mitmproxy feature
+mitmproxy>=4.0.4

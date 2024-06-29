@@ -1,0 +1,89 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 14 (0xe)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=OR, L=Portland, O=KafkaELK-PKI-ORG, OU=KafkaELK-PKI-OU, CN=ca/emailAddress=kakfkaelk@kafka.elk
+        Validity
+            Not Before: Nov 16 11:14:35 2018 GMT
+            Not After : Nov 13 11:14:35 2028 GMT
+        Subject: C=US, ST=OR, O=KafkaELK-PKI-ORG, OU=KafkaELK-PKI-OU, CN=kafka/emailAddress=kakfkaelk@kafka.elk
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:dd:53:bb:05:25:eb:1d:2e:78:b2:45:dd:4f:1c:
+                    5a:10:eb:1f:d6:25:e4:c6:9b:84:88:f7:84:fe:56:
+                    5a:8e:9a:97:62:f4:aa:02:f0:07:7b:81:bc:37:73:
+                    65:c6:4f:fb:bf:25:36:d5:92:9b:20:64:43:e5:22:
+                    45:9d:ef:69:09:38:28:24:dc:41:70:0a:b4:ed:1d:
+                    e8:fe:26:c3:26:0c:92:0b:c6:56:4e:be:e0:d6:d1:
+                    d4:33:63:04:39:da:ea:4a:fe:85:68:00:3a:eb:8b:
+                    fc:ea:ca:e1:53:9e:8f:c5:34:b6:c3:5b:6c:c0:ad:
+                    68:5d:49:e4:27:b0:2c:a4:05:e0:4d:28:be:e8:dc:
+                    aa:91:73:4c:e5:92:b9:88:3b:68:45:5d:31:0e:5b:
+                    b5:f3:db:97:7f:0b:e9:a4:f6:00:79:a5:e1:49:e8:
+                    ce:1d:36:2a:c9:27:21:75:eb:66:c0:4f:b5:b6:37:
+                    cd:1c:73:73:de:73:8b:de:84:c8:01:83:d4:6c:e5:
+                    ca:4d:b0:7c:cb:65:32:7f:2b:81:1a:e6:c3:25:23:
+                    fd:6e:78:cf:ce:0f:a5:92:7f:60:9d:58:cb:d9:4f:
+                    4c:8a:21:65:40:d3:a9:08:fd:59:e5:db:98:1b:39:
+                    bd:65:dc:f5:24:72:01:ce:4f:5d:13:e9:7d:e4:80:
+                    11:dd
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                A8:60:41:EE:2D:1D:7F:8F:79:8C:E6:52:C9:23:CD:A4:D5:7E:C5:D2
+            X509v3 Authority Key Identifier: 
+                keyid:FF:62:B8:00:87:46:3A:87:16:D4:0A:09:D0:67:79:56:E3:96:06:59
+                DirName:/C=US/ST=OR/L=Portland/O=KafkaELK-PKI-ORG/OU=KafkaELK-PKI-OU/CN=ca/emailAddress=kakfkaelk@kafka.elk
+                serial:81:08:FE:AC:C4:5D:06:62
+
+    Signature Algorithm: sha256WithRSAEncryption
+         38:6b:31:9e:ed:41:a4:dc:f9:5c:21:ba:14:ef:19:da:5c:8b:
+         2b:eb:ea:6c:f7:ce:ba:40:6c:dd:d2:51:63:90:15:8e:96:71:
+         fb:bc:d3:4e:c2:05:ba:0e:7b:ca:98:3e:11:b7:12:83:ce:6a:
+         b6:6d:60:2d:7d:0e:6b:62:b6:07:92:6d:db:84:ed:d8:16:60:
+         2a:8e:98:c8:d0:40:68:32:b8:d0:13:db:08:6d:2c:1e:2d:53:
+         ba:38:fe:26:b6:87:45:ff:32:27:a2:cc:d5:2c:c2:85:55:22:
+         b3:26:32:13:aa:c0:f5:55:e3:71:23:10:65:0a:b4:92:0d:ec:
+         cf:54:ca:fa:9e:93:5e:4b:27:9d:00:8d:b8:12:58:0c:3e:c8:
+         76:45:94:26:81:42:2e:b5:a8:32:6e:0c:77:df:77:9e:f3:e9:
+         41:14:b7:9c:86:b4:9a:21:b3:c5:2e:d3:69:05:b4:4c:ab:6a:
+         12:d7:c1:ac:20:b4:70:05:14:b2:ce:09:4b:ea:ef:2f:57:a2:
+         2c:35:f3:a1:ef:81:bc:98:42:fc:14:ee:84:c5:f5:3f:b1:dc:
+         72:f4:1d:50:02:aa:e0:cf:a5:94:72:9e:6c:e1:73:36:97:c2:
+         a1:28:a2:66:be:8f:9c:c9:36:a2:a6:11:d9:25:2d:43:fd:d5:
+         db:25:d6:96
+-----BEGIN CERTIFICATE-----
+MIIEvDCCA6SgAwIBAgIBDjANBgkqhkiG9w0BAQsFADCBkzELMAkGA1UEBhMCVVMx
+CzAJBgNVBAgTAk9SMREwDwYDVQQHEwhQb3J0bGFuZDEZMBcGA1UEChMQS2Fma2FF
+TEstUEtJLU9SRzEYMBYGA1UECxMPS2Fma2FFTEstUEtJLU9VMQswCQYDVQQDEwJj
+YTEiMCAGCSqGSIb3DQEJARYTa2FrZmthZWxrQGthZmthLmVsazAeFw0xODExMTYx
+MTE0MzVaFw0yODExMTMxMTE0MzVaMIGDMQswCQYDVQQGEwJVUzELMAkGA1UECBMC
+T1IxGTAXBgNVBAoTEEthZmthRUxLLVBLSS1PUkcxGDAWBgNVBAsTD0thZmthRUxL
+LVBLSS1PVTEOMAwGA1UEAxMFa2Fma2ExIjAgBgkqhkiG9w0BCQEWE2tha2ZrYWVs
+a0BrYWZrYS5lbGswggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDdU7sF
+JesdLniyRd1PHFoQ6x/WJeTGm4SI94T+VlqOmpdi9KoC8Ad7gbw3c2XGT/u/JTbV
+kpsgZEPlIkWd72kJOCgk3EFwCrTtHej+JsMmDJILxlZOvuDW0dQzYwQ52upK/oVo
+ADrri/zqyuFTno/FNLbDW2zArWhdSeQnsCykBeBNKL7o3KqRc0zlkrmIO2hFXTEO
+W7Xz25d/C+mk9gB5peFJ6M4dNirJJyF162bAT7W2N80cc3Pec4vehMgBg9Rs5cpN
+sHzLZTJ/K4Ea5sMlI/1ueM/OD6WSf2CdWMvZT0yKIWVA06kI/Vnl25gbOb1l3PUk
+cgHOT10T6X3kgBHdAgMBAAGjggEnMIIBIzAJBgNVHRMEAjAAMCwGCWCGSAGG+EIB
+DQQfFh1PcGVuU1NMIEdlbmVyYXRlZCBDZXJ0aWZpY2F0ZTAdBgNVHQ4EFgQUqGBB
+7i0df495jOZSySPNpNV+xdIwgcgGA1UdIwSBwDCBvYAU/2K4AIdGOocW1AoJ0Gd5
+VuOWBlmhgZmkgZYwgZMxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJPUjERMA8GA1UE
+BxMIUG9ydGxhbmQxGTAXBgNVBAoTEEthZmthRUxLLVBLSS1PUkcxGDAWBgNVBAsT
+D0thZmthRUxLLVBLSS1PVTELMAkGA1UEAxMCY2ExIjAgBgkqhkiG9w0BCQEWE2th
+a2ZrYWVsa0BrYWZrYS5lbGuCCQCBCP6sxF0GYjANBgkqhkiG9w0BAQsFAAOCAQEA
+OGsxnu1BpNz5XCG6FO8Z2lyLK+vqbPfOukBs3dJRY5AVjpZx+7zTTsIFug57ypg+
+EbcSg85qtm1gLX0Oa2K2B5Jt24Tt2BZgKo6YyNBAaDK40BPbCG0sHi1Tujj+JraH
+Rf8yJ6LM1SzChVUisyYyE6rA9VXjcSMQZQq0kg3sz1TK+p6TXksnnQCNuBJYDD7I
+dkWUJoFCLrWoMm4Md993nvPpQRS3nIa0miGzxS7TaQW0TKtqEtfBrCC0cAUUss4J
+S+rvL1eiLDXzoe+BvJhC/BTuhMX1P7HccvQdUAKq4M+llHKebOFzNpfCoSiiZr6P
+nMk2oqYR2SUtQ/3V2yXWlg==
+-----END CERTIFICATE-----

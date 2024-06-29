@@ -1,0 +1,330 @@
+{
+  "workload1": {
+    "metadata": {
+      "name": "Intel mysql multi-node",
+      "type": "DB",
+      "load": "Peak"
+    },
+    "vm_groups": [
+      {
+        "name": "vm_group1",
+        "deps": [
+          {
+            "os_type": "centos7",
+            "packages_info": [
+              {
+                "name": "Mysql",
+                "ver": "5.7.22"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./mysql_packages_centos7_vmgroup1.sh install"
+              },
+              {
+                "install_script": "./mysql_multi_node_setup.sh $install_path"
+              }
+            ],
+            "packages_remove": [
+              {
+                "uninstall_script": "./mysql_packages_centos7_vmgroup1.sh remove"
+              }
+            ]
+          },
+          {
+            "os_type": "ubuntu1804",
+            "packages_info": [
+              {
+                "name": "Mysql",
+                "ver": "5.7.22"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./mysql_packages_ubuntu1804_vmgroup1.sh install"
+              },
+              {
+                "install_script": "./mysql_multi_node_setup.sh $install_path"
+              }
+            ],
+            "packages_remove": [
+              {
+                "uninstall_script": "./mysql_packages_ubuntu1804_vmgroup1.sh remove"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "vm_group2",
+        "deps": [
+          {
+            "os_type": "centos7",
+            "packages_info": [
+              {
+                "name": "sysbench",
+                "ver": "1.1.0"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./mysql_packages_centos7_vmgroup2.sh install"
+              },
+              {
+                "install_script": "./sysbench_install.sh $install_path"
+              }
+            ],
+            "packages_remove": [
+              {
+                "uninstall_script": "./mysql_packages_centos7_vmgroup2.sh remove"
+              }
+            ]
+          },
+          {
+            "os_type": "ubuntu1804",
+            "packages_info": [
+              {
+                "name": "sysbench",
+                "ver": "1.1.0"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./mysql_packages_ubuntu1804_vmgroup2.sh install"
+              },
+              {
+                "install_script": "./sysbench_install.sh $install_path"
+              }
+            ],
+            "packages_remove": [
+              {
+                "uninstall_script": "./mysql_packages_ubuntu1804_vmgroup2.sh remove"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "install": [
+      {
+        "target": "",
+        "cmd": "",
+        "internal_resources": [
+          {
+            "name": "",
+            "url": ""
+          }
+        ]
+      },
+      {
+        "target": "",
+        "cmd": ""
+      }
+    ],
+    "run": [
+      {
+      "target": "vm_group2[0]",
+      "cmd": "./mysql_test.sh $host $port $tag $install_path $thread_count_start $thread_count_step $thread_count_end $testtype $sysbench_table_size $sysbench_tables $sysbench_duration $sysbench_latency_percentile $sysbench_report_interval"
+      }
+    ],
+    "config_flags": [
+      {
+        "name": "host",
+        "description": "IP address of Mysql server listen ",
+        "range": "",
+        "type": "custom-str",
+        "target_default": "vm_group1[0]",
+        "default": "./get_private_ip.sh",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "port",
+        "description": "Port of Mysql server listen ",
+        "range": "6000-7000",
+        "type": "num",
+        "target_default": "",
+        "default": "6306",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "tag",
+        "description": "tag for the log",
+        "range": "",
+        "type": "str",
+        "target_default": "",
+        "default": "intel",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "install_path",
+        "description": "The path Mysql installed",
+        "range": "",
+        "type": "str",
+        "target_default": "",
+        "default": "/opt/pkb/",
+        "setcmd": "",
+        "target_setcmd": ""
+      }
+    ],
+    "tunable_flags": [
+      {
+        "name": "thread_count_start",
+        "description": "The min thread num for the Sysbench",
+        "range": "0-2000",
+        "type": "num",
+        "target_default": "",
+        "default": "100",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "thread_count_step",
+        "description": "The step to increase thread_count_start",
+        "range": "0-1000",
+        "type": "num",
+        "target_default": "",
+        "default": "100",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "thread_count_end",
+        "description": "The max thread num for the Sysbench",
+        "range": "0-2000",
+        "type": "num",
+        "target_default": "",
+        "default": "1000",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "testtype",
+        "description": "Test type for the Sysbench,ps:only search, rw:read and write",
+        "range": "('ps', 'rw')",
+        "type": "str",
+        "target_default": "",
+        "default": "ps",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "sysbench_table_size",
+        "description": "The number of rows of each table used in the oltp tests",
+        "range": "",
+        "type": "num",
+        "target_default": "",
+        "default": "2000000",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "sysbench_tables",
+        "description": "The number of tables used in sysbench oltp.lua tests",
+        "range": "",
+        "type": "num",
+        "target_default": "",
+        "default": "10",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "sysbench_duration",
+        "description": "The duration of the actual run in seconds",
+        "range": "20-200",
+        "type": "num",
+        "target_default": "",
+        "default": "120",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "sysbench_latency_percentile",
+        "description": "The latency percentile we ask sysbench to compute",
+        "range": "1-100",
+        "type": "num",
+        "target_default": "",
+        "default": "99",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "sysbench_report_interval",
+        "description": "The interval in seconds that we ask sysbench to report results",
+        "range": "1-100",
+        "type": "num",
+        "target_default": "",
+        "default": "10",
+        "setcmd": "",
+        "target_setcmd": ""
+      }
+    ],
+    "output_dir": {
+      "path": "$install_path/sysbench/logs",
+      "target": "vm_group2[0]"
+    },
+    "metric": [
+      {
+        "name": "Threads with best QPS",
+        "goal": "Sustain",
+        "read": "grep -rn 'Threads:' $install_path/sysbench/logs/result.log | awk '{print $3}'",
+        "target": "vm_group2[0]",
+        "unit": "threads"
+      },
+      {
+        "name": "TPS",
+        "goal": "Increase",
+        "read": "grep -rn 'TPS:' $install_path/sysbench/logs/result.log | awk '{print $3}'",
+        "target": "vm_group2[0]",
+        "unit": "tps"
+      },
+      {
+        "name": "QPS",
+        "goal": "Increase",
+        "read": "grep -rn 'QPS:' $install_path/sysbench/logs/result.log | awk '{print $3}'",
+        "target": "vm_group2[0]",
+        "unit": "qps"
+      },
+      {
+        "name": "Latency min time",
+        "goal": "Decrease",
+        "read": "grep -rn 'Latency min:' $install_path/sysbench/logs/result.log | awk '{print $4}'",
+        "target": "vm_group2[0]",
+        "unit": "ms"
+      },
+      {
+        "name": "Latency avg time",
+        "goal": "Decrease",
+        "read": "grep -rn 'Latency avg:' $install_path/sysbench/logs/result.log | awk '{print $4}'",
+        "target": "vm_group2[0]",
+        "unit": "ms"
+      },
+      {
+        "name": "Latency max time",
+        "goal": "Decrease",
+        "read": "grep -rn 'Latency max:' $install_path/sysbench/logs/result.log | awk '{print $4}'",
+        "target": "vm_group2[0]",
+        "unit": "ms"
+      },
+      {
+        "name": "Latency $sysbench_latency_percentile th percentile time",
+        "goal": "Decrease",
+        "read": "grep -rn 'Latency percentile:' $install_path/sysbench/logs/result.log | awk '{print $4}'",
+        "target": "vm_group2[0]",
+        "unit": "ms"
+      }
+    ],
+    "cleanup": [
+      {
+        "target": "vm_group1[0]",
+        "cmd": "sudo rm -rf $install_path"
+      },
+      {
+        "target": "vm_group2[0]",
+        "cmd": "sudo rm -rf $install_path"
+      }
+    ]
+  }
+}

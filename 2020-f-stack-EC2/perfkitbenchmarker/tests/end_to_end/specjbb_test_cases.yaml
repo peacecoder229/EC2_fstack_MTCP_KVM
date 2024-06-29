@@ -1,0 +1,128 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+  aws-ubuntu-2004: &aws-ubuntu-2004
+    cloud: AWS
+    zone: us-east-1
+    os_type: ubuntu2004
+    machine_type: t3.xlarge
+
+  azure-ubuntu-2004: &azure-ubuntu-2004
+    cloud: Azure
+    zone: westus
+    os_type: ubuntu2004
+    machine_type: Standard_F8s_v2
+
+  gcp-ubuntu-2004: &gcp-ubuntu-2004
+    cloud: GCP
+    zone: us-west2-c
+    os_type: ubuntu2004
+    machine_type: n1-standard-8
+    gce_subnet_region: us-west2
+
+  aws-graviton2-ubuntu-2004: &aws-arm-ubuntu-2004
+    cloud: AWS
+    os_type: ubuntu2004
+    zone: us-east-1
+    machine_type: m6g.xlarge
+    image: ami-0ccca293427f70203
+
+  default: *aws-ubuntu-2004
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-collect-svrinfo: &pkb-collect-svrinfo
+    file_log_level: debug
+    svrinfo: True
+    trace_allow_benchmark_control: True
+
+################################################################################
+# Benchmark configurations -- Define various useful FFMPEG configurations
+################################################################################
+
+benchmark-configurations:
+  specjbb_defaults: &specjbb_defaults
+    benchmarks: specjbb
+
+  intel_specjbb_arm: &specjbb_arm
+    benchmarks: specjbb
+    preprovision_ignore_checksum: True
+    openjdk_url: 'https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.2%2B12/OpenJDK14U-jdk_aarch64_linux_hotspot_14.0.2_12.tar.gz'
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options
+################################################################################
+
+tests:
+  DefaultCSPRun: &DefaultCSPRun
+    pkb: *pkb-basic
+    benchmark: *specjbb_defaults
+
+  Ubuntu2004AWS: &Ubuntu2004AWS
+    pkb: *pkb-basic
+    benchmark: *specjbb_defaults
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004ArmAWS: &Ubuntu2004ArmAWS
+    pkb: *pkb-basic
+    benchmark: *specjbb_arm
+    platform: *aws-arm-ubuntu-2004
+
+  Ubuntu2004Azure: &Ubuntu2004Azure
+    pkb: *pkb-basic
+    benchmark: *specjbb_defaults
+    platform: *azure-ubuntu-2004
+
+  Ubuntu2004GCP: &Ubuntu2004GCP
+    pkb: *pkb-basic
+    benchmark: *specjbb_defaults
+    platform: *gcp-ubuntu-2004
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options
+################################################################################
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+
+test-suites:
+
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  developer:
+    DefaultCSPRun: *DefaultCSPRun
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  benchmark:
+    DefaultCSPRun: *DefaultCSPRun
+
+
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  acceptance:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004Azure: *Ubuntu2004Azure
+    Ubuntu2004GCP: *Ubuntu2004GCP
+    Ubuntu2004ArmAWS: *Ubuntu2004ArmAWS
+
+  ################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  
+  regression:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004Azure: *Ubuntu2004Azure
+    Ubuntu2004GCP: *Ubuntu2004GCP

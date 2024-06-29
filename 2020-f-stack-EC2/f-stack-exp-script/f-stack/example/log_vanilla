@@ -1,0 +1,42 @@
+sockfd:3
+Accepting new connection at fd: 5
+Error accepting new connection.Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+Did not get request from client. Delete and close the fd: 5
+Accepting new connection at fd: 5
+Error accepting new connection.Got request from client. Sending response to client fd: 5
+

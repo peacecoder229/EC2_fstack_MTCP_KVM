@@ -1,0 +1,25 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /mnt/nvme_local
+  logs-location: /tmp/aibench/runs/$RUN_ID 
+
+virtual-instances:
+  srgan-inference:
+    repeat-count: 1                                               # number of instances to launch
+    #cores: 0-55                                                  # number of cores (divided uniformly among all instances)
+    services: ssh                                                 # opens port 22
+    env:
+      STANDALONE: 'true'
+      DATA_DIR: ${shares.shared-storage-partition}/Data/srgan-inference/data_DIV2K_30        #Images are taken from DIV2K dataset. Full dataset is 800 images. Using only 100 here for runtime reasons. If you want to increase image count, use data_DIV2K_100, data_DIV2K_200 or data_DIV2K_800
+      RESULT_DIR: ${shares.logs-location}
+      CHECKPOINT_DIR: ${shares.shared-storage-partition}/Data/srgan-inference/checkpoints    # Directory to hold checkpoints/Pre-Trained Models
+      CHECKPOINT_NAME: g_srgan.npz                                                           # Name of the pre-trained model used in this usecase
+      #NUMA_OPTIONS: --membind=0,1
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                                                                      # INFO or DEBUG, use DEBUG for detailed event collection
+
+scenarios:
+  srgan-inference:
+    virtual-instances: srgan-inference
+    parser: parser-srgan.py

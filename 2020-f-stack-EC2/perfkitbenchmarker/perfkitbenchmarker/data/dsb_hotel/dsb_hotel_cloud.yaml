@@ -1,0 +1,45 @@
+# Example public cloud benchmark configuration file
+
+client_vm: &client_vm
+  AWS:
+    machine_type: t3.2xlarge
+    zone: us-west-2
+    boot_disk_size: 200
+  GCP:
+    machine_type: n2-standard-16
+    zone: us-west1-a
+    boot_disk_size: 200
+  Azure:
+    machine_type: Standard_D16_v4
+    zone: westus
+    boot_disk_size: 200
+
+cluster_node: &cluster_node
+  AWS:
+    machine_type: t3.2xlarge
+    zone: us-west-2
+    boot_disk_size: 200
+  GCP:
+    machine_type: n2-standard-16
+    zone: us-west1-a
+    boot_disk_size: 200
+  Azure:
+    machine_type: Standard_D16_v4
+    zone: westus
+    boot_disk_size: 200
+
+dsb_hotel:
+  description: DeathStarBench Hotel Reservation
+  vm_groups:
+    client:
+      vm_spec: *client_vm
+  container_specs: {}
+  container_registry: {}
+  container_cluster:
+    vm_spec: *cluster_node
+
+flags:
+ dsb_hotel_image_cache: ""
+ dsb_hotel_worker_nodes: 2
+ dsb_hotel_client_nodes: 1
+ k8s_get_retry_count: 50        # large number of retries to allow time to start up all pods

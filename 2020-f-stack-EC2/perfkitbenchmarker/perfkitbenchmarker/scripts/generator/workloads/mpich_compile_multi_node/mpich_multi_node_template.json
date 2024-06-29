@@ -1,0 +1,198 @@
+{
+  "workload1": {
+    "metadata": {
+      "name": "Mpich compile multi node",
+      "type": "Compile",
+      "load": "Peak"
+    },
+    "install": [
+      {
+        "target": "head_node",
+        "cmd": "./install.sh fa$enum_cfg.py",
+        "internal_resources": [
+          {
+            "name": "DLaas",
+            "url": "https://github.intel.com/verticals/DLaaS/archive/$enum_cfg.tar.gz"
+          }
+        ]
+      },
+      {
+        "target": "compute_nodes",
+        "cmd": "./install.sh compute_nodes"
+      }
+    ],
+    "run": [
+      {
+      "target": "head_node[0]",
+      "run_command": "cd /tmp/mpich-3.3 && ./configure --disable-fortran && (time make -j $cores) &> /tmp/pkb/results"
+      }
+    ],
+    "config_flags": [
+      {
+        "name": "cores",
+        "range": "2-96",
+        "default": "nproc",
+        "target_default": "compute_nodes[0]",
+        "setcmd": "./set_cores.sh",
+        "target_setcmd": "compute_nodes",
+        "description": "number of cores",
+        "type": "OS-num"
+      },
+      {
+        "name": "list_cfg",
+        "range": "['b', 200, 'xyz']",
+        "default": "200",
+        "target_default": "",
+        "setcmd": "",
+        "target_setcmd": "",
+        "description": "description of list parameter",
+        "type": "num"
+      },
+      {
+        "name": "enum_cfg",
+        "range": "('a', '1810', 'c')",
+        "default": "1810",
+        "target_default": "",
+        "setcmd": "",
+        "target_setcmd": "",
+        "description": "description of enum parameter",
+        "type": "str"
+      },
+      {
+        "name": "version",
+        "range": "",
+        "default": "./get_ver.sh",
+        "target_default": "head_node[0]",
+        "setcmd": "",
+        "target_setcmd": "",
+        "description": "description of ver",
+        "type": "custom-str"
+      },
+      {
+        "name": "hex_cfg",
+        "range": "2-2000",
+        "default": "./set_hex.sh",
+        "target_default": "compute_nodes[0]",
+        "setcmd": "",
+        "target_setcmd": "",
+        "description": "description of hex parameter",
+        "type": "custom-str"
+      },
+      {
+        "name": "float_cfg",
+        "range": "1-66",
+        "default": "3.14",
+        "target_default": "",
+        "setcmd": "",
+        "target_setcmd": "",
+        "description": "description of float parameter",
+        "type": "num"
+      }
+    ],
+    "output_dir": {
+      "path": "/tmp/pkb",
+      "target": "head_node[0]"
+    },
+    "metric": [
+      {
+        "name": "compile time",
+        "goal": "Increase",
+        "read": "cat /tmp/pkb/results | grep -w 'real' | awk '{print $2}'",
+        "target": "head_node[0]",
+        "unit": "seconds"
+      }
+    ],
+    "cleanup": [
+      {
+        "target": "head_node",
+        "cmd": "echo 'clean head_node'"
+      },
+      {
+        "target": "compute_nodes",
+        "cmd": "echo 'clean compute_nodes'"
+      }
+    ],
+    "vm_groups": [
+      {
+        "name": "head_node",
+        "deps": [
+          {
+            "os_type": "ubuntu1604",
+            "packages_info": [
+              {
+                "name": "build-essential",
+                "ver": "12.1ubuntu2"
+              },
+              {
+                "name": "mpich",
+                "ver": "3.3"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./install_build_deps_ubuntu1604.sh install"
+              },
+              {
+                "install_script": "cd /tmp && wget -q http://www.mpich.org/static/downloads/$version/mpich-3.3.tar.gz && tar xvf mpich-3.3.tar.gz" 
+              }
+            ]
+          },
+          {
+            "os_type": "centos7",
+            "packages_info": [
+              {
+                "name": "wget",
+                "ver": "1.14-18.el7.x86_64"
+              },
+              {
+                "name": "mpich",
+                "ver": "3.3"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./install_build_deps_centos7.sh install"
+              },
+              {
+                "install_script": "cd /tmp && wget -q http://www.mpich.org/static/downloads/$version/mpich-3.3.tar.gz && tar xvf mpich-3.3.tar.gz"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "compute_nodes",
+        "deps": [
+          {
+            "os_type": "ubuntu1604",
+            "packages_info": [
+              {
+                "name": "wget",
+                "ver": ""
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./compute_nodes_ubuntu1604.sh install"
+              }
+            ]
+          },
+          {
+            "os_type": "centos7",
+            "packages_info": [
+              {
+                "name": "wget",
+                "ver": "1.14-18.el7.x86_64"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./compute_nodes_centos7.sh install"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

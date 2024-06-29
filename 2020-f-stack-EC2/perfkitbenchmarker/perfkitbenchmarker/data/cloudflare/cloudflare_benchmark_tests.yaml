@@ -1,0 +1,356 @@
+all:
+  description: 'Run all cloudflare benchmark tests'
+  group: >-
+    lua
+    brotli
+    gzip
+    openssl-pki
+    openssl-cipher
+    go
+
+go:
+  description: 'Run all go benchmark tests'
+  group: >-
+    go_regexp_match_easy
+    go_regexp_match_easy_i
+    go_regexp_match_easy_2
+    go_regexp_match_medium
+    go_regexp_match_hard
+    go_regexp_match_hard2
+    go_ecdsa_p256_sign
+    go_ecdsa_p256_verify
+    go_rsa2048_3_prime_sign
+    go_aes_128_gcm_enc
+    go_chacha20_poly1305_enc
+    go_html_escape_string
+    go_html_unescape_string
+    go_compress_gzip_compression_twain_8
+    go_compress_gzip_decompression_twain_d
+    go_compress_gzip_compression_digits_8
+    go_compress_gzip_decompression_digits
+
+go_regexp_match_easy:
+  description: 'go regexp alg'
+  arg: 'regexp.Match_easy'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_regexp_match_easy_i:
+  description: 'go regexp alg'
+  arg: 'regexp.Match_easy_(i)'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r="{}" -c={}'
+
+go_regexp_match_easy_2:
+  description: 'go regexp alg'
+  arg: 'regexp.Match_easy2'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_regexp_match_medium:
+  description: 'go regexp alg'
+  arg: 'regexp.Match_medium'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_regexp_match_hard:
+  description: 'go regexp alg'
+  arg: 'regexp.Match_hard'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_regexp_match_hard2:
+  description: 'go regexp alg'
+  arg: 'regexp.Match_hard2'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_ecdsa_p256_sign:
+  description: 'go crypto alg'
+  arg: 'ECDSA-P256_Sign'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_ecdsa_p256_verify:
+  description: 'go crypto alg'
+  arg: 'ECDSA-P256_Verify'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_rsa2048_3_prime_sign:
+  description: 'go crypto alg'
+  arg: 'RSA2048_3-prime_Sign'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_aes_128_gcm_enc:
+  description: 'go crypto alg'
+  arg: 'AES-128-GCM_Enc'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_chacha20_poly1305_enc:
+  description: 'go crypto alg'
+  arg: 'ChaCha20-Poly1305_Enc'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_html_escape_string:
+  description: 'go escape string alg'
+  arg: 'html.EscapeString'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_html_unescape_string:
+  description: 'go escape string alg'
+  arg: 'html.UnescapeString'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+go_compress_gzip_compression_twain_8:
+  description: 'go compression alg'
+  arg: 'compress_gzip_compression_Twain_(-8)'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r="{}" -c={}'
+
+go_compress_gzip_decompression_twain_d:
+  description: 'go compression alg'
+  arg: 'compress_gzip_decompression_Twain_(-d)'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r="{}" -c={}'
+
+go_compress_gzip_compression_digits_8:
+  description: 'go compression alg'
+  arg: 'compress_gzip_compression_digits_(-8)'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r="{}" -c={}'
+
+go_compress_gzip_decompression_digits:
+  description: 'go compression alg'
+  arg: 'compress_gzip_decompression_digits'
+  cmd: 'go run ./go_benchmarks.go'
+  params: '-r={} -c={}'
+
+openssl-cipher:
+  description: 'Run all cloudflare openssl-cipher benchmark tests'
+  group: >-
+    openssl_aes_128_gcm
+    openssl_aes_256_gcm
+    openssl_chacha20_poly1305
+
+openssl_chacha20_poly1305:
+  description: 'openssl aes 256 alg'
+  arg: 'chacha20-poly1305'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -bytes 16384 -multi {} -evp {} | tail -1 | rev | cut -f 1 -d '' '' | rev | sed ''s/k//'' '
+
+openssl_aes_256_gcm:
+  description: 'openssl aes 256 alg'
+  arg: 'aes-256-gcm'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -bytes 16384 -multi {} -evp {} | tail -1 | rev | cut -f 1 -d '' '' | rev | sed ''s/k//'' '
+
+openssl_aes_128_gcm:
+  description: 'openssl aes 128 alg'
+  arg: 'aes-128-gcm'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -bytes 16384 -multi {} -evp {} | tail -1 | rev | cut -f 1 -d '' '' | rev | sed ''s/k//'' '
+
+openssl-pki:
+  description: 'Run all cloudflare openssl-pki benchmark tests'
+  group: >-
+    openssl_sign_ecdsap256
+    openssl_verify_ecdsap256
+    openssl_sign_rsa2048
+    openssl_verify_rsa2048
+    openssl_sign_rsa3072
+    openssl_verify_rsa3072
+
+openssl_sign_ecdsap256:
+  description: 'openssl ecdsap256 alg'
+  arg: 'ecdsap256'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -multi {} {} | tail -1 | tr -s '' '' | rev | cut -f 2 -d '' '' | rev'
+
+openssl_verify_ecdsap256:
+  description: 'openssl ecdsap256 alg'
+  arg: 'ecdsap256'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -multi {} {} | tail -1 | tr -s '' '' | rev | cut -f 1 -d '' '' | rev'
+
+
+openssl_sign_rsa2048:
+  description: 'openssl rsa2048 alg'
+  arg: 'rsa2048'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -multi {} {} | tail -1 | tr -s '' '' | rev | cut -f 2 -d '' '' | rev'
+
+openssl_verify_rsa2048:
+  description: 'openssl rsa2048 alg'
+  arg: 'rsa2048'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -multi {} {} | tail -1 | tr -s '' '' | rev | cut -f 1 -d '' '' | rev'
+
+openssl_sign_rsa3072:
+  description: 'openssl rsa3072 alg'
+  arg: 'rsa3072'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -multi {} {} | tail -1 | tr -s '' '' | rev | cut -f 2 -d '' '' | rev'
+
+openssl_verify_rsa3072:
+  description: 'openssl rsa3072 alg'
+  arg: 'rsa3072'
+  cmd: './openssl/apps/openssl'
+  params: 'speed -seconds 10 -multi {} {} | tail -1 | tr -s '' '' | rev | cut -f 1 -d '' '' | rev'
+
+gzip:
+  description: 'Run all cloudflare gzip benchmark tests'
+  group: >-
+    gzip_4
+    gzip_5
+    gzip_6
+    gzip_7
+    gzip_8
+    gzip_9
+
+brotli:
+  description: 'Run all cloudflare brotli benchmark tests'
+  group: >-
+    brotli_4
+    brotli_5
+    brotli_6
+    brotli_7
+    brotli_8
+    brotli_9
+    brotli_10
+    brotli_11
+
+gzip_4:
+  description: 'gzip compresion alg'
+  arg: '4'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+gzip_5:
+  description: 'gzip compresion alg'
+  arg: '5'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+gzip_6:
+  description: 'gzip compresion alg'
+  arg: '6'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+gzip_7:
+  description: 'gzip compresion alg'
+  arg: '7'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+gzip_8:
+  description: 'gzip compresion alg'
+  arg: '8'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+gzip_9:
+  description: 'gzip compresion alg'
+  arg: '9'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_4:
+  description: 'brotli compresion alg'
+  arg: '4'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_5:
+  description: 'brotli compresion alg'
+  arg: '5'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_6:
+  description: 'brotli compresion alg'
+  arg: '6'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_7:
+  description: 'brotli compresion alg'
+  arg: '7'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_8:
+  description: 'brotli compresion alg'
+  arg: '8'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_9:
+  description: 'brotli compresion alg'
+  arg: '9'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_10:
+  description: 'brotli compresion alg'
+  arg: '10'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+brotli_11:
+  description: 'brotli compresion alg'
+  arg: '11'
+  cmd: './comp_bench/bench'
+  params: '-q {} -c {} -b ./comp_bench/index.html | tail -1 | cut -f 2 -d '','' '
+
+lua:
+  description: 'Run all cloudflare lua benchmark tests'
+  group: >-
+    lua_binary_trees.lua
+    lua_fasta.lua
+    lua_fibonacci.lua
+    lua_mandelbrot.lua
+    lua_n_body.lua
+    lua_spectral.lua
+
+lua_fasta.lua:
+  description: 'lua fasta algorithm'
+  arg: 'binary_trees.lua'
+  cmd: './bench_lua/bench'
+  params: '-c {} ./bench_lua/{} | tail -1 | cut -f 2 -d '' '' '
+
+lua_binary_trees.lua:
+  description: 'lua binary trees algorithm'
+  arg: 'fasta.lua'
+  cmd: './bench_lua/bench'
+  params: '-c {} ./bench_lua/{} | tail -1 | cut -f 2 -d '' '' '
+
+lua_fibonacci.lua:
+  description: 'lua fibonacci algorithm'
+  arg: 'fibonacci.lua'
+  cmd: './bench_lua/bench'
+  params: '-c {} ./bench_lua/{} | tail -1 | cut -f 2 -d '' '' '
+
+lua_mandelbrot.lua:
+  description: 'lua mandelbrot algorithm'
+  arg: 'mandelbrot.lua'
+  cmd: './bench_lua/bench'
+  params: '-c {} ./bench_lua/{} | tail -1 | cut -f 2 -d '' '' '
+
+lua_n_body.lua:
+  description: 'lua n body algorithm'
+  arg: 'n_body.lua'
+  cmd: './bench_lua/bench'
+  params: '-c {} ./bench_lua/{} | tail -1 | cut -f 2 -d '' '' '
+
+lua_spectral.lua:
+  description: 'lua spectral algorithm'
+  arg: 'spectral.lua'
+  cmd: './bench_lua/bench'
+  params: '-c {} ./bench_lua/{} | tail -1 | cut -f 2 -d '' '' '

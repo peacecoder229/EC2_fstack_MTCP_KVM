@@ -1,0 +1,8 @@
+num=$1
+host=$2
+server="0-3"
+ratio=$3
+tag=$4
+proto=$5
+ccore=$6
+cdir=$7

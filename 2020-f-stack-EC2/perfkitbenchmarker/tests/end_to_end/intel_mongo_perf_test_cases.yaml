@@ -1,0 +1,147 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+      
+  aws-ubuntu-2004: &aws-ubuntu-2004
+    cloud: AWS
+    zone: us-east-1
+    os_type: ubuntu2004
+    machine_type: m5.2xlarge
+
+  gcp-ubuntu-2004: &gcp-ubuntu-2004
+    cloud: GCP
+    zone: us-west2-c
+    os_type: ubuntu2004
+    machine_type: n1-standard-8
+    gce_subnet_region: us-west2
+
+  aws-graviton2-ubuntu-2004: &aws-graviton2-ubuntu-2004
+    cloud: AWS
+    zone: us-east-1
+    os_type: ubuntu2004
+    machine_type: m6g.2xlarge
+
+  default: *aws-ubuntu-2004
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-publish: &pkb-publish
+    file_log_level: debug
+    kafka_publish: True
+
+  pkb-collect-svrinfo: &pkb-collect-svrinfo
+    file_log_level: debug
+    svrinfo: True
+
+  pkb-collect-collectd: &pkb-collect-collectd
+    file_log_level: debug
+    collectd: True
+
+  pkb-collect-and-publish: &pkb-collect-and-publish
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+    kafka_publish: True
+
+  pkb-collect-emon: &pkb-collect-emon
+    file_log_level: debug
+    emon: True
+
+################################################################################
+# Benchmark configurations -- Define various useful workload configurations
+################################################################################
+
+benchmark-configurations:
+
+  intel_mongo_perf_defaults: &intel_mongo_perf_defaults
+    benchmarks: intel_mongo_perf
+
+  intel_mongo_perf_no_crypto: &intel_mongo_perf_no_crypto
+    benchmarks: intel_mongo_perf
+    mongo_perf_require_tls: false
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options
+################################################################################
+
+tests:
+
+  DefaultCSPRun: &DefaultCSPRun
+    pkb: *pkb-basic
+    benchmark: *intel_mongo_perf_defaults
+  
+  Ubuntu2004AWS: &Ubuntu2004AWS
+    pkb: *pkb-basic
+    benchmark: *intel_mongo_perf_defaults
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004AWSCrypto: &Ubuntu2004AWSCrypto
+    pkb: *pkb-basic
+    benchmark: *intel_mongo_perf_no_crypto
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004AWSGraviton2: &Ubuntu2004AWSGraviton2
+    pkb: *pkb-basic
+    benchmark: *intel_mongo_perf_defaults
+    platform: *aws-graviton2-ubuntu-2004
+
+  Ubuntu2004AWSCryptoGraviton2: &Ubuntu2004AWSCryptoGraviton2
+    pkb: *pkb-basic
+    benchmark: *intel_mongo_perf_no_crypto
+    platform: *aws-graviton2-ubuntu-2004
+
+  Ubuntu2004GCP: &Ubuntu2004GCP
+    pkb: *pkb-basic
+    benchmark: *intel_mongo_perf_defaults
+    platform: *gcp-ubuntu-2004
+
+################################################################################
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+
+test-suites:
+
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  
+  developer:
+    DefaultCSPRun: *DefaultCSPRun
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  
+  benchmark:
+    DefaultCSPRun: *DefaultCSPRun
+    
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  
+  acceptance:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004AWSCrypto: *Ubuntu2004AWSCrypto
+    Ubuntu2004GCP: *Ubuntu2004GCP
+
+################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  
+  regression:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004AWSCrypto: *Ubuntu2004AWSCrypto
+    Ubuntu2004GCP: *Ubuntu2004GCP
+    Ubuntu2004AWSGraviton2: *Ubuntu2004AWSGraviton2
+    Ubuntu2004AWSCryptoGraviton2: *Ubuntu2004AWSCryptoGraviton2

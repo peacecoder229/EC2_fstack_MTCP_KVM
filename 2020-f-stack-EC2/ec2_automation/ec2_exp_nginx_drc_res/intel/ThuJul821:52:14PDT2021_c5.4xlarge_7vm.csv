@@ -1,0 +1,15 @@
+Run No,Instance Id,Exp Time,Case No,VM Type,P-50,P-75,P-90,Avg RPS,Avg User Utilization(%), Avg System Utilization(%)
+run_1,i-0bb83893a888abf6c,ThuJul819:56:14PDT2021,case_1,primary,2.229,7.035,26.047,10.47k,24.2528,49.6339
+run_1,i-02dc70ebf47e92b85,ThuJul819:56:14PDT2021,case_1,secondary,0,0,0,0
+run_1,i-03224eff33e8d1a67,ThuJul819:56:14PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0c268917cd01b2afc,ThuJul819:56:14PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0c45d06b92ff24460,ThuJul819:56:14PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0e30dbe3572387ef7,ThuJul819:56:14PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0e6d8c61a29600329,ThuJul819:56:14PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0eb546a6560566db7,ThuJul821:13:31PDT2021,case_2,primary,2.533,9.023,36.767,10.66k,23.7355,48.6252
+run_1,i-0076f524bdbdb8d93,ThuJul821:13:31PDT2021,case_2,secondary,1.408,2.149,4.583,10.87k,23.6304,46.7627
+run_1,i-054db09ea219fcaf7,ThuJul821:13:32PDT2021,case_2,secondary,1.314,1.939,3.949,10.87k,23.5023,47.8575
+run_1,i-0b366afc4fd684aaf,ThuJul821:13:31PDT2021,case_2,secondary,1.451,2.481,9.247,10.86k,23.4842,46.6918
+run_1,i-0b8405ef8c1c89f3f,ThuJul821:13:31PDT2021,case_2,secondary,4.065,24.559,128.831,10.43k,24.0363,49.3696
+run_1,i-0d0e57aa3cb924fb8,ThuJul821:13:31PDT2021,case_2,secondary,1.398,2.107,5.355,10.88k,23.5786,47.8458
+run_1,i-0d29b5e3ff873df85,ThuJul821:13:31PDT2021,case_2,secondary,1.488,2.569,11.127,10.86k,25.4845,49.9364

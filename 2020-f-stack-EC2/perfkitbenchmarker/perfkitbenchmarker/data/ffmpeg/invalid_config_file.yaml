@@ -1,0 +1,15 @@
+##########################################################################################
+# This is a syntactically *invalid* configuration file used for unit testing - DO NOT USE
+##########################################################################################
+
+some_entry:
+  description: '4k input to 4k output using SVT-HEVC/0/2'
+    input_files: crowd_run_2160p50.mp4 Netflix_Tango_4096x2160_60fps_10bit_420.mp4
+  input_format: 4k
+  output_mode:
+    type: 1:1/VOD
+  video_codec:
+    codec: SVT-HEVC
+    preset: 0
+    tune: 1
+    args: -rc 1 -b:v 9.6M -maxrate 9.6M -bufsize 19.2M -r 60 -g 120 4k.mp4

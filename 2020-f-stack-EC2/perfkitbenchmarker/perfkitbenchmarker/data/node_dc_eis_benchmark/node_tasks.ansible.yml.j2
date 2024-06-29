@@ -1,0 +1,36 @@
+---
+- name: Download nvm for Centos or Ubuntu
+  get_url:
+    url: https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh
+    dest: "{{ INSTALL_DIR }}/install.sh"
+  when: ansible_facts['distribution'] == "CentOS" or ansible_facts['distribution'] == "Ubuntu"
+
+- name: Run nvm installer for CentOS or Ubuntu
+  command: /bin/bash "{{ INSTALL_DIR }}/install.sh"
+  when: ansible_facts['distribution'] == "CentOS" or ansible_facts['distribution'] == "Ubuntu" 
+
+- name: Install Node.js for CentOS or Ubuntu
+  command: /bin/bash -i -c 'nvm install 12.9.0'
+  when: ansible_facts['distribution'] == "CentOS" or ansible_facts['distribution'] == "Ubuntu"
+
+- name: Install Node.js for Clear Linux OS
+  command: swupd bundle-add nodejs-basic 
+  when: ansible_facts['distribution'] == "Clear Linux OS"
+  become: yes
+
+- name: Clone workload
+  git:
+    repo: {{repo}}
+    dest: "{{ INSTALL_DIR }}/Node-DC-EIS"
+    version: {{version}}
+
+- name: Prepare workload server
+  command: /bin/bash -i -c 'npm install'
+  args:
+    chdir: "{{ INSTALL_DIR }}/Node-DC-EIS/Node-DC-EIS-cluster"
+
+- name: Create mongodb data directory
+  file:
+    path: "{{ INSTALL_DIR }}/data/db"
+    state: directory
+  when: ansible_facts['distribution'] == "Clear Linux OS"

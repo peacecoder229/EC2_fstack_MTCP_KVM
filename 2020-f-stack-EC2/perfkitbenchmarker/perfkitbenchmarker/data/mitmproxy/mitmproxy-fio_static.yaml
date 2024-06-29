@@ -1,0 +1,18 @@
+static_vms:
+  - &vm0
+    ip_address: <SUT_ip_address>
+    user_name: <SUT_user_name>
+    ssh_private_key: /path/to/PKB_host_private_key
+    internal_ip: <SUT_ip_address>
+    disk_specs:
+      - mount_point: /home/<SUT_user_name>/
+fio_static:
+  name: fio
+  vm_groups:
+    default:
+      static_vms:
+        - *vm0
+  flags:
+    use_offline: True
+    offline_listen_host: 192.168.0.1
+    offline_upstream_proxy: http://proxy-jf.intel.com:911

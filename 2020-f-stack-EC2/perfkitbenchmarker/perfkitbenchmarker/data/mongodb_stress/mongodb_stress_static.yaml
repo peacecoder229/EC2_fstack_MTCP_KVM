@@ -1,0 +1,46 @@
+# Example static/on-prem config file for the mongodb_stress benchmark.
+
+static_vms:
+  - &worker
+     ip_address: xx.xx.xx.xxx
+     internal_ip: xx.xx.xx.xxx
+     additional_ips: xx.xx.xx.xxx,xx.xx.xx.xxx
+     os_type: ubuntu1804
+     user_name: pkb
+     ssh_private_key: ~/.ssh/id_rsa
+     disk_specs:
+       - mount_point: /home/pkb/
+  - &client1
+     ip_address: xx.xx.xx.xxx
+     internal_ip: xx.xx.xx.xxx
+     os_type: ubuntu1804
+     user_name: pkb
+     ssh_private_key: ~/.ssh/id_rsa
+     disk_specs:
+       - mount_point: /home/pkb/
+  - &client2
+     ip_address: xx.xx.xx.xxx
+     internal_ip: xx.xx.xx.xxx
+     os_type: ubuntu1804
+     user_name: pkb
+     ssh_private_key: ~/.ssh/id_rsa
+     disk_specs:
+       - mount_point: /home/pkb/
+
+mongodb_stress:
+   vm_groups:
+     workers:
+       static_vms:
+         - *worker
+     clients:
+       vm_count: 2
+       static_vms:
+         - *client1
+         - *client2
+
+flags:
+  ycsb_client_vms: 2                    # use this number of client vms/machines
+
+
+##Note: if you encounter error "Error: Could not find or load main class org.HdrHistogram.HistogramLogProcessor"
+#specify pkb proxy flags on the commandline: --http_proxy and --https_proxy

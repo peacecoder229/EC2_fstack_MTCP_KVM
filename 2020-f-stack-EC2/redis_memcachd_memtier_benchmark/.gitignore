@@ -1,0 +1,4 @@
+*.pyc
+*.txt
+*.log
+core_scale/testsum

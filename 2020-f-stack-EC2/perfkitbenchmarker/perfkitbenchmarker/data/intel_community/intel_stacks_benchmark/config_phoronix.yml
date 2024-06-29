@@ -1,0 +1,12 @@
+data_format: NHWC
+model: phoronix
+clean_up: false
+pts-bench: pts/phpbench
+docker_runtime: runc
+train: False
+repeat_count: 1
+batch_sizes: [128]
+intel_stacks_models_to_use: phoronix
+images:
+  tensorflow_mkl_image_latest: "stacks-tensorflow-oss_cumulus:latest"
+image_to_use: tensorflow_mkl_image_latest

@@ -1,0 +1,25 @@
+Run No,Instance Id,Exp Time,Case No,VM Type,P-50,P-75,P-90,Avg RPS,Avg User Utilization(%), Avg System Utilization(%)
+run_1,i-0f3ef8c9ff27aae53,FriJul911:54:12PDT2021,case_1,primary,2.018,16.943,325.375,10.79k,23.3658,47.9309
+run_1,i-00e8b27498a752730,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-04af43e4e3515ba32,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-066d4df05ef94e546,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-085c3726880ce9898,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0c16677e9a7ba80fe,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0c789be1c69d918c7,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0c96e91d9eb927a12,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0cd13c7f65d2b6d21,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0e5eb77013276f89c,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0ea68bb0cf972dd9d,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-0f6cf6cb394b67b5b,FriJul911:54:12PDT2021,case_1,secondary,0,0,0,0
+run_1,i-05b21831646a38f4c,FriJul911:20:23PDT2021,case_2,primary,2.339,8.567,30.447,10.50k,23.6914,47.9596
+run_1,i-00b50bb2325a49752,FriJul911:20:23PDT2021,case_2,secondary,1.577,3.079,10.919,10.85k,23.4909,47.6449
+run_1,i-01d7172573ddacff9,FriJul911:20:23PDT2021,case_2,secondary,1.744,3.863,19.615,10.47k,23.4364,47.4708
+run_1,i-02a6326d7bd21665c,FriJul911:20:23PDT2021,case_2,secondary,2.351,7.811,35.103,10.55k,23.7568,46.4285
+run_1,i-05b9146b7622e81a7,FriJul911:20:23PDT2021,case_2,secondary,1.312,2.031,6.291,10.87k,23.345,46.9416
+run_1,i-06a7033f13b73d2dd,FriJul911:20:23PDT2021,case_2,secondary,1195.007,2611.199,4517.887,10.17k,23.8843,50.2413
+run_1,i-07e69c4793fd96a1b,FriJul911:20:23PDT2021,case_2,secondary,1.225,1.743,2.555,10.87k,23.3748,46.7246
+run_1,i-08976f5c1d92fb063,FriJul911:20:23PDT2021,case_2,secondary,2.565,11.063,43.487,10.47k,24.46,50.497
+run_1,i-08987431fdf52eac0,FriJul911:20:23PDT2021,case_2,secondary,2.507,8.879,26.895,10.41k,24.2366,48.9327
+run_1,i-0a0d47d3e2fe31f91,FriJul911:20:23PDT2021,case_2,secondary,6422.527,10264.575,13623.295,9.51k,23.6675,50.198
+run_1,i-0a6a2a50d67176d44,FriJul911:20:23PDT2021,case_2,secondary,5.915,115.583,653.311,10.79k,23.5884,50.4034
+run_1,i-0cbda301b1c15132d,FriJul911:20:23PDT2021,case_2,secondary,2301.951,4833.279,7557.119,10.08k,23.2371,50.5547

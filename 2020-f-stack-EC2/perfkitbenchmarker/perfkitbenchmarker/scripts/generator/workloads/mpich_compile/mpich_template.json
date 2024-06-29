@@ -1,0 +1,166 @@
+{
+  "workload1": {
+    "metadata": {
+      "name": "Mpich compile",
+      "type": "Compile",
+      "load": "Peak"
+    },
+    "vm_groups": [
+      {
+        "name": "vm_group1",
+        "deps": [
+          {
+            "os_type": "ubuntu1604",
+            "packages_info": [
+              {
+                "name": "build-essential",
+                "ver": "12.1ubuntu2"
+              },
+              {
+                "name": "mpich",
+                "ver": "3.3"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./install_build_deps_ubuntu1604.sh install"
+              },
+              {
+                "install_script": "cd /tmp && wget -q http://www.mpich.org/static/downloads/$version/mpich-3.3.tar.gz && tar xvf mpich-3.3.tar.gz" 
+              }
+            ],
+            "packages_remove": [
+              {
+                "uninstall_script": "./install_build_deps_ubuntu1604.sh remove"
+              }
+            ]
+          },
+          {
+            "os_type": "centos7",
+            "packages_info": [
+              {
+                "name": "wget",
+                "ver": "1.14-18.el7.x86_64"
+              },
+              {
+                "name": "mpich",
+                "ver": "3.3"
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./install_build_deps_centos7.sh install"
+              },
+              {
+                "install_script": "cd /tmp && wget -q http://www.mpich.org/static/downloads/$version/mpich-3.3.tar.gz && tar xvf mpich-3.3.tar.gz"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "install": [
+      {
+      "target": "",
+      "cmd": "./install.sh fa$enum_cfg.py",
+      "internal_resources": [
+        {
+          "name": "DLaas",
+          "url": "https://github.intel.com/verticals/DLaaS/archive/$enum_cfg.tar.gz"
+        }
+      ]
+      },
+      {
+        "target": "",
+        "cmd": ""
+      }
+    ],
+    "run": [
+      {
+      "target": "vm_group1[0]",
+      "cmd": "cd /tmp/mpich-3.3 && ./configure --disable-fortran && (time make -j $cores)"
+      }
+    ],
+    "config_flags": [
+      {
+        "name": "cores",
+        "description": "number of cores",
+        "range": "2-96",
+        "target_default": "vm_group1[0]",
+        "type": "OS-num",
+        "default": "'nproc'",
+        "setcmd": "./set_cores.sh",
+        "target_setcmd": "vm_group1[0]"
+      },
+      {
+        "name": "list_cfg",
+        "description": "description of list parameter",
+        "range": "['b', 200, 'xyz']",
+        "type": "num",
+        "target_default": "vm_group1[0]",
+        "default": "200",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "enum_cfg",
+        "description": "description of enum parameter",
+        "range": "('a', '1810', 'c')",
+        "type": "str",
+        "target_default": "vm_group1[0]",
+        "default": "1810",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "version",
+        "description": "description of ver",
+        "range": "",
+        "type": "custom-str",
+        "target_default": "vm_group1[0]",
+        "default": "'./get_ver.sh'",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "hex_cfg",
+        "description": "description of hex parameter",
+        "range": "2-2000",
+        "type": "custom-str",
+        "target_default": "vm_group1[0]",
+        "default": "./set_hex.sh",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "float_cfg",
+        "description": "description of float parameter",
+        "range": "1-66",
+        "type": "num",
+        "default": "3.14",
+        "target_default": "vm_group1[0]",
+        "setcmd": "",
+        "target_setcmd": ""
+      }
+    ],
+    "output_dir": {
+      "path": "/tmp/pkb",
+      "target": "vm_group1[0]"
+    },
+    "metric": [
+      {
+        "name": "compile time",
+        "goal": "Increase",
+        "read": "cat /tmp/pkb/results | grep -w 'real' | awk '{print $2}'",
+        "target": "vm_group1[0]",
+        "unit": "seconds"
+      }
+    ],
+     "cleanup": [
+      {
+        "target": "vm_group1[0]",
+        "cmd": "sudo rm -rf $install_path"
+      }
+    ]
+  }
+}

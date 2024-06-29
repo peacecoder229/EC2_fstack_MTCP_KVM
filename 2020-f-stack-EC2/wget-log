@@ -1,0 +1,5 @@
+--2021-06-03 05:50:31--  https://wiki.ith.intel.com/download/attachments/1202654201/mlc%20v3.6.zip?version=1
+Resolving wiki.ith.intel.com (wiki.ith.intel.com)... 10.18.89.162
+Connecting to wiki.ith.intel.com (wiki.ith.intel.com)|10.18.89.162|:443... connected.
+ERROR: The certificate of ‘wiki.ith.intel.com’ is not trusted.
+ERROR: The certificate of ‘wiki.ith.intel.com’ hasn't got a known issuer.

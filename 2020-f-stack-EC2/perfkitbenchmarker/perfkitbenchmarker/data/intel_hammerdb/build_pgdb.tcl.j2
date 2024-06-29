@@ -1,0 +1,25 @@
+puts "SETTING CONFIGURATION"
+global complete
+proc wait_to_complete {} {
+global complete
+set complete [vucomplete]
+puts "Is it complete ?: $complete"
+if {!$complete} {
+ after 5000 wait_to_complete
+} else { 
+ exit
+}
+}
+
+dbset db {{ db_type }}
+dbset bm {{ bm_type }}
+diset connection pg_host "{{ ip_address }}"
+diset tpcc pg_num_vu {{ pg_threads }}
+diset tpcc pg_count_ware {{ pg_ware }}
+diset tpcc pg_raiseerror  true
+diset tpcc pg_storedprocs true
+vuset timestamps {{ enable_timestamps }}
+print dict
+buildschema
+wait_to_complete
+vwait forever

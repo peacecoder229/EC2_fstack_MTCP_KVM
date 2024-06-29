@@ -1,0 +1,30 @@
+# Example cloud config file for the kafka benchmark
+
+worker: &worker
+  AWS:
+    machine_type: c5d.2xlarge
+    zone: us-west-2
+
+worker_disk: &worker_disk
+  AWS:
+    disk_type: standard
+    disk_size: 100
+    mount_point: /scratch
+
+client: &client
+  AWS:
+    machine_type: m5.2xlarge
+    zone: us-west-2
+
+kafka:
+  vm_groups:
+    brokers:
+      os_type: ubuntu2004
+      vm_spec: *worker
+      disk_spec: *worker_disk
+    producers:
+      os_type: ubuntu2004
+      vm_spec: *client
+    consumers:
+      os_type: ubuntu2004
+      vm_spec: *client

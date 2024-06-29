@@ -1,0 +1,67 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /tmp
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  e2e-kafkabroker:
+    repeat-count: 1                                   # number of instances to launch
+    #cores: 0-55                                      # number of cores (divided uniformly among all instances)
+    services: ssh,kafka
+    env:
+      MAX_KAFKA_MSG_SIZE_BYTES: 1200000000            # max message size in bytes
+      DELAY_TIME_S: 0                                 # to be used to introduce delay between start of multiple brokers
+      KAFKA_BROKER: e2e-kafkabroker-0                 # kafka broker service name
+      ZOOKEEPER_SERVER: e2e-kafkabroker-0             # zookeeper server service name, use same zookeeper server for all brokers
+      ZOOKEEPER_ID: 1                                 # ID of the zookeeper server
+      KAFKA_TOPIC_REPLICATION_FACTOR: 1               # should not be greater than the number of consumers
+      KAFKA_PORT: 9092
+      TOPIC_PARTITIONS: 4                             # change to match max number of consumers per broker
+      BROKER_LOG_DIR: ${shares.disk1-storage}/kafka-logs
+      ZOOKEEPER_TIMEOUT_MS: 6000                      # zookeeper timeout
+      ZOOKEEPER_LOG_DIR: /tmp/zookeeper
+      ZOOKEEPER_PORT: 2080
+      ZOOKEEPER_PORT_1: 2888
+      ZOOKEEPER_PORT_2: 3888
+
+  e2e-rcnn-inference:
+    repeat-count: 1 
+    #cores: 0-55
+    services: ssh
+    env:
+      RCNN_MOD_DIR: ${shares.shared-storage-partition}/Data/e2e-rcnn-inference/rcnn_models/res101
+      KAFKA_BROKER: e2e-kafkabroker-0
+      INFER_TOPIC_NAME: topic_if
+      DATA_DIR: ${shares.shared-storage-partition}/Data/e2e-rcnn-inference/videos/march9.avi
+      INFER_TIMEOUT_MS: 50000 # 120 sec works
+      NETWORK: res101
+      DATASET: pascal_voc_0712
+      KMP_AFFINITY: granularity=fine,compact,1 
+      KMP_BLOCKTIME: 2 
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                               # INFO or DEBUG, use DEBUG for detailed event collection
+ 
+  e2e-rcnn-videodecode:
+    repeat-count: 1
+    services: ssh
+    #cores: 0-55
+    env:
+      KAFKA_BROKER: e2e-kafkabroker-0
+      ASCALEX: 0.5
+      ASCALEY: 0.5
+      INFER_TOPIC_NAME: topic_if
+      DELAY_TIME: 45 i                                # 30, 60 works
+      DATA_DIR: ${shares.shared-storage-partition}/Data/e2e-rcnn-videodecode/videos/march9.avi   # KITTI dataset video
+      KMP_AFFINITY: granularity=fine,compact,1
+      KMP_BLOCKTIME: 2
+      NUM_LOOP: 4
+      FRAME_RATE_S: 30
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'
+
+scenarios:
+  e2e-rcnn:
+    virtual-instances: e2e-rcnn-inference,e2e-kafkabroker,e2e-rcnn-videodecode   # list of virtual instances required to run the workload
+    parser: parser-rcnn-inference.py

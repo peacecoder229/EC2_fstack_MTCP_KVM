@@ -1,0 +1,16 @@
+build:
+  enabled: false
+
+bolt:
+    enabled: false
+
+paths:
+  php_oss_perf: /usr/bin/php
+
+run:
+  targets:
+  - mediawiki
+  count: 1
+  cpu_util: false
+  oss_additional_params:
+

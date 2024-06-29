@@ -1,0 +1,46 @@
+client2 , 9 and 11 are only CPUs with 4 core sockets.
+
+clientt2
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+clientt3
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+clientt4
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+clientt5
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+clientt6
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+clientt7
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+clientt8
+NUMA node0 CPU(s):     0-7,16-23
+NUMA node1 CPU(s):     8-15,24-31
+clientt9
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+clientt10
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+clientt11
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+clientt12
+NUMA node0 CPU(s):     0-7,16-23
+NUMA node1 CPU(s):     8-15,24-31
+clientt13
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+clientt14
+NUMA node0 CPU(s):     0-31
+clientt15
+NUMA node0 CPU(s):     0-17,36-53
+NUMA node1 CPU(s):     18-35,54-71
+clientt16
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23

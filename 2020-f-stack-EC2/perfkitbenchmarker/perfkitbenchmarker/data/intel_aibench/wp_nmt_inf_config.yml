@@ -1,0 +1,20 @@
+intel_aibench_k8: 
+  vm_groups:
+    vm_kafka:
+      vm_count: 1 
+      cloud: Kubernetes
+      vm_spec:
+        Kubernetes: 
+          image: 310062343207.dkr.ecr.us-east-1.amazonaws.com/aibench:e2e-kafkabroker.20190625104207364066
+    target:
+      vm_count: 1
+      cloud: Kubernetes
+      vm_spec:
+        Kubernetes:
+          image: 310062343207.dkr.ecr.us-east-1.amazonaws.com/aibench:nmt-inference.20190619131404787047
+    vm_producer:
+      vm_count: 1
+      cloud: Kubernetes
+      vm_spec:
+        Kubernetes:
+          image: 310062343207.dkr.ecr.us-east-1.amazonaws.com/aibench:e2e-nmt-kafka-producer.20190625133618401198

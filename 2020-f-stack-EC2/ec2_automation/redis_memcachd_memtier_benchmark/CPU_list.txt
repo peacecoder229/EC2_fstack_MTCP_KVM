@@ -1,0 +1,59 @@
+CPU(s):                16
+On-line CPU(s) list:   0-15
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+CPU(s):                32
+On-line CPU(s) list:   0-31
+NUMA node0 CPU(s):     0-7,16-23
+NUMA node1 CPU(s):     8-15,24-31
+CPU(s):                16
+On-line CPU(s) list:   0-15
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+CPU(s):                16
+On-line CPU(s) list:   0-15
+NUMA node0 CPU(s):     0-3,8-11
+NUMA node1 CPU(s):     4-7,12-15
+CPU(s):                32
+On-line CPU(s) list:   0-31
+NUMA node0 CPU(s):     0-7,16-23
+NUMA node1 CPU(s):     8-15,24-31
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23
+CPU(s):                32
+On-line CPU(s) list:   0-31
+NUMA node0 CPU(s):     0-31
+CPU(s):                72
+On-line CPU(s) list:   0-71
+NUMA node0 CPU(s):     0-17,36-53
+NUMA node1 CPU(s):     18-35,54-71
+CPU(s):                24
+On-line CPU(s) list:   0-23
+NUMA node0 CPU(s):     0-5,12-17
+NUMA node1 CPU(s):     6-11,18-23

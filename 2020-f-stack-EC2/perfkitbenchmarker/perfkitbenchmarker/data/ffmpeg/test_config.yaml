@@ -1,0 +1,113 @@
+
+test-group-1:
+  description: 'A sample group'
+  group: >-
+    x264-medium-1to1Live-1080p
+    x264-veryfast-1to1Live-1080p
+
+x264-medium-1to1Live-1080p:
+  description: '1080p input to 1080P output using x264/medium'
+  input_files: crowd_run_1080p50.mp4
+  input_format: 1080P
+  output_mode:
+    type: 1:1/LIVE
+    fps_threshold: 60
+  video_codec:
+    codec: x264
+    preset: medium
+    args: >-
+      -filter_scale_threads 4
+      -profile:v main -refs 3 -g 60 -keyint_min 60 -b:v 6M -maxrate 6M -bufsize 12M -sc_threshold 0 -r 60 -y 1080p.mp4
+
+x264-veryfast-1to1Live-1080p:
+  description: '1080p input to 1080P output using x264/veryfast'
+  input_files: crowd_run_1080p50.mp4
+  input_format: 1080P
+  #num_instances: 4
+  output_mode:
+    type: 1:1/LIVE
+    fps_threshold: 60
+  video_codec:
+    codec: x264
+    preset: veryfast
+    args: >-
+      -filter_scale_threads 4
+      -profile:v main -refs 3 -g 60 -keyint_min 60 -b:v 6M -maxrate 6M -bufsize 12M -sc_threshold 0 -r 60 -y 1080p.mp4
+
+x264-veryfast-1to1VOD-1080p:
+  description: '1080P input to 1080P output using x264/veryslow'
+  input_files: crowd_run_1080p50.mp4
+  input_format: 1080P
+  output_mode:
+    type: 1:1/VOD
+  video_codec:
+    codec: x264
+    preset: veryfast
+    args: -x264-params asm=62463 -profile:v main -refs 3 -g 60 -keyint_min 60 -b:v 5.5M -maxrate 5.5M -bufsize 11M -sc_threshold 0 -r 60 -y 1080p.mp4
+
+x264-veryfast-1to1Live-1080p-4:
+  description: '1080p input to 1080P output using x264/veryfast'
+  input_files: crowd_run_1080p50.mp4
+  input_format: 1080P
+  num_instances: 4
+  output_mode:
+    type: 1:1/LIVE
+    fps_threshold: 60
+  video_codec:
+    codec: x264
+    preset: veryfast
+    args: >-
+      -filter_scale_threads 4
+      -profile:v main -refs 3 -g 60 -keyint_min 60 -b:v 6M -maxrate 6M -bufsize 12M -sc_threshold 0 -r 60 -y 1080p.mp4
+
+x264-veryfast-1toNLive-1080p-4:
+  description: '1080p input to multiple outputs using x264/veryfast'
+  input_files: crowd_run_1080p50.mp4 # CSGO.mp4
+  input_format: 1080P
+  num_instances: 4
+  output_mode:
+    type: 1:n/LIVE
+    fps_threshold: 60
+  video_codec:
+    codec: x264
+    preset: veryfast
+    args: >-
+      -filter_scale_threads 4
+      ${codec} ${preset} -profile:v main -refs 3 -g 60 -keyint_min 60 -b:v 6M -maxrate 6M -bufsize 12M -sc_threshold 0 -r 60 -y 1080p.mp4
+      ${codec} ${preset} -vf scale=1280:720 -profile:v main -refs 3 -g 60 -keyint_min 60 -b:v 3.1M -maxrate 3.1M -bufsize 6.2M -sc_threshold 0 -r 60 -y 720p.mp4
+      ${codec} ${preset} -vf scale=480:360 -profile:v main -refs 3 -g 30 -keyint_min 30 -b:v 0.55M -maxrate 0.55M -bufsize 1.1M -sc_threshold 0 -r 30 -y 360p.mp4
+      ${codec} ${preset} -vf scale=280:160 -profile:v main -refs 3 -g 30 -keyint_min 30 -b:v 0.18M -maxrate 0.18M -bufsize 0.36M -sc_threshold 0 -r 30 -y 160p.mp4
+      -abr_pipeline
+
+x264-direct-mode:
+  description: '1080p input to 1080P output using x264/medium'
+  input_files: crowd_run_1080p50.y4m
+  input_format: 1080P
+  output_mode:
+    type: 1:1/LIVE
+    fps_threshold: 60
+  video_codec:
+    codec: x264
+    direct: True
+    args: >-
+      --profile main --preset veryfast --bframes 4 --b-pyramid strict --ref 3 --keyint 60 --threads 12 --frames 1600 --min-keyint 60
+      --bitrate 5500 --vbv-maxrate 5500 --vbv-bufsize 11000 --scenecut 0 --rc-lookahead 60 --crf 23.0 --tune=psnr --b-adapt=0 -o 1080p.264
+
+svt-hevc-preset6-1toNVOD-4k:
+  description: '4k input to multiple outputs using hevc/6'
+  input_files: crowd_run_2160p50.mp4
+  input_format: 4k
+  output_mode:
+    type: 1:n/VOD
+    fps_threshold: 60
+  video_codec:
+    codec: SVT-HEVC
+    preset: 6
+    args: >-
+      -filter_scale_threads 4
+      ${codec} ${preset} -rc 1 -b:v 9.6M -maxrate 9.6M -bufsize 19.2M -r 60 -g 60 -sc_detection 0 4k.mp4
+      ${codec} ${preset} -rc 1 -b:v 4.4M -maxrate 4.4M -bufsize 8.8M -vf scale=1920:1080 -r 60 -g 60 -sc_detection 0 1080P.mp4
+      ${codec} ${preset} -rc 1 -b:v 2.48M -maxrate 2.48M -bufsize 4.96M -g 60 -vf scale=1280:720 -r 60 -sc_detection 0 720P.mp4
+      ${codec} ${preset} -rc 1 -b:v 0.96M -maxrate 0.96M -bufsize 1.92M -g 60 -vf scale=640:480 -r 60 -sc_detection 0 480P.mp4
+      ${codec} ${preset} -rc 1 -b:v 0.96M -maxrate 0.96M -bufsize 1.92M -g 60 -vf scale=480:360 -r 60 -sc_detection 0 360P.mp4
+      -abr_pipeline

@@ -1,0 +1,69 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /tmp
+  logs-location: /tmp/aibench/runs/$RUN_ID 
+
+virtual-instances:
+  e2e-kafkabroker:
+    repeat-count: 1                                  # number of instances to launch
+    #cores: 0-55                                     # number of cores (divided uniformly among all instances)
+    services: ssh,kafka
+    env:
+      MAX_KAFKA_MSG_SIZE_BYTES: 1200000000
+      DELAY_TIME_S: 0
+      KAFKA_BROKER: e2e-kafkabroker-0                # kafka broker service name
+      ZOOKEEPER_TIMEOUT_MS: 6000
+      ZOOKEEPER_SERVER: e2e-kafkabroker-0            # zookeeper server service name, use same zookeeper server for all brokers
+      ZOOKEEPER_ID: 1                                # ID of the zookeeper server
+      KAFKA_TOPIC_REPLICATION_FACTOR: 1              # should not be greater than the number of consumers
+      KAFKA_PORT: 9092
+      TOPIC_PARTITIONS: 1                            # change to match max number of consumers per broker
+      BROKER_LOG_DIR: ${shares.disk1-storage}/kafka-logs
+      ZOOKEEPER_LOG_DIR: /tmp/zookeeper
+      ZOOKEEPER_PORT: 2080
+      ZOOKEEPER_PORT_1: 2888
+      ZOOKEEPER_PORT_2: 3888
+
+  e2e-nmt-kafka-producer:
+    repeat-count: 1
+    #cores: 0
+    services: ssh
+    env:
+      KAFKA_BROKER: e2e-kafkabroker-0                # comma separated list of all kafka brokers
+      INFER_TOPIC_NAME: topic_if_nmt
+      DELAY_TIME: 120
+      DATA_DIR: ${shares.shared-storage-partition}/Data/e2e-nmt-kafka-producer/dataset/newstest2014.100.en  # WMT newstest2014 dataset
+      PRODUCER_DELAY: 0.0
+      PRODUCER_FLUSH_INTERVAL: 300
+      #NUMA_OPTIONS: --membind=0,1
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                              # INFO or DEBUG, use DEBUG for detailed event collection
+
+  nmt-inference:
+    repeat-count: 1 
+    #cores: 0-55
+    services: ssh
+    env:
+      NMT_ARCHITECTURE: gnmt
+      E2E_INFERENCE: 'True'
+      DATA_DIR: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/data
+      VOCAB_PREFIX: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/data/vocab.bpe.32000
+      HPARAMS_FILE: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/data/standard_hparams/wmt16_gnmt_4_layer.json
+      CHECKPOINT: ${shares.shared-storage-partition}/Data/nmt-inference/GNMT/model/ende_gnmt_model_4_layer/translate.ckpt
+      KAFKA_BROKER: e2e-kafkabroker-0
+      INFER_TOPIC_NAME: topic_if_nmt
+      TRANSLATE_TIMEOUT_MS: 300000
+      HEARTBEAT_INTERVAL_MS: 49000
+      REQUEST_TIMEOUT_MS: 150000
+      SESSION_TIMEOUT_MS: 149000
+      KMP_BLOCKTIME: 0
+      #NUMA_OPTIONS: --membind=0,1
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'
+
+scenarios:
+  e2e-gnmt:
+    virtual-instances: nmt-inference,e2e-kafkabroker,e2e-nmt-kafka-producer   # list of virtual instances required to run the workload
+    parser: parser-e2e-nmt.py

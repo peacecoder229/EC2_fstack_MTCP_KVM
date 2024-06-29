@@ -1,0 +1,167 @@
+{
+  "workload1": {
+    "metadata": {
+      "name": "intel_python_django",
+      "type": "workload category - Web",
+      "load": "Unknown"
+    },
+    "vm_groups": [
+      {
+        "name": "vm_group1",
+        "deps": [
+          {
+            "os_type": "ubuntu1804",
+            "packages_info": [
+              {
+                "name": "ansible",
+                "ver": ""
+              }
+            ],
+            "packages_install": [
+              {
+                "install_script": "./django_packages_ubuntu1804.sh install"
+              },
+              {
+                "install_script": "./install_ansible.sh"
+              }
+            ],
+            "packages_remove": [
+              {
+                "uninstall_script": "./django_packages_ubuntu1804.sh remove"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "install": [
+      {
+        "target": "vm_group1[0]",
+        "cmd": "./install_django_wl.sh $version $webtier_version",
+        "internal_resources": [
+          {
+            "name": "Django Workload internal project",
+            "url":  "https://gitlab.devtools.intel.com/DCSP/Python/django-workload-internal/-/archive/$version/django-workload-internal-$version.zip"
+          },
+          {
+            "name": "Ansible scripts for deploying Django",
+            "url":  "https://gitlab.devtools.intel.com/DCSP/CWA/webtier-provisioning/-/archive/$webtier_version/webtier-provisioning-$webtier_version.zip"
+          } 
+        ]
+      },
+      {
+        "target": "",
+        "cmd": ""
+      }
+    ],
+    "run": [
+      {
+        "target": "vm_group1[0]",
+        "cmd": "~/python-django/src/django-workload/data-collection/run.sh -v ~/python-django/venv -o $path -c $client_concurrency --https $https_enabled --run_count=$run_count --uwsgi_workers=$uwsgi_workers --https_tls_version=$https_tls_version --https_cipher=$https_cipher"
+      }
+    ],
+    "config_flags": [
+      {
+        "name": "version",
+        "description": "The Python Django Workload version to be used. Cmd line parameter passed to the workload install script.",
+        "range": "",
+        "type": "str",
+        "target_default": "vm_group1[0]",
+        "default": "v1.1.1",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "webtier_version",
+        "description": "The Webtier-provisioning version to be used. Cmd line parameter passed to the workload install script.",
+        "range": "",
+        "type": "str",
+        "target_default": "vm_group1[0]",
+        "default": "v1.0.4",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "https_enabled",
+        "description": "If True, Python Django will run using HTTPS. The default is False, defaulting to HTTP",
+        "range": "('True', 'False')",
+        "type": "str",
+        "target_default": "vm_group1[0]",
+        "default": "False",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "https_tls_version",
+        "description": "TLS version to be used by the workload with HTTPS mode. Default is TLSv1.3.",
+        "range": "('TLSv1.2', 'TLSv1.3')",
+        "type": "str",
+        "target_default": "vm_group1[0]",
+        "default": "TLSv1.3",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "https_cipher",
+        "description": "Cipher to be used by the workload with HTTPS mode. Only ciphers in TLSv1.2 can be specified.",
+        "range": "",
+        "type": "str",
+        "target_default": "vm_group1[0]",
+        "default": "",
+        "setcmd": "",
+        "target_setcmd": ""
+      }
+    ],
+    "tunable_flags": [
+      {
+        "name": "run_count",
+        "description": "Number of times the WL is run. Default is 1.",
+        "range": "1-20",
+        "type": "num",
+        "target_default": "vm_group1[0]",
+        "default": "1",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "client_concurrency",
+        "description": "Number of Siege client workers. Default is 185.",
+        "range": "50-1024",
+        "type": "num",
+        "target_default": "vm_group",
+        "default": "185",
+        "setcmd": "",
+        "target_setcmd": ""
+      },
+      {
+        "name": "uwsgi_workers",
+        "description": "Number of uWSGI server workers. Default is equal to the number of vCPUs.",
+        "range": "1-512",
+        "type": "OS-num",
+        "target_default": "vm_group1[0]",
+        "default": "'nproc'",
+        "setcmd": "",
+        "target_setcmd": ""
+      }
+    ],
+    "output_dir": {
+      "path": "~/python-django/results/",
+      "target": "vm_group1[0]"
+    },
+    "metric": [
+      {
+        "name": "Transaction rate",
+        "goal": "Increase",
+        "read": "cat $path/run/run_log.txt | grep 'Transaction rate:' | awk '{ print $3 }'",
+        "target": "vm_group1[0]",
+        "unit": "trans/sec"
+      }
+    ],
+    "cleanup": [
+      {
+        "target": "vm_group1[0]",
+        "cmd": "sudo rm -rf $install_path"
+      }
+    ]
+  }
+}

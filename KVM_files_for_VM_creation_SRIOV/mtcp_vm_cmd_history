@@ -1,0 +1,1000 @@
+   34  ip r
+   35  pwd
+   36  ip r
+   37  lsblk
+   38  cd /pnpdata/
+   39  pwd
+   40  cd f-stack
+   41  ls
+   42  git log
+   43  pwd
+   44  du . -m
+   45  cd ..
+   46  ls
+   47  cd f-stack_working/
+   48  ls
+   49  git log
+   50  pwd
+   51  cd ..
+   52  ls
+   53  history | grep mv
+   54  ls
+   55  rm -rf f-stack
+   56  git clone https://gitlab.devtools.intel.com/rdas/f-stack.git
+   57  ls
+   58  cd f-stack
+   59  ls
+   60  cd ..
+   61  ls
+   62  cp -r f-stack_working f-stack
+   63  cd f-stack
+   64  ls
+   65  rm -rf f-stack_working/
+   66  cd ..
+   67  cp -r f-stack_working/ f-stack
+   68  cd f-stack
+   69  ls
+   70  mv f-stack_working/* .
+   71  ls
+   72  rm -rf f-stack_working/
+   73  ls
+   74  git add .
+   75  git commit -m 'fstack working with redis on NCC1'
+   76  git push
+   77  git log
+   78  git push
+   79  pwd
+   80  lshw -c network -businfo
+   81  history | grep "srio"
+   82  echo 2 >  /sys/class/net/enp109s0f2/device/sriov_numvfs
+   83  lshw -c network -businfo
+   84  virsh nodedev-list | grep 6d_0a
+   85  pwd
+   86  cd ../vmisofile/
+   87  ls *.xml
+   88  cat sriov_interface_2.xml
+   89  history | grep detach
+   90  virsh  nodedev-detach pci_0000_6d_0a_1
+   91  history | grep atach
+   92  history | grep attach
+   93  virsh attach-device fed30 sriov_interface_2.xml
+   94  lshw -c network -businfo
+   95  virsh console fed30
+   96  ls
+   97  pwd
+   98  cd ..
+   99  ls
+  100  cd f-stack
+  101  cd ..
+  102  f-stack_working/
+  103  cd f-stack_working/
+  104  git log
+  105  git diff
+  106  pwd
+  107  cd ..
+  108  df -h
+  109  git clone https://gitlab.devtools.intel.com/rohantab/mtcpxdpm.git
+  110  pwd
+  111  exit
+  112  ip r
+  113  virsh dumpxml fed30 | less
+  114  ip addr
+  115  history | grep ifup
+  116  ifdown enp1s0f0
+  117  brctl show
+  118  virsh list
+  119  virsh  shutdown fed30
+  120  virsh start fed30
+  121  virsh console fed30
+  122  ]
+  123  exit
+  124  lsblk
+  125  history | grep ifup
+  126  ifup enp1s0f0
+  127  ifup corp
+  128  ip r
+  129  ifdown corp
+  130  ifup enp1s0f0
+  131  ifup corp
+  132  ip r
+  133  reboot
+  134  pwd
+  135  virsh list
+  136  virsh console fed30
+  137  ip r
+  138  curl http://www.google.com
+  139  tmux ls
+  140  tmux a -t 0
+  141  tmux ls
+  142  virsh console fed30
+  143  virsh shutdown fed30
+  144  virsh console fed30
+  145  ping 10.242.51.218
+  146  virsh shutdown fed30
+  147  virsh start fed30
+  148  pwd
+  149  df -h
+  150  pwd
+  151  virsh console fed30
+  152  ip addr
+  153  brctl show
+  154  ip r
+  155  route -n
+  156  virsh list
+  157  virsh console fed30
+  158  ip addr
+  159  ip r
+  160  brctl show
+  161  route -n
+  162  tcpdump -i corp
+  163  tcpdump -i corp -vvv -s 1500 '((port 67 or port 68) and (udp[8:1] = 0x1))'
+  164  ssh 10.242.51.177
+  165  ping -I corp  10.242.51.177
+  166  virsh list
+  167  virsh list --all
+  168  virsh start fed30
+  169  virsh console fed30
+  170  virsh nodedev-list | grep pci | grep 6d
+  171  cat /proc/cmdline 
+  172  ip addr
+  173  cat /proc/cpuinfo 
+  174  cd /pnpdata/mtcpxdpm/
+  175  pwd
+  176  ls
+  177  cd ..
+  178  df -h
+  179  lsblk
+  180  df -h
+  181  cd /pnpdata/
+  182  ls
+  183  docker images
+  184  systemctl start docker
+  185  virsh console fed30
+  186  ip r
+  187  history | grep fire
+  188  systemctl disable firewalld
+  189  systemctl status firewalld
+  190  virsh console fed30
+  191  ip r
+  192  virsh list
+  193  ip r
+  194  lshw -c network -businfo
+  195  arp -a
+  196  route -n
+  197  ip r
+  198  tmux a -t 0
+  199  df -h
+  200  uane -r
+  201  uname -r
+  202  virsh list
+  203  lshw -c network -businfo
+  204  echo 2 >  /sys/class/net/enp109s0f2/device/sriov_numvfs
+  205  pwd
+  206  cd /pnpdata/
+  207  ls *.xml
+  208  cd vmisofile/
+  209  ls *.xml
+  210  vim vfunc_1.xml 
+  211  vim sriov_interface_2.xml 
+  212  mv sriov_interface_2.xml sriovifc1.xml
+  213  cp sriovifc1.xml  sriovifc2.xml
+  214  vim sriovifc2.xml 
+  215  virsh nodedev-list --cap pci
+  216  virsh nodedev-list --cap pci | grep 6d_0a
+  217  virsh nodedev-dumpxml pci_0000_6d_0a_0
+  218  virsh nodedev-dumpxml pci_0000_6d_0a_1
+  219  virsh nodedev-list --cap pci | grep 6d_0a
+  220  vim sriovifc1.xml 
+  221  vim sriovifc2.xml 
+  222  pwd
+  223  history | grep detach
+  224  virsh  nodedev-detach pci_0000_6d_0a_0
+  225  virsh  nodedev-detach pci_0000_6d_0a_1
+  226  lshw -c network -businfo
+  227  virsh  list
+  228  virsh attach-device fed30 sriovifc1.xml 
+  229  virsh attach-device fed30 sriovifc2.xml 
+  230  ssh root@10.242.51.218
+  231  iptables -L
+  232  ping 10.242.51.198
+  233  iptables -L
+  234  wjo
+  235  who
+  236  ip addr
+  237  ip r
+  238  route -n
+  239  brctl show
+  240  vim /etc/sysconfig/network-scripts/ifcfg-enp109s0f2 
+  241  vim /etc/sysconfig/network-scripts/ifcfg-enp0s31f6 
+  242  virsh shutdown fed30
+  243  virsh start fed30
+  244  virsh console fed30
+  245  pwd
+  246  cd /pnpdata/vmisofile/
+  247  ls -ltr
+  248  virsh nodedev-list --cap pci
+  249  history | grep virsh
+  250  virsh nodedev-list --cap pci | grep 6d_0a
+  251  lshw -c network -businfo
+  252  history | grep attach-device
+  253  virsh attach-device fed30 sriovifc1.xml
+  254  virsh attach-device fed30 sriovifc2.xml
+  255  virsh console fed30
+  256  virsh shutdown fed30
+  257  virsh start fed30
+  258  history | grep attach
+  259  virsh attach-device fed30 sriovifc1.xml
+  260  virsh attach-device fed30 sriovifc2.xml
+  261  ping 192.168.232.235
+  262  ping 192.168.232.236
+  263  route -n
+  264  traceroute  192.168.232.236
+  265  route -n
+  266  pwd
+  267  route -n
+  268  tcpdump -i enp109s0f2 -vvvnU 'icmp or arp'
+  269  ls
+  270  pwd
+  271  ls
+  272  pwd
+  273  ls
+  274  pwd
+  275  ls
+  276  ls -ltr
+  277  cd apps/
+  278  ls
+  279  cd ..
+  280  lsblk
+  281  df -h
+  282  pwd
+  283  ls
+  284  pwd
+  285  ip r
+  286  virsh list
+  287  virsh console fed30
+  288  lshw -c network -businfo
+  289  virsh list
+  290  ip r
+  291  ip addr
+  292  ifup enp1s0f0
+  293  ifup corp
+  294  ip r
+  295  pwd
+  296  virsh list
+  297  virsh shutdown fed30
+  298  lshw -c network -businfo
+  299  virsh start fed30
+  300  virsh console fed30
+  301  history | grep attach
+  302  virsh attach-device fed30 sriovifc1.xml
+  303  pwd
+  304  cd /pnpdata/vmisofile/
+  305  virsh attach-device fed30 sriovifc1.xml
+  306  virsh attach-device fed30 sriovifc2.xml
+  307  pwd
+  308  virsh  list
+  309  reboot
+  310  ls
+  311  ifconfig eno109s0f2
+  312  ifconfig enp109s0f2
+  313  ls
+  314  cd mtcp-dpdk/use
+  315  cd mtcp-dpdk
+  316  ls
+  317  cd ..
+  318  ls
+  319  cd -
+  320  git pull
+  321  ls
+  322  cd ..
+  323  ls
+  324  cd Documents/
+  325  ls
+  326  cd ..
+  327  ls
+  328  cd ..
+  329  ls
+  330  cd
+  331  ls
+  332  cd /pnpdata/
+  333  ls
+  334  cd f-stack
+  335  ls
+  336  cd dpdk
+  337  ls
+  338  cd usertools/
+  339  ./dpdk-devbind.py -s
+  340  cd ..
+  341  ls
+  342  cd ..
+  343  ls
+  344  cd ..
+  345  ls
+  346  wget https://downloadmirror.intel.com/24411/eng/i40e-2.9.21.tar.gz
+  347  export
+  348  wget https://downloadmirror.intel.com/24411/eng/i40e-2.9.21.tar.gz
+  349  ./dpdk-devbind.py -s
+  350  ls
+  351  f-stack/dpdk/usertools/dpdk-devbind.py -s
+  352  ethtool -u enp109s0f2
+  353  man ethtool 
+  354  ethtool -N enp109s0f2 flow-type ip4 dst-ip 192.168.232.235 action 0x100000000
+  355  ethtool -N enp109s0f2 flow-type ip4 dst-ip 192.168.233.236 action 0x200000001
+  356  ethtool -u enp109s0f2
+  357  ifconfig
+  358  ethtool -u enp109s0f2
+  359  ifconfig eth0
+  360  ethtool -N enp109s0f2 flow-type icmp4 dst-ip 192.168.233.236 action 0x200000001
+  361  ethtool -N enp109s0f2 flow-type icmp dst-ip 192.168.233.236 action 0x200000001
+  362  man ethtool
+  363  ethtool -u enp109s0f2
+  364  ethtool -U enp109s0f2 7422 
+  365  ethtool -N enp109s0f2 7422 
+  366  ethtool -U enp109s0f2 delete 7422 
+  367  ethtool -U enp109s0f2 delete 7423 
+  368  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.233.236 action 0x200000001
+  369  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.232.235 action 0x100000000
+  370  ethtool -u enp109s0f2
+  371  ls
+  372  ./f-stack/dpdk/usertools/dpdk-devbind.py -s
+  373  ethtool -u enp109s0f2
+  374  cat /sys/class/net/enp109s0f2/device/sriov_numvfs
+  375  cat /sys/class/net/enp109s0f0/device/sriov_numvfs
+  376  cat /sys/class/net/enp109s0f1/device/sriov_numvfs
+  377  cat /sys/class/net/enp109s0f3/device/sriov_numvfs
+  378  ethtool -U enp109s0f2 delete 7423 
+  379  ethtool -U enp109s0f2 delete 7422
+  380  cat /sys/class/net/enp109s0f3/device/sriov_numvfs
+  381  ethtool -N enp109s0f2 flow-type tcp4 action 0x200000001
+  382  ethtool -u enp109s0f2
+  383  ethtool -U enp109s0f2 delete 7423
+  384  ethtool -u enp109s0f2
+  385  ./f-stack/dpdk/usertools/dpdk-devbind.py -s
+  386  ping 192.168.232.235
+  387  arp -a
+  388  arp -s 192.168.232.235 52:54:00:49:33:2c
+  389  ping 192.168.232.235
+  390  ping 192.168.232.111
+  391  man ping
+  392  ifconfig 
+  393  ping 192.168.232.111 -I enp109s0f2
+  394  ping 192.168.232.235
+  395  arp -s 192.168.232.235 52:54:00:49:33:2c
+  396  ping 192.168.232.235
+  397  arp -a | grep PERM
+  398  arp -d 192.168.232.235 
+  399  arp -a | grep PERM
+  400  pwd
+  401  history | grep nodedev
+  402  virsh nodedev-list --cap pci | grep 6d_0a
+  403  pwd
+  404  cd /pnpdata/vmisofile/
+  405  history | grep attach
+  406  ip addr
+  407  lshw -c network -businfo
+  408  history | grep detach
+  409  virsh  nodedev-detach pci_0000_6d_0a_0
+  410  lshw -c network -businfo
+  411  virsh  nodedev-detach pci_0000_6d_0a_1
+  412  lshw -c network -businfo
+  413  history | grep attach
+  414  virsh attach-device fed30 sriovifc1.xml
+  415  virsh start fed30
+  416  virsh console fed30
+  417  virsh attach-device fed30 sriovifc1.xml
+  418  virsh attach-device fed30 sriovifc2.xml 
+  419  pwd
+  420  virsh console fed30
+  421  ip addr
+  422  lshw -c network -businfo
+  423  pwd
+  424  vim sriovifc1.xml 
+  425  vim sriovifc2.xml 
+  426  pwd
+  427  history | grep ethtool
+  428  ls
+  429  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.232.235 action 0x100000000
+  430  ethtool -u enp109s0f2
+  431  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.233.236 action 0x200000001
+  432  ethtool -u enp109s0f2
+  433  ethtool -U enp109s0f2 delete 7423
+  434  ethtool -U enp109s0f2 delete 7422
+  435  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+  436  ethtool -u enp109s0f2
+  437  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 dst-port 9001 action 0x200000001
+  438  ethtool -U enp109s0f2 delete 7422
+  439  ethtool -U enp109s0f2 delete 7423
+  440  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 dst-port 9001 action 0x200000001
+  441  ethtool -u enp109s0f2
+  442  l
+  443  cd /pnpdata/
+  444  ls
+  445  cd f-stack
+  446  ls
+  447  cd dpdk/
+  448  ls
+  449  cd usertools/
+  450  ls
+  451  ./dpdk-devbind.py -s
+  452  ethtool -U enp109s0f2 delete 7423
+  453  ethtool -u 00(Gbps), TX:       0(pps),  0.00(Gbps)
+  454  [CPU 0] dpdk1, RX:       0(pps) (err:     0),  0.000(Gbps), TX:       0(pps),  0.00(Gbps)
+  455  ethtool -u enp109s0f2
+  456  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000002
+  457  dmesg
+  458  sudo dmesg -c
+  459  ethtool -U enp109s0f2 delete 7423
+  460  ethtool -u enp109s0f2
+  461  dmesg
+  462  ethtool -N enp109s0f2 flow-type ip4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+  463  dmesg
+  464  ethtool -U enp109s0f2 delete 7423
+  465  ethtool -u enp109s0f2
+  466  ifconfig enp109s0f2
+  467  sudo ifconfig enp109s0f2 192.168.232.100/16 up
+  468  ifconfig enp109s0f2
+  469  ip r
+  470  ifconfig enp109s0f2
+  471  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+  472  ethtool -u enp109s0f2
+  473  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235 action 0x100000000
+  474  ethtool -u enp109s0f2
+  475  ifconfig
+  476  lshw -c network -businfo
+  477  pwd
+  478  virsh list
+  479  virsh console fed30
+  480  tmux ls
+  481  ip r
+  482  ip addr
+  483  ip r
+  484  cd /pnpdata/vmisofile/
+  485  ls -ltr
+  486  virsh list
+  487  virsh shutdown fed30
+  488  ls -ltr
+  489  pwd
+  490  ip r
+  491  pwd
+  492  virsh list
+  493  virsh start fed30
+  494  virsh console fed30
+  495  virsh list
+  496  virsh shutdown fed30
+  497  virsh list
+  498  virsh start fed30
+  499  virsh console fed30
+  500  df -h
+  501  pwd
+  502  cd /pnpdata/
+  503  ip r
+  504  pwd
+  505  lscpu
+  506  cd hwpdesire/
+  507  ls
+  508  ./2p4_c6_off
+  509  turbostat -d
+  510  clear
+  511  lsblk
+  512  pwd
+  513  cd ..
+  514  ip r
+  515  cd hwp
+  516  ls
+  517  ./2p7_c6_off
+  518  turbostat -d
+  519  vim 2p7_c6_off
+  520  ip r
+  521  tmux ls
+  522  tmux -s new mtcp
+  523  tmux new -s mtcp
+  524  tmux ls
+  525  tmux a -t mtcp
+  526  tmus ls
+  527  tmux ls
+  528  tmux a -t mtcp
+  529  cd /pnpdata/hwp/
+  530  ls
+  531  vim 2p2_c6_off 
+  532  lshw -c network -businfo
+  533  ethtool -g enp109s0f2
+  534  ethtool -l enp109s0f2
+  535  history | grep ethtool
+  536  ethtool -u enp109s0f2
+  537  ethtool -N --help
+  538  ethtool -N -h
+  539  ethtool -h 
+  540  history | grep ethtool
+  541   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 m 255.255.255.0 dst-ip 192.168.233.236 action 0x200000001
+  542  ethtool -u enp109s0f2
+  543   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3/24  dst-ip 192.168.233.236 action 0x200000001
+  544   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 src-mask 255.255.255.0  dst-ip 192.168.233.236 action 0x200000001
+  545   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 m 255.255.255.0  dst-ip 192.168.233.236 m 255.255.255.0 action 0x200000001
+  546  ethtool -u enp109s0f2
+  547  ethtool delete 7423
+  548  history | grep dele
+  549  ethtool -u enp109s0f2
+  550  ethtool -U enp109s0f2  delete 7423
+  551   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 m 255.255.255.0  dst-ip 192.168.233.236 m 255.255.255.0 action 0x200000001
+  552   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  dst-ip 192.168.233.236  action 0x200000001
+  553  ethtool -u enp109s0f2
+  554  ethtool -U enp109s0f2  delete 7423
+  555   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  255.255.255.0  dst-ip 192.168.233.236  255.255.255.0 action 0x200000001
+  556   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  [m 255.255.255.0]  dst-ip 192.168.233.236  255.255.255.0 action 0x200000001
+  557   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  [m 255.255.255.0]  dst-ip 192.168.233.236  255.255.255.0 vf 1 queue 1
+  558   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3   dst-ip 192.168.233.236  255.255.255.0 vf 1 queue 1
+  559   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3   dst-ip 192.168.233.236  vf 1 queue 1
+  560  ethtool -u enp109s0f2
+  561  virsh domiflist fed30
+  562  virsh detach-interface --domain fed30 --type bridge --mac 52:54:00:5c:41:2f --live --config
+  563  virsh console fed30
+  564  pwd
+  565  history
+  566  ethtool -u enp109s0f2
+  567  virsh console fed30
+  568  history
+  569  ethtool -u enp109s0f2
+  570  history
+  571  ethtool -u enp109s0f2
+  572  pkill -KILL redis-server
+  573  ethtool -U enp109s0f2  delete 7423
+  574  ethtool -U enp109s0f2  delete 7422
+  575  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235 action 0x100000000
+  576  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236 action 0x200000001
+  577  ip a
+  578  ethtool -u enp109s0f2
+  579  ls
+  580  cd mtcp-dpdk/
+  581  ls
+  582  cd ..
+  583  ls
+  584  cd /pnpdata/mtcpxdpm/
+  585  ls
+  586  cd ..
+  587  ls
+  588  cd f-stack
+  589  ls
+  590  cd dpdk/
+  591  ls
+  592  cd usertools/
+  593  l
+  594  ls
+  595  ./dpdk-devbind.py -s
+  596  ethtool -u enp109s0f2
+  597  ethtool -U enp109s0f2  delete 7422
+  598  ethtool -U enp109s0f2  delete 7423
+  599  history | grep ethtool | grep vf
+  600  ethtool -u enp109s0f2
+  601  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  dst-ip 192.168.233.236  255.255.255.0 vf 1 queue 0
+  602  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  dst-ip 192.168.233.236  vf 1 queue 0
+  603  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2  dst-ip 192.168.232.235  vf 0 queue 1
+  604  ethtool -u enp109s0f2
+  605  ethtool -U enp109s0f2  delete 7423
+  606  ethtool -U enp109s0f2  delete 7422
+  607  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  dst-ip 192.168.233.236  vf 1 queue 1
+  608  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2  dst-ip 192.168.232.235  vf 0 queue 0
+  609  ethtool -u enp109s0f2
+  610  pkill -KILL redis-server
+  611  ethtool -U enp109s0f2  delete 7423
+  612  ethtool -u enp109s0f2
+  613  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  dst-ip 192.168.233.236  vf 0 queue 0
+  614  ethtool -u enp109s0f2
+  615  ethtool -U enp109s0f2  delete 7423
+  616  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3  dst-ip 192.168.233.236  vf 1 queue 1
+  617  ethtool -u enp109s0f2
+  618  dmesg
+  619  dmesg -T
+  620  date
+  621  ethtool -u enp109s0f2
+  622  dmesg
+  623  ethtool -u enp109s0f2
+  624  virsh list
+  625  cd /pnpdata/vmisofile/
+  626  virsh list fed30
+  627  virsh list
+  628  virsh shutdown fed30
+  629  virsh start fed30
+  630  virsh console fed30
+  631  history | grep attach
+  632  virsh attach-device fed30 sriovifc1.xml
+  633  virsh attach-device fed30 sriovifc2.xml 
+  634  lshw -c network -businfo
+  635  virsh nodedev-list | grep pci
+  636  lshw -c network -businfo
+  637  virsh nodedev-list | grep pci | grep 6d_0a
+  638  virsh nodedev-dumpxml pci_0000_6d_0a_0
+  639  virsh nodedev-dumpxml pci_0000_6d_0a_1
+  640  history
+  641  virsh domiflist fed30
+  642  history | grep ethtool
+  643  ethtool -u enp109s0f2
+  644  ethtool -U enp109s0f2  delete 7423
+  645  ethtool -U enp109s0f2  delete 7422
+  646  ethtool -u enp109s0f2
+  647  pwd
+  648  cd /pnpdata/
+  649  ls
+  650  ls -ltr
+  651  cd mtcpxdpm/
+  652  git log
+  653  git branch -a
+  654  pwd
+  655  cd ..
+  656  ls
+  657  df -h
+  658  cd res/
+  659  ls
+  660  cd ..
+  661  ls
+  662  git clone https://gitlab.devtools.intel.com/rdas/mtcp-dpdk.git
+  663  ls -ltr
+  664  cd mtcp-dpdk/
+  665  ls
+  666  vim README.md 
+  667  ls
+  668  cd mtcp-source/
+  669  ls
+  670  pwd
+  671  history | grep attach
+  672  vim sriovifc1.xml
+  673  cd /pnpdata/vmisofile/
+  674  vim sriovifc1.xml
+  675  scp fed30.img root@10.242.51.189:/vmdisk/mtcp-fed30.img
+  676  history | grep ifcfg
+  677  history | grep virt-install
+  678  history | grep virt
+  679  history
+  680  history | grep virsh
+  681  history | grep virt
+  682  vim /etc/hostname 
+  683  pwd
+  684  cd /pnpdata/
+  685  ls -ltr
+  686  cd mtcp-dpdk/
+  687  ls
+  688  scp -r mtcp-source/ root@10.242.51.11:/root/
+  689  history | grep attach
+  690  pwd
+  691  ip r
+  692  vim /etc/hosts 
+  693  ip r
+  694  cd mtcp-source/
+  695  ./setup_mtcp_dpdk_env.sh /pnpdata/mtcp-dpdk/mtcp-source/dpdk
+  696  gcc --version
+  697  pwd
+  698  df -h
+  699  ip r
+  700  lshw -c network -businfo
+  701  virsh nodedev-list --cap pci | grep 0a
+  702  virsh nodedev-list --cap pci | grep 6d_0a
+  703  virsh domiflist fed30
+  704  virsh dumpxml fed30 
+  705  virsh dumpxml fed30  | less
+  706  virsh nodedev-list --cap pci | grep 6d_0a
+  707  ip addr
+  708  ethtool -u enp109s0f2
+  709  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2  dst-ip 192.168.233.236  vf 0 queue 0
+  710  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2  dst-ip 192.168.232.235  vf 1 queue 1
+  711  ethtool -u
+  712  ethtool -u enp109s0f2
+  713  ethtool -u enp109s0f2 delete 7422
+  714  history | grep ethtool | rep delete
+  715  history | grep ethtool | grep delete
+  716  ethtool -U enp109s0f2 delete 7422
+  717  ethtool -u enp109s0f2
+  718  ethtool -U enp109s0f2 delete 7423
+  719  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 m 255.255.255.255  dst-ip 192.168.232.235 m 255.255.255.255  vf 1 queue 1
+  720  ethtool -U enp109s0f2
+  721  ethtool -u enp109s0f2
+  722  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255  dst-ip 192.168.233.236 m 255.255.255.255  vf 0 queue 0
+  723  ethtool -u enp109s0f2
+  724  history
+  725   ethtool -U enp109s0f2 delete 7423
+  726  ethtool -U enp109s0f2 delete 7422
+  727  ethtool -u enp109s0f2
+  728  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 src-port 0 m 0 dst-ip 192.168.233.236 m 255.255.255.255 dst-port 0 m 0  vf 0 queue 0
+  729  ethtool -u enp109s0f2
+  730  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 m 255.255.255.255 src-port 0 m 0 dst-ip 192.168.232.235 m 255.255.255.255 dst-port 0 m 0  vf 1 queue 1
+  731  ethtool -u enp109s0f2
+  732  ethtool -U enp109s0f2 delete 7422
+  733  ethtool -U enp109s0f2 delete 7423
+  734  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 m 255.255.255.255 dst-ip 192.168.232.235 m 255.255.255.255 dst-port 9001  vf 1 queue 1
+  735  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.255 dst-port 9001  vf 0 queue 0
+  736  ethtool -u enp109s0f2
+  737  ethtool -U enp109s0f2 delete 7422
+  738  ethtool -U enp109s0f2 delete 7423
+  739  ethtool -u enp109s0f2
+  740  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2  dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  741  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2  dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 1
+  742  ethtool -u enp109s0f2
+  743  ethtool -U enp109s0f2 delete 7423
+  744  ethtool -U enp109s0f2 delete 7422
+  745  ethtool -u enp109s0f2
+  746  ip r
+  747  cat /etc/hostname 
+  748  hostnamectl set-hostname NCC1
+  749  lshw -c network -businfo
+  750  history | grep detach
+  751  virsh  nodedev-detach pci_0000_6d_0a_0
+  752  virsh  nodedev-detach pci_0000_6d_0a_1
+  753  lshw -c network -businfo
+  754  pwd
+  755  cd /pnpdata/vmisofile/
+  756  history | grep attach
+  757  virsh attach-device fed30 sriovifc1.xml
+  758  virsh attach-device fed30 sriovifc2.xml 
+  759  virsh domiflist fed30
+  760  virsh dumpxml fed30 | less
+  761  ip r
+  762  virsh list
+  763  virsh list --all
+  764  virsh start fed30
+  765  virsh console fed30
+  766  cat /etc/environment 
+  767  curl http://www.google.com
+  768  cat /etc/environment 
+  769  virsh console fed30
+  770  cat /etc/environment 
+  771  ping 10.242.51.173
+  772  ip r
+  773  ifdown enp1s0f0
+  774  virsh list
+  775  virsh list --all
+  776  virsh start fed30
+  777  lshw -c network -businfo
+  778  history | grep echo
+  779  echo 2 >  /sys/class/net/enp109s0f2/device/sriov_numvfs
+  780  lshw -c network -businfo
+  781  history | grep detach
+  782  virsh  nodedev-detach pci_0000_6d_0a_0
+  783  virsh  nodedev-detach pci_0000_6d_0a_1
+  784  cd /pnpdata/vmisofile/
+  785  ls
+  786  history | grep attach
+  787  virsh attach-device fed30 sriovifc1.xml
+  788  virsh attach-device fed30 sriovifc2.xml 
+  789  virsh console fed30
+  790  virsh dumpxml fed30
+  791  virsh dumpxml fed30 | less
+  792  ip r
+  793  tmux a -t mtcp
+  794  ethtool -u enp109s0f2
+  795  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2  dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 1
+  796  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2  dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  797  ethtool -U enp109s0f2 
+  798  ethtool -u enp109s0f2 
+  799  ethtool -U enp109s0f2 delete 7422
+  800  ethtool -U enp109s0f2 delete 7423
+  801  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2  dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  802  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2  dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 0
+  803  ethtool -U enp109s0f2 delete 7423
+  804  ethtool -U enp109s0f2 delete 7422
+  805  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2  dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  806  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2  dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 1
+  807  ethtool -u enp109s0f2 
+  808  ethtool -U enp109s0f2 delete 7423
+  809  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2  dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  810  ethtool -U enp109s0f2 delete 7423
+  811  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2  dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 2
+  812  ethtool -U enp109s0f2 delete 7423
+  813  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.0  dst-port 9001  m 0xffff vf 0 queue 0
+  814  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.0  dst-port 9001  m 255.255 vf 0 queue 0
+  815  man ethtool 
+  816  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.0  dst-port 9001  vf 0 queue 0
+  817  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.255  dst-port 9001  vf 0 queue 0
+  818  ethtool -u enp109s0f2 
+  819  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.255  dst-port 9001  vf 0 queue 0
+  820  man ethtool 
+  821  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  822  ethtool -U enp109s0f2 delete 7423
+  823  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.255  dst-port 9001  vf 0 queue 0
+  824  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 m 255.255.255.255 dst-ip 192.168.233.236 m 255.255.255.255  vf 0 queue 0
+  825  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236 m 255.255.255.255 vf 0 queue 0
+  826  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236 vf 0 queue 0
+  827  ethtool -u enp109s0f2
+  828  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236 vf 0 queue 0
+  829  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  830  ethtool -u enp109s0f2
+  831  ethtool -U enp109s0f2 delete 7423
+  832  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.233.236   vf 0 queue 0
+  833  ethtool -N enp109s0f2 flow-type ip4 dst-ip 192.168.233.236   vf 0 queue 0
+  834  ethtool -u enp109s0f2
+  835  ip a
+  836  iptables -L
+  837  ifconfig enp109s0f2
+  838  ip a
+  839  ip addr add 192.168.233.100 netmask 255.255.255.0 dev enp109s0f2
+  840  ip addr add 192.168.233.100/24 dev enp109s0f2
+  841  ip a
+  842  ethtool -U enp109s0f2 delete 7423
+  843  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  844  ethtool -u enp109s0f2
+  845  ip a
+  846  route -n
+  847  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  848  ethtool -U enp109s0f2 delete 7423
+  849  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  850  ethtool -U enp109s0f2 delete 7423
+  851  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  852  ethtool -u enp109s0f2
+  853  ethtool -U enp109s0f2 delete 7423
+  854  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  855  ethtool -U enp109s0f2 delete 7423
+  856  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  vf 0 queue 0
+  857  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9002  vf 0 queue 0
+  858  iptables -L
+  859  ls
+  860  dmesg
+  861  ls
+  862  ethtool -u enp109s0f2
+  863  ethtool -U enp109s0f2 delete 7423
+  864  ethtool -U enp109s0f2 delete 7422
+  865  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9002  vf 0 queue 0
+  866  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235  dst-port 9002  vf 1 queue 1
+  867  ethtool -U enp109s0f2 delete 7422
+  868  ethtool -U enp109s0f2 delete 7423
+  869  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9002  vf 0 queue 1
+  870  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235  dst-port 9002  vf 1 queue 0
+  871  ethtool -U enp109s0f2 delete 7423
+  872  ethtool -U enp109s0f2 delete 7422
+  873  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 0
+  874  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  875  dmesg
+  876  date
+  877  dmesg -T
+  878  ethtool -U enp109s0f2 delete 7422
+  879  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  880  ethtool -U enp109s0f2 delete 7422
+  881  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  882  ethtool -U enp109s0f2 delete 7422
+  883  ethtool -U enp109s0f2 delete 7423
+  884  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 1 queue 1
+  885  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235  dst-port 9001  vf 0 queue 0
+  886  ethtool -U enp109s0f2 delete 7423
+  887  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 2 queue 1
+  888  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 3 queue 1
+  889  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 4 queue 1
+  890  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 5 queue 1
+  891  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 6 queue 1
+  892  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 7 queue 1
+  893  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  894  ethtool -u enp109s0f2
+  895  ethtool -U enp109s0f2 delete 7423
+  896  ethtool -U enp109s0f2 delete 7422
+  897  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 1
+  898  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  899  ethtool -u enp109s0f2
+  900  fg
+  901  ls
+  902  ethtool -u enp109s0f2
+  903  ethtool -U enp109s0f2 delete 7422
+  904  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  905  ethtool -N enp109s0f2 flow-type tcp4 dst-ip 192.168.233.236  vf 0 queue 0
+  906  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  907  ethtool -U enp109s0f2 delete 7422
+  908  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  909  ethtool -U enp109s0f2 delete 7422
+  910  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 1
+  911  ethtool -U enp109s0f2 delete 7422
+  912  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  913  ip a
+  914  iptables -L
+  915  ethtool -u enp109s0f2
+  916  lshw -c network -businfo
+  917  history | grep echo
+  918  echo 2 >  /sys/class/net/enp109s0f2/device/sriov_numvfs
+  919  history | grep  lshw
+  920  history | grep  nodedev-list
+  921  virsh nodedev-list --cap pci | grep 6d_0a
+  922  pwd
+  923  history | grep  attach
+  924  cd /pnpdata/vmisofile/
+  925  virsh attach-device fed30 sriovifc1.xml
+  926  virsh attach-device fed30 sriovifc2.xml
+  927  history | grep ethtool
+  928  ethtool -u enp109s0f2
+  929  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  930   ethtool -U enp109s0f2 delete 7423
+  931  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  932   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235  dst-port 9002  vf 1 queue 1
+  933  ethtool -u enp109s0f2
+  934  pwd
+  935  route -n
+  936  history
+  937   ethtool -U enp109s0f2 delete 7423
+  938   ethtool -U enp109s0f2 delete 7422
+  939  ping 192.168.232.235
+  940  ping 192.168.233.236
+  941  ip r
+  942  arp -a
+  943  route -n
+  944  ip route add 192.168.233.236/24 via 192.168.232.100 dev enp109s0f2
+  945  ip route add 192.168.233.236/24  dev enp109s0f2
+  946  ip route add 192.168.233.0/24  dev enp109s0f2
+  947  route -n
+  948  ping 192.168.233.236
+  949  ping 192.168.232.235
+  950  ping 192.168.233.236
+  951  arp -a
+  952  arp -d 192.168.233.236
+  953  arp -a
+  954  ping 192.168.233.236
+  955  arp -a
+  956  route -n
+  957  route del -net 192.168.233.0  gw 0.0.0.0 netmask 255.255.255.0 dev enp109s0f2
+  958  route -n
+  959  ifdown enp109s0f2
+  960  route -n
+  961  ifup enp109s0f2
+  962  ip r
+  963  route -n
+  964  ping 192.168.233.236
+  965  ping 192.168.232.235
+  966  route -n
+  967  history | grep "ip "
+  968  history | grep "ip addr"
+  969  ip addr add 192.168.233.100 netmask 255.255.255.0 dev enp109s0f2
+  970  ip addr add 192.168.233.100/24 dev enp109s0f2
+  971  ip addr
+  972  ping 192.168.232.235
+  973  ping 192.168.233.236
+  974  arp -a
+  975  ping 192.168.233.236
+  976  route -n
+  977  history | grep "ethtool -N"
+  978   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.2 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  979   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 1
+  980  ethtool -u enp109s0f2
+  981   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.3 dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 1
+  982  ethtool -u enp109s0f2
+  983   ethtool -U enp109s0f2 delete 7423
+  984   ethtool -U enp109s0f2 delete 7421
+  985  ethtool -u enp109s0f2
+  986   ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  987  ethtool -u enp109s0f2
+  988   ethtool -U enp109s0f2 delete 7422
+  989   ethtool -U enp109s0f2 delete 7423
+  990  ethtool -u enp109s0f2
+  991  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.233.3 dst-ip 192.168.233.236  dst-port 9001  vf 0 queue 0
+  992  ethtool -N enp109s0f2 flow-type tcp4 src-ip 192.168.232.2 dst-ip 192.168.232.235  dst-port 9001  vf 1 queue 1
+  993  ethtool -u enp109s0f2
+  994   ethtool -U enp109s0f2 delete 7423
+  995   ethtool -U enp109s0f2 delete 7422
+  996  ethtool -u enp109s0f2
+  997  ulimit -a
+  998  cat /proc/sys/net/core/somaxconn
+  999  echo 16384 > /proc/sys/net/core/somaxconn
+ 1000  cat /proc/sys/net/core/somaxconn
+ 1001  virsh list
+ 1002  cat /proc/sys/net/core/somaxconn 
+ 1003  pwd
+ 1004  cd /pnpdata/
+ 1005  ls
+ 1006  cd f-stack
+ 1007  ls
+ 1008  vim README.md 
+ 1009  pwd
+ 1010  cd ..
+ 1011  ls
+ 1012  cd f-stack_working/
+ 1013  ls
+ 1014  vim run_fstack_redis.sh 
+ 1015  ls
+ 1016  ip r
+ 1017  pwd
+ 1018  cd ..
+ 1019  vim network_param_tune.sh 
+ 1020  ./network_param_tune.sh 
+ 1021  virsh list
+ 1022  virsh shutdown fed30
+ 1023  virsh start fed30
+ 1024  virsh console fed30
+ 1025  cd vmisofile/
+ 1026  ls
+ 1027  lshw -c network -businfo
+ 1028  cd ..
+ 1029  ls *his*
+ 1030  cd vmisofile/
+ 1031  ls *his*
+ 1032  history 
+ 1033  history > mtcp_vm_cmd_history

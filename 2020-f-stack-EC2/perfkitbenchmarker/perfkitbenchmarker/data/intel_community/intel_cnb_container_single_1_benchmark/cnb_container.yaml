@@ -1,0 +1,13 @@
+static_vms:
+  - &vm0
+    ip_address: 10.3.214.112
+    user_name: pkb
+    ssh_private_key: ~/.ssh/id_rsa
+    internal_ip: x.x.x.x
+
+intel_cnb_container_single_1:
+  vm_groups:
+    vm_group1:
+      static_vms:
+        - *vm0
+

@@ -1,0 +1,10 @@
+#This playbook will prepare your platform running the widedeep Workload
+---
+- hosts: target
+  remote_user: "{{target_username}}"
+  environment:
+      http_proxy: "{{ http_proxy if (set_internal_proxy  == 'yes') else '' }}"
+      https_proxy: "{{ https_proxy if (set_internal_proxy  == 'yes') else '' }}"
+      no_proxy: "{{ no_proxy if (set_internal_proxy == 'yes') else '' }}"
+  roles:
+    - { role: siege, when: ansible_distribution != 'Clear Linux OS' }

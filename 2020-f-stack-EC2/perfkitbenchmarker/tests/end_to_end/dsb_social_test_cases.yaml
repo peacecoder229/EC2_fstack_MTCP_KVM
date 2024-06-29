@@ -1,0 +1,153 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+
+  aws-ubuntu-2004: &aws-ubuntu-2004
+    cloud: AWS
+    zone: us-west-2
+    os_type: ubuntu2004
+    machine_type: t3.2xlarge
+
+  default: *aws-ubuntu-2004
+
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-publish: &pkb-publish
+    file_log_level: debug
+    kafka_publish: True
+
+  pkb-collect-collectd: &pkb-collect-collectd
+    file_log_level: debug
+    collectd: True
+
+  pkb-collect-and-publish: &pkb-collect-and-publish
+    file_log_level: debug
+    collectd: True
+    kafka_publish: True
+
+  pkb-collect-emon: &pkb-collect-emon
+    file_log_level: debug
+    emon: True
+
+################################################################################
+# Benchmark configurations -- Define various useful benchmark configurations
+################################################################################
+
+benchmark-configurations:
+
+  # mostly default settings for cloud
+  #   1 client VM (NOT in cluster)
+  #   1 worker node in the cluster
+  #   stop after 4 iterations (500, 600, 700, 800) -- not default
+  dsb_social_defaults: &dsb_social_defaults
+    benchmarks: dsb_social
+    dsb_social_client_rate_autoscale_max: "800" # limit run duration of test
+    dsb_social_image_cache: ""
+    k8s_get_retry_count: 50
+
+  # increase replicas and assign pods to nodes
+  #   1 client node (in cluster)
+  #   3 worker nodes in the cluster
+  #   2 load generators on client 
+  #   2 replicas of all replicable services
+  #   run one iteration at 500
+  dsb_social_replicas: &dsb_social_replicas
+    benchmarks: dsb_social
+    dsb_social_clients_in_cluster: True
+    dsb_social_replicas_override: 2
+    dsb_social_wrk2_replicas: 2
+    dsb_social_worker_nodes: 3
+    dsb_social_assign_nodes: True
+    dsb_social_client_rate: 500
+    dsb_social_image_cache: ""
+    k8s_get_retry_count: 50
+
+  # test less frequently used options
+  dsb_social_options: &dsb_social_options
+    benchmarks: dsb_social
+    dsb_social_nginx-thrift_replicas: 2
+    dsb_social_client_instances_per_vm: 2
+    dsb_social_client_connections: 100
+    dsb_social_client_threads: 10
+    dsb_social_client_timeout: 6
+    dsb_social_client_duration: 30
+    dsb_social_client_rate_autoscale_min: 200
+    dsb_social_client_rate_autoscale_increment: 200
+    dsb_social_client_rate_autoscale_max: 500
+    dsb_social_namespace: "testcase-namespace"
+    dsb_social_p99_sla: 1000
+    dsb_social_error_limit: 0.20
+    dsb_social_workloads: "mixed-workload,read-user-timeline,read-home-timeline,compose-post"
+    dsb_social_graph_url: "http://nrvis.com/download/data/socfb/socfb-Haverford76.zip"
+    dsb_social_skip_teardown: True
+    dsb_social_image_cache: ""
+    k8s_get_retry_count: 50
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options
+################################################################################
+
+tests:
+
+  Ubuntu2004AWS: &Ubuntu2004AWS
+    pkb: *pkb-basic
+    benchmark: *dsb_social_defaults
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004AWSReplicas: &Ubuntu2004AWSReplicas
+    pkb: *pkb-basic
+    benchmark: *dsb_social_replicas
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004AWSOptions: &Ubuntu2004AWSOptions
+    pkb: *pkb-basic
+    benchmark: *dsb_social_options
+    platform: *aws-ubuntu-2004
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+
+test-suites:
+
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  
+  developer:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  
+  benchmark:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  
+  acceptance:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004AWSReplicas: *Ubuntu2004AWSReplicas
+    Ubuntu2004AWSOptions: *Ubuntu2004AWSOptions
+  
+  ################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  
+  regression:
+    Ubuntu2004AWS: *Ubuntu2004AWS
+    Ubuntu2004AWSReplicas: *Ubuntu2004AWSReplicas
+    Ubuntu2004AWSOptions: *Ubuntu2004AWSOptions

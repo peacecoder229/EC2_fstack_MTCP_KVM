@@ -1,0 +1,302 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+  aws-centos7: &aws-centos7
+    cloud: AWS
+    zone: us-east-1
+    os_type: centos7
+    machine_type: c5.4xlarge
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+
+  aws-centos7-amd: &aws-centos7-amd
+    cloud: AWS
+    zone: us-east-2
+    os_type: centos7
+    machine_type: c5a.24xlarge
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+    image: ami-0a75b786d9a7f8144
+
+  azure-centos7: &azure-centos7
+    cloud: Azure
+    zone: westus
+    os_type: centos7
+    machine_type: Standard_F32s_v2
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+
+  azure-centos7-amd: &azure-centos7-amd
+    cloud: Azure
+    zone: westus
+    os_type: centos7
+    machine_type:  Standard_E64s_v3
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+
+  gcp-centos7: &gcp-centos7
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: centos7
+    machine_type: n2-standard-32
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+    gce_subnet_region: europe-west4
+
+  gcp-centos7-amd: &gcp-centos7-amd
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: centos7
+    machine_type: n2d-standard-96
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+    gce_subnet_region: europe-west4
+
+  aws-centos7-mn: &aws-centos7-mn
+    cloud: AWS
+    zone: us-east-1
+    os_type: centos7
+    machine_type: c5.4xlarge
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+
+  azure-centos7-mn: &azure-centos7-mn
+    cloud: Azure
+    zone: westus
+    os_type: centos7
+    machine_type: Standard_F16s_v2
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+
+  gcp-centos7-mn: &gcp-centos7-mn
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: centos7
+    machine_type: n2-standard-8
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+
+  aws-centos7-mn-efa: &aws-centos7-mn-efa
+    cloud: AWS
+    zone: us-east-1
+    os_type: centos7
+    machine_type: c5n.18xlarge
+    data_disk_type: standard
+    data_disk_size: 200
+    scratch_dir: /scratch
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-collect-svrinfo: &pkb-collect-svrinfo
+    file_log_level: debug
+    svrinfo: True
+
+  pkb-collect-collectd: &pkb-collect-collectd
+    file_log_level: debug
+    collectd: True
+
+  pkb-collect-svrinfo-collectd: &pkb-collect-svrinfo-collectd
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+
+  pkb-collect-and-publish: &pkb-collect-and-publish
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+    kafka_publish: True
+
+##############################################################################################
+# Benchmark configurations -- Define various useful HPC_NAMD configurations
+##############################################################################################
+benchmark-configurations:
+
+  namd_single_node_avx512: &namd_single_node_avx512
+    benchmarks: intel_hpc_namd
+    intel_hpc_namd_image_type: avx512
+
+  namd_single_node_amd: &namd_single_node_amd
+    benchmarks: intel_hpc_namd
+    intel_hpc_namd_image_type: amd
+
+  namd_multi_node_2nodes: &namd_multi_node_2nodes
+    benchmarks: intel_hpc_namd
+    intel_hpc_namd_nodes: 2
+
+  namd_multi_node_with_cluster_checker: &namd_multi_node_with_cluster_checker
+    benchmarks: intel_hpc_namd
+    intel_hpc_namd_nodes: 2
+    intel_hpc_namd_CC: 'True'
+
+  namd_multi_node_with_aws_fsx: &namd_multi_node_with_aws_fsx
+    benchmarks: intel_hpc_namd
+    intel_hpc_namd_nodes: 2
+    intel_hpc_namd_fss_type: 'FSX'
+
+  namd_multi_node_with_aws_efa: &namd_multi_node_with_aws_efa
+    benchmarks: intel_hpc_namd
+    intel_hpc_namd_nodes: 2
+    aws_efa: 'True'
+    aws_efa_version: 1.9.4
+
+  namd_multi_node_with_azure_openHPCImage: &namd_multi_node_with_azure_openHPCImage
+    benchmarks: intel_hpc_namd
+    intel_hpc_namd_nodes: 2
+    image: 'OpenLogic:CentOS-HPC:7.7:7.7.2020042000'
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options for HPC_NAMD
+################################################################################
+tests:
+
+  Run_SingleNode_NAMD_Intel_AWS: &Run_SingleNode_NAMD_Intel_AWS
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_single_node_avx512
+    platform: *aws-centos7
+
+  Run_SingleNode_NAMD_Intel_Azure: &Run_SingleNode_NAMD_Intel_Azure
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_single_node_avx512
+    platform: *azure-centos7
+
+  Run_SingleNode_NAMD_Intel_GCP: &Run_SingleNode_NAMD_Intel_GCP
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_single_node_avx512
+    platform: *gcp-centos7
+  
+  Run_SingleNode_NAMD_AMD_AWS: &Run_SingleNode_NAMD_AMD_AWS
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_single_node_amd
+    platform: *aws-centos7-amd
+
+  Run_SingleNode_NAMD_AMD_Azure: &Run_SingleNode_NAMD_AMD_Azure
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_single_node_amd
+    platform: *azure-centos7-amd
+
+  Run_SingleNode_NAMD_AMD_GCP: &Run_SingleNode_NAMD_AMD_GCP
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_single_node_amd
+    platform: *gcp-centos7-amd
+
+  Run_2Nodes_NAMD_Intel_AWS: &Run_2Nodes_NAMD_Intel_AWS
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_2nodes
+    platform: *aws-centos7-mn
+
+  Run_2Nodes_NAMD_Intel_Azure: &Run_2Nodes_NAMD_Intel_Azure
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_2nodes
+    platform: *azure-centos7-mn
+
+  Run_2Nodes_NAMD_Intel_GCP: &Run_2Nodes_NAMD_Intel_GCP
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_2nodes
+    platform: *gcp-centos7-mn
+
+  Run_2Nodes_NAMD_Intel_With_CC_AWS: &Run_2Nodes_NAMD_Intel_With_CC_AWS
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_with_cluster_checker
+    platform: *aws-centos7-mn
+
+  Run_2Nodes_NAMD_Intel_With_CC_Azure: &Run_2Nodes_NAMD_Intel_With_CC_Azure
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_with_cluster_checker
+    platform: *azure-centos7-mn
+
+  Run_2Nodes_NAMD_Intel_With_CC_GCP: &Run_2Nodes_NAMD_Intel_With_CC_GCP
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_with_cluster_checker
+    platform: *gcp-centos7-mn
+
+  Run_2Nodes_NAMD_Intel_With_AWS_FSX: &Run_2Nodes_NAMD_Intel_With_AWS_FSX
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_with_aws_fsx
+    platform: *aws-centos7-mn
+
+  Run_2Nodes_NAMD_Intel_With_AWS_EFA: &Run_2Nodes_NAMD_Intel_With_AWS_EFA
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_with_aws_efa
+    platform: *aws-centos7-mn-efa
+
+  Run_2Nodes_NAMD_Intel_With_OpenHPCImage_Azure: &Run_2Nodes_NAMD_Intel_With_OpenHPCImage_Azure
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *namd_multi_node_with_azure_openHPCImage
+    platform: *azure-centos7-mn
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+test-suites:
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  developer:
+    Run_SingleNode_NAMD_Intel_AWS: *Run_SingleNode_NAMD_Intel_AWS
+    Run_SingleNode_NAMD_Intel_Azure: *Run_SingleNode_NAMD_Intel_Azure
+    Run_SingleNode_NAMD_Intel_GCP: *Run_SingleNode_NAMD_Intel_GCP
+    Run_SingleNode_NAMD_AMD_AWS: *Run_SingleNode_NAMD_AMD_AWS
+    Run_SingleNode_NAMD_AMD_Azure: *Run_SingleNode_NAMD_AMD_Azure
+    Run_SingleNode_NAMD_AMD_GCP: *Run_SingleNode_NAMD_AMD_GCP
+
+    Run_2Nodes_NAMD_Intel_AWS: *Run_2Nodes_NAMD_Intel_AWS
+    Run_2Nodes_NAMD_Intel_Azure: *Run_2Nodes_NAMD_Intel_Azure
+    Run_2Nodes_NAMD_Intel_GCP: *Run_2Nodes_NAMD_Intel_GCP
+
+    Run_2Nodes_NAMD_Intel_With_CC_AWS: *Run_2Nodes_NAMD_Intel_With_CC_AWS
+    Run_2Nodes_NAMD_Intel_With_CC_Azure: *Run_2Nodes_NAMD_Intel_With_CC_Azure
+    Run_2Nodes_NAMD_Intel_With_CC_GCP: *Run_2Nodes_NAMD_Intel_With_CC_GCP
+
+    Run_2Nodes_NAMD_Intel_With_AWS_FSX: *Run_2Nodes_NAMD_Intel_With_AWS_FSX
+    Run_2Nodes_NAMD_Intel_With_AWS_EFA: *Run_2Nodes_NAMD_Intel_With_AWS_EFA
+
+    Run_2Nodes_NAMD_Intel_With_OpenHPCImage_Azure: *Run_2Nodes_NAMD_Intel_With_OpenHPCImage_Azure
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  benchmark:
+    Run_SingleNode_NAMD_Intel_AWS: *Run_SingleNode_NAMD_Intel_AWS
+    Run_2Nodes_NAMD_Intel_AWS: *Run_2Nodes_NAMD_Intel_AWS
+
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  acceptance:
+    Run_SingleNode_NAMD_Intel_AWS: *Run_SingleNode_NAMD_Intel_AWS
+    Run_SingleNode_NAMD_Intel_Azure: *Run_SingleNode_NAMD_Intel_Azure
+    Run_SingleNode_NAMD_Intel_GCP: *Run_SingleNode_NAMD_Intel_GCP
+    Run_SingleNode_NAMD_AMD_AWS: *Run_SingleNode_NAMD_AMD_AWS
+    Run_SingleNode_NAMD_AMD_Azure: *Run_SingleNode_NAMD_AMD_Azure
+    Run_SingleNode_NAMD_AMD_GCP: *Run_SingleNode_NAMD_AMD_GCP
+
+    Run_2Nodes_NAMD_Intel_AWS: *Run_2Nodes_NAMD_Intel_AWS
+    Run_2Nodes_NAMD_Intel_With_CC_AWS: *Run_2Nodes_NAMD_Intel_With_CC_AWS
+    Run_2Nodes_NAMD_Intel_With_AWS_FSX: *Run_2Nodes_NAMD_Intel_With_AWS_FSX
+    Run_2Nodes_NAMD_Intel_With_AWS_EFA: *Run_2Nodes_NAMD_Intel_With_AWS_EFA
+    Run_2Nodes_NAMD_Intel_With_OpenHPCImage_Azure: *Run_2Nodes_NAMD_Intel_With_OpenHPCImage_Azure
+
+  ################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  regression:
+    Run_SingleNode_NAMD_Intel_AWS: *Run_SingleNode_NAMD_Intel_AWS
+    Run_SingleNode_NAMD_Intel_Azure: *Run_SingleNode_NAMD_Intel_Azure
+    Run_SingleNode_NAMD_Intel_GCP: *Run_SingleNode_NAMD_Intel_GCP

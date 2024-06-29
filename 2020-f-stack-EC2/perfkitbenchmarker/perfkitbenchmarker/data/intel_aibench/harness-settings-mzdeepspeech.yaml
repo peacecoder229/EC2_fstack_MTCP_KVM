@@ -1,0 +1,28 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk
+  disk1-storage: /disk1
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  mzdeepspeech-inference:
+    repeat-count: 1                                          # number of instances to launch
+    #cores: 0-55                                             # number of cores (divided uniformly among all instances)
+    services: ssh,mzdeepspeech
+    env:
+      MZDS_DATA_DIR: ${shares.shared-storage-partition}/Data/mzdeepspeech-inference/RT_Compatible/   # RT Compatible dataset
+      MZDS_FILE_NAME: ${shares.shared-storage-partition}/Data/mzdeepspeech-inference/moz.py
+      BATCH_MODE: true
+      MZDS_NUM_STREAMS: 1
+      MZDS_LENGTH: 1
+      MZDS_WL: mzdeepspeech-inference
+      MZDS_SOURCE: ${shares.shared-storage-partition}/Data/mzdeepspeech-inference
+      MZDS_ALPHABET: ${shares.shared-storage-partition}/Data/mzdeepspeech-inference/alphabet.txt
+      MZDS_MODEL: ${shares.shared-storage-partition}/Data/mzdeepspeech-inference/output_graph.pb
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: INFO                                        # INFO or DEBUG, use DEBUG for detailed event collection
+
+scenarios:
+  mzdeepspeech:
+    virtual-instances: mzdeepspeech-inference
+    parser: parser-mzds.py

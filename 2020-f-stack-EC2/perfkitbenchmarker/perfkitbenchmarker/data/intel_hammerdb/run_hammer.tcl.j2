@@ -1,0 +1,44 @@
+#!/bin/tclsh
+proc runtimer { seconds } {
+set x 0
+set timerstop 0
+while {!$timerstop} {
+incr x
+after 1000
+  if { ![ expr {$x % 60} ] } {
+          set y [ expr $x / 60 ]
+          puts "Timer: $y minutes elapsed"
+  }
+update
+if {  [ vucomplete ] || $x eq $seconds } { set timerstop 1 }
+    }
+return
+}
+puts "SETTING CONFIGURATION"
+dbset db {{ db_type }}
+dbset bm {{ bm_type }}
+diset connection pg_host "{{ ip_address }}"
+diset tpcc pg_driver timed
+diset tpcc pg_rampup {{ pg_rampup }}
+diset tpcc pg_duration {{ pg_duration }}
+diset tpcc pg_allwarehouse {{ pg_allwh }}
+diset tpcc pg_vacuum true
+diset tpcc pg_raiseerror  true
+diset tpcc pg_storedprocs true
+diset tpcc pg_timeprofile {{ pg_timeprofile }}
+vuset logtotemp 1
+vuset unique 1
+vuset timestamps {{ enable_timestamps }}
+loadscript
+puts "SEQUENCE STARTED"
+foreach z { {{ hm_vus }} } {
+puts "$z VU TEST"
+vuset vu $z
+vucreate
+vurun
+runtimer 600
+vudestroy
+after 5000
+        }
+puts "TEST SEQUENCE COMPLETE"
+exit

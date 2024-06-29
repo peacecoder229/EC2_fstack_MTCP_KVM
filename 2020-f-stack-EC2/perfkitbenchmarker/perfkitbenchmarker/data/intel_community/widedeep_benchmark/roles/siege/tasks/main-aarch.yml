@@ -1,0 +1,8 @@
+---
+ - name: Install automake
+   apt: name="automake" state=present
+   become: yes
+
+ - name: Copy config.guess to the siege dir
+   shell: cp /usr/share/automake-*/config.guess "{{ download_dir }}/{{ siege_dir }}/utils/config.guess"
+   become: yes

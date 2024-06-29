@@ -1,0 +1,62 @@
+# Example cloud config file for the mongodb_stress benchmark.
+
+worker: &worker
+  AWS:
+    machine_type: m5d.24xlarge
+    zone: us-east-1
+    boot_disk_size: 200
+  GCP:
+    machine_type: n1-standard-96
+    zone: us-west1-a
+    min_cpu_platform: skylake
+    boot_disk_size: 200
+    num_local_ssds: 4
+  Azure:
+    machine_type: Standard_F72s_v2
+    zone: westus
+    boot_disk_size: 200
+
+worker_disk: &worker_disk
+  AWS:
+    disk_type: local
+    num_striped_disks: 4
+    mount_point: /scratch
+  GCP:
+    disk_type: local
+    num_striped_disks: 4
+    mount_point: /scratch
+  Azure:
+    disk_type: Premium_LRS
+    disk_size: 500
+    mount_point: /scratch
+
+client: &client 
+  AWS:
+    zone: us-east-1
+    machine_type: m5.24xlarge
+    boot_disk_size: 200
+  GCP:
+    machine_type: n1-standard-96
+    zone: us-west1-a
+    min_cpu_platform: skylake
+    boot_disk_size: 200
+  Azure:
+    machine_type: Standard_F72s_v2
+    zone: westus
+    boot_disk_size: 200
+
+mongodb_stress:
+  vm_groups:
+    workers:
+      os_type: ubuntu2004
+      vm_spec: *worker
+      disk_spec: *worker_disk
+      vm_count: 1
+    clients:
+      os_type: ubuntu2004
+      vm_spec: *client
+
+flags:
+  ycsb_client_vms: 2                    # use this number of client vms/machines
+  gce_ssd_interface: NVME
+  azure_accelerated_networking: True

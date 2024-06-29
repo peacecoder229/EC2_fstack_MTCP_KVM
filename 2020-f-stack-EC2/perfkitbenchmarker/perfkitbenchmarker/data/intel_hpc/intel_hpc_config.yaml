@@ -1,0 +1,61 @@
+image-bucket: s3://cumulus/hpc
+image-uri: https://cumulus.s3.us-east-2.amazonaws.com/hpc
+head_node:
+lammps:
+  sub_workloads:
+    - airebo
+    - dpd
+    - eam
+    - lc
+    - lj
+    - rhodo
+    - sw
+    - tersoff
+    - water
+  sub_workload_names:
+    - Polyethelene (airebo)
+    - Dissipative Particle Dynamics (dpd)
+    - Copper with Embedded Atom Method (eam)
+    - Liquid Crystal (lc)
+    - Atomic fluid (lj)
+    - Protein (rhodo)
+    - Silicon with Stillinger-Weber (sw)
+    - Silicon with Tersoff (tersoff)
+    - Coarse-grain water (water)
+gromacs:
+  sub_workloads:
+    - ion_channel.tpr
+    - topol_pme.tpr
+    - topol_rf.tpr
+    - lignocellulose-rf.tpr
+  sub_workload_names:
+    - ion_channel.pme (ion_channel.tpr)
+    - lignocellulose_rf (lignocellulose-rf.tpr)
+    - water_pme (topol_pme.tpr)
+    - water_rf (topol_rf.tpr)
+  steps:
+    - 55000
+    - 10000
+    - 10000
+    - 8000
+openfoam:
+  workloads:
+    - potentialFoam
+    - simpleFoam
+computeBenches:
+  workloads:
+    - gemms
+    - hpl
+    - hpcg
+wrf:
+  package: conus2.5km
+namd:
+  workloads:
+    - apoa1
+    - apoa1_nptsr_cuda
+    - stmv
+    - stmv_nptsr_cuda
+montecarlo:
+blacksholes:
+binomialoptions:
+hpcg:

@@ -1,0 +1,23 @@
+shares:
+  shared-storage-partition: /mnt/nvme_nfs_share/AIBench_shared_disk/
+  disk1-storage: /mnt/nvme_local
+  logs-location: /tmp/aibench/runs/$RUN_ID
+
+virtual-instances:
+  wide-n-deep-inference:
+    repeat-count: 1                                  # number of instances to launch
+    #cores: 0-27                                      # number of cores (divided uniformly among all instances)
+    services: ssh
+    env:
+      HOME_DIR:  ${shares.shared-storage-partition}/Data/wide-n-deep-inference/mxnet-model-dir
+      BATCH_SIZE: 1024
+      VNNI: fp32                                                                      # options are int8 and fp32
+      #NUMA_OPTIONS: --membind=0
+      LOGSTASH_HOST: db-server-0.aibench-static
+      LOGSTASH_PORT: 5959
+      LOG_LEVEL: 'INFO'                                                               # INFO or DEBUG, use DEBUG for detailed event collection
+ 
+scenarios:
+  wide-n-deep:
+    virtual-instances: wide-n-deep-inference
+    parser: parser-wnd.py

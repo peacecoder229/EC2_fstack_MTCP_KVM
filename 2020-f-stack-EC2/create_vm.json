@@ -1,0 +1,112 @@
+{
+    "Groups": [],
+    "Instances": [
+        {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-08962a4068733a2b6",
+            "InstanceId": "i-07411289d324cb9db",
+            "InstanceType": "c5.4xlarge",
+            "KeyName": "test-key-3",
+            "LaunchTime": "2021-03-11T19:32:56.000Z",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "us-east-2a",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-172-31-6-81.us-east-2.compute.internal",
+            "PrivateIpAddress": "172.31.6.81",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-0f7c796a123cfa8e9",
+            "VpcId": "vpc-00c11ae45fe104edc",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "226c4a55-41db-462f-8127-f6b72def93dd",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2021-03-11T19:32:56.000Z",
+                        "AttachmentId": "eni-attach-0a1303a629309f31a",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching"
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "launch-wizard-3",
+                            "GroupId": "sg-04469ab52ccaf103e"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "02:29:18:39:dc:90",
+                    "NetworkInterfaceId": "eni-0622380f47af427d7",
+                    "OwnerId": "867197782197",
+                    "PrivateDnsName": "ip-172-31-6-81.us-east-2.compute.internal",
+                    "PrivateIpAddress": "172.31.6.81",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateDnsName": "ip-172-31-6-81.us-east-2.compute.internal",
+                            "PrivateIpAddress": "172.31.6.81"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-0f7c796a123cfa8e9",
+                    "VpcId": "vpc-00c11ae45fe104edc",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/sda1",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "launch-wizard-3",
+                    "GroupId": "sg-04469ab52ccaf103e"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "f-stack-3"
+                }
+            ],
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 8,
+                "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            }
+        }
+    ],
+    "OwnerId": "867197782197",
+    "ReservationId": "r-0044a76cfee44d51d"
+}

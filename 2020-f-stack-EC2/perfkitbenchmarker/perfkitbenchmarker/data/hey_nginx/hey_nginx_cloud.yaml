@@ -1,0 +1,50 @@
+# Example cloud config file for the hey_nginx benchmark.
+
+worker: &worker
+  AWS:
+    machine_type: m5.16xlarge
+    #machine_type: m6g.16xlarge
+    #image: ami-003b90277095b7a42  # ARM64 Ubuntu 18.04
+    zone: us-west-2
+    boot_disk_size: 200
+  GCP:
+    machine_type: n1-standard-96
+    zone: us-west1-a
+    min_cpu_platform: skylake
+    boot_disk_size: 200
+  Azure:
+    machine_type: Standard_F72s_v2
+    zone: westus
+    boot_disk_size: 200
+
+client: &client 
+  AWS:
+    machine_type: m5.24xlarge
+    zone: us-west-2
+    boot_disk_size: 200
+  GCP:
+    machine_type: n1-standard-96
+    zone: us-west1-a
+    min_cpu_platform: skylake
+    boot_disk_size: 200
+  Azure:
+    machine_type: Standard_F72s_v2
+    zone: westus
+    boot_disk_size: 200
+
+hey_nginx:
+  vm_groups:
+    workers:
+      os_type: ubuntu1804
+      vm_spec: *worker
+      vm_count: 1
+    clients:
+      os_type: ubuntu1804
+      vm_spec: *client
+
+flags:
+  hey_nginx_client_vms: 2                    # use this number of client vms/machines
+  hey_nginx_threads_per_client: 192
+  hey_nginx_requests_per_client: 1000000     # 1M
+  gce_ssd_interface: NVME
+  azure_accelerated_networking: True

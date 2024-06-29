@@ -1,0 +1,187 @@
+{
+    "workload1": {
+        "metadata": {
+            "metadata_name": "widedeep",
+            "metadata_type": "workload category - AI",
+            "metadata_load": "Unknown"
+        },
+        "vm_groups": [{
+            "name": "vm_group1",
+            "deps": [{
+                "os": {
+                    "os_name": "Ubuntu",
+                    "os_ver": "18.04",
+                    "os_kernel": "5.3.0-40-generic"
+                },
+                "packages": [{
+                        "name": "tar",
+                        "ver": "",
+                        "type": "OS",
+                        "custom_install": "",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    },
+                    {
+                        "name": "ansible",
+                        "ver": "",
+                        "type": "custom",
+                        "custom_install": "./install_ansible.sh",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    },
+                    {
+                        "name": "python-setuptools",
+                        "ver": "",
+                        "type": "OS",
+                        "custom_install": "",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    },
+                    {
+                        "name": "numactl",
+                        "ver": "",
+                        "type": "OS",
+                        "custom_install": "",
+                        "custom_pre": "",
+                        "custom_post": ""
+                    }
+                ]
+            }]
+        }],
+        "run_local": {
+            "cmd": ""
+        },
+        "weightage": "",
+        "install": [{
+                "target": "vm_group1[0]",
+                "cmd": "./install_widedeep_wl.bash ",
+                "internal_resources": [
+                        {
+                            "name": "WideNDeep Workload Project",
+                            "url":  "https://cumulus.s3.us-east-2.amazonaws.com/wide_n_deep/model.tar.gz"
+                        },
+                        {
+                            "name": "WideNDeep datafiles for deployment ",
+                            "url":  "https://cumulus.s3.us-east-2.amazonaws.com/wide_n_deep/widedeep_wlfiles.tar.gz"
+                        }
+                    ]
+                },
+            {
+                "target": "",
+                "cmd": ""
+            }
+        ],
+        "run": {
+            "target": "vm_group1[0]",
+            "run_command": "./measure_inference_performance.bash --run_mode=$run_mode --benchmark_mode=$benchmark_mode --vcpu=$vcpu --framework=$framework --precision=$precision --batchsize=$batchsize --intra_threads=$intra_threads --inter_threads=$inter_threads --omp_threads=$omp_threads"
+        },
+        "config": [{
+                "name": "vcpu",
+                "description": "Number of virtual cpus to use. ",
+                "range": "",
+                "type": "OS-num",
+                "target_default": "vm_group1[0]",
+                "default": "nproc",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+			{
+                "name": "run_mode",
+                "description": "Select default, custom, or optimize. ",
+                "range": "('default', 'custom', 'optimize')",
+                "type": "str",
+                "target_default": "vm_group1[0]",
+                "default": "default",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+			{
+                "name": "benchmark_mode",
+                "description": "Select either benchmark-only or accuracy to use. ",
+                "range": "('benchmark-only', 'accuracy')",
+                "type": "str",
+                "target_default": "vm_group1[0]",
+                "default": "benchmark-only",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+            {
+                "name": "framework",
+                "description": "Version of tensorflow framework to use. ",
+                "range": "{'tensorflow-1.14.1', 'tensorflow-1.14.0')",
+                "type": "str",
+                "target_default": "vm_group1[0]",
+                "default": "tensorflow-1.14.1",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+			{
+                "name": "precision",
+                "description": "Inference precision to use. ",
+                "range": "('int8', 'fp32')",
+                "type": "str",
+                "target_default": "vm_group1[0]",
+                "default": "fp32",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+			{
+                "name": "batchsize",
+                "description": "Batch size to use. ",
+                "range": "",
+                "type": "num",
+                "target_default": "vm_group1[0]",
+                "default": "1",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+			{
+                "name": "intra_threads",
+                "description": "Number of intra-threads to use. ",
+                "range": "",
+                "type": "num",
+                "target_default": "vm_group1[0]",
+                "default": "1",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+			{
+                "name": "inter_threads",
+                "description": "Number of inter-threads to use. ",
+                "range": "",
+                "type": "num",
+                "target_default": "vm_group1[0]",
+                "default": "1",
+                "setcmd": "",
+                "target_setcmd": ""
+            },
+			{
+                "name": "omp_threads",
+                "description": "Number of omp threads to use. ",
+                "range": "",
+                "type": "num",
+                "target_default": "vm_group1[0]",
+                "default": "1",
+                "setcmd": "",
+                "target_setcmd": ""
+            }
+        ],
+        "output_dir": {
+            "output_dir_path": "/opt/pkb/results",
+            "output_dir_target": "vm_group1[0]"
+        },
+        "metric": [
+        {
+            "name": "Throughput ",
+            "goal": "Increase",
+            "read": "cat $output_dir_path/benchmark_wide_deep_large_ds_inference_*.log | grep 'Throughput is' | awk -F':' '{ print $2 }'",
+            "target": "vm_group1[0]",
+            "unit": "records/sec"
+        }
+        ],
+        "cleanup": [{
+            "target": "vm_group1[0]",
+            "cmd": "echo cleaning up work directories; rm -rf ~/wide_deep_large_ds"
+        }]
+    }
+}

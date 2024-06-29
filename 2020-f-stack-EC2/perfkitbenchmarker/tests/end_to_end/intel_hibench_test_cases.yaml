@@ -1,0 +1,545 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+  aws-ubuntu-1804: &aws-ubuntu-1804
+    cloud: AWS
+    zone: us-west-2
+    os_type: ubuntu1804
+    machine_type: m5.2xlarge
+
+  aws-centos-7: &aws-centos-7
+    cloud: AWS
+    zone: us-west-2
+    os_type: centos7
+    machine_type: m5.2xlarge
+
+  aws-centos-7-east-1: &aws-centos-7-east-1
+    cloud: AWS
+    zone: us-east-1a
+    zone: us-east-1b
+    zone: us-east-1c
+    zone: us-east-1d
+    zone: us-east-1f 
+    os_type: centos7
+    machine_type: m5.2xlarge
+
+  aws-centos-7-east-2: &aws-centos-7-east-2
+    cloud: AWS
+    zone: us-east-2
+    os_type: centos7
+    machine_type: m5.2xlarge
+
+  aws-rhel-7: &aws-rhel-7
+    cloud: AWS
+    zone: us-west-2
+    os_type: rhel7
+    machine_type: m5.2xlarge
+
+  azure-ubuntu-1804: &azure-ubuntu-1804
+    cloud: Azure
+    zone: westus
+    os_type: ubuntu1804
+    machine_type: Standard_F8s_v2
+
+  azure-centos-7: &azure-centos-7
+    cloud: Azure
+    zone: westus
+    os_type: centos7
+    machine_type: Standard_F8s_v2
+
+  azure-rhel-7: &azure-rhel-7
+    cloud: Azure
+    zone: westus
+    os_type: rhel7
+    machine_type: Standard_F8s_v2
+
+  gcp-ubuntu-1804: &gcp-ubuntu-1804
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: ubuntu1804
+    machine_type: n2-standard-8
+
+  gcp-centos-7: &gcp-centos-7
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: centos7
+    machine_type: n2-standard-8
+
+  gcp-rhel-7: &gcp-rhel-7
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: rhel7
+    machine_type: n2-standard-8
+
+  aws-ubuntu-2004: &aws-ubuntu-2004
+    cloud: AWS
+    zone: us-east-1
+    os_type: ubuntu2004
+    machine_type: m5.2xlarge
+    data_disk_type: standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  azure-ubuntu-2004: &azure-ubuntu-2004
+    cloud: Azure
+    zone: westus
+    os_type: ubuntu2004
+    machine_type: Standard_F8s_v2
+    data_disk_type: Standard_LRS
+    data_disk_size: "250"
+    scratch_dir: /scratch
+
+  gcp-ubuntu-2004: &gcp-ubuntu-2004
+    cloud: GCP
+    zone: us-west2-c
+    os_type: ubuntu2004
+    machine_type: n1-standard-8
+    data_disk_type: pd-standard
+    data_disk_size: "250"
+    scratch_dir: /scratch
+    gce_subnet_region: us-west2
+
+  baremetal-ubuntu1604: &baremetal-ubuntu1604
+    benchmark_config_file: intel_hibench_baremetal_ubuntu1604_testing.yaml
+    os_type: ubuntu1604
+    http_proxy: "http://proxy-chain.intel.com:911"
+    https_proxy: "http://proxy-chain.intel.com:912"
+
+  baremetal-ubuntu1804: &baremetal-ubuntu1804
+    benchmark_config_file: intel_hibench_baremetal_ubuntu1804_testing.yaml
+    os_type: ubuntu1804
+    http_proxy: "http://proxy-chain.intel.com:911"
+    https_proxy: "http://proxy-chain.intel.com:912"
+
+  baremetal-ubuntu2004: &baremetal-ubuntu2004
+    benchmark_config_file: intel_hibench_baremetal_ubuntu2004_testing.yaml
+    os_type: ubuntu2004
+    http_proxy: "http://proxy-chain.intel.com:911"
+    https_proxy: "http://proxy-chain.intel.com:912"
+
+  aws-centos-7-small: &aws-centos-7-small
+    cloud: AWS
+    zone: us-west-2
+    os_type: centos7
+    machine_type: m5.4xlarge
+
+  aws-centos-7-large: &aws-centos-7-large
+    cloud: AWS
+    zone: us-east-1
+    os_type: centos7
+    machine_type: m5.12xlarge
+
+  aws-centos-7-huge: &aws-centos-7-huge
+    cloud: AWS
+    zone: us-east-2
+    os_type: centos7
+    machine_type: m5.24xlarge
+ 
+  default: *aws-ubuntu-1804
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-collect-svrinfo: &pkb-collect-svrinfo
+    file_log_level: debug
+    svrinfo: True
+    trace_allow_benchmark_control: True
+
+  pkb-collect-collectd: &pkb-collect-collectd
+    file_log_level: debug
+    trace_allow_benchmark_control: True
+    collectd: True
+
+  pkb-collect-and-publish: &pkb-collect-and-publish
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+    trace_allow_benchmark_control: True
+    kafka_publish: True
+
+##############################################################################################
+# Benchmark configurations -- Define various useful HiBench configurations
+##############################################################################################
+
+benchmark-configurations:
+  hibench_scalaspark_kmeans_defaults: &hibench_scalaspark_kmeans_defaults   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+
+  hibench_scalaspark_kmeans_defaults_pub: &hibench_scalaspark_kmeans_defaults_pub   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+
+  hibench_scalaspark_terasort_defaults: &hibench_scalaspark_terasort_defaults   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: terasort
+
+  hibench_scalaspark_terasort_defaults_pub: &hibench_scalaspark_terasort_defaults_pub   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: terasort
+  
+  hibench_hadoop_kmeans_defaults: &hibench_hadoop_kmeans_defaults   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+
+  hibench_hadoop_terasort_defaults: &hibench_hadoop_terasort_defaults   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: terasort
+
+  hibench_scalaspark_kmeans_multimntpt: &hibench_scalaspark_kmeans_multimntpt   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+    intel_hibench_mountpoints: "'/data/data0','/data/data1','/data/data2'"
+
+  hibench_scalaspark_terasort_multimntpt: &hibench_scalaspark_terasort_multimntpt   
+    benchmarks: intel_hibench
+    intel_hibench_workloads: terasort
+    intel_hibench_mountpoints: "'/data/data0','/data/data1','/data/data2'"
+
+  hibench_apply_patch_upstream: &hibench_apply_patch_upstream
+    benchmarks: intel_hibench
+
+  hibench_scalaspark_kmeans_small: &hibench_scalaspark_kmeans_small
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+
+  hibench_scalaspark_kmeans_large: &hibench_scalaspark_kmeans_large
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+
+  hibench_scalaspark_kmeans_huge: &hibench_scalaspark_kmeans_huge
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+
+  hibench_scalaspark_kmeans_sp_override: &hibench_scalaspark_kmeans_sp_override
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+    intel_hibench_hibench_scale_profile: "tiny"
+
+  hibench_scalaspark_kmeans_tune_override: &hibench_scalaspark_kmeans_tune_override
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+    intel_hibench_hibench_scale_profile: "tiny"
+    intel_hibench_kmeans_num_of_clusters: 6
+    intel_hibench_kmeans_dimensions: 9
+    intel_hibench_kmeans_num_of_samples: 10000000
+    intel_hibench_kmeans_samples_per_inputfile: 200000
+    intel_hibench_kmeans_max_iteration: 6
+    intel_hibench_kmeans_k: 9
+    intel_hibench_kmeans_convergedist: 0.5
+
+  hibench_scalaspark_kmeans_quick_run: &hibench_scalaspark_kmeans_quick_run
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+    intel_hibench_hibench_scale_profile: "tiny"
+    intel_hibench_kmeans_num_of_clusters: 5
+    intel_hibench_kmeans_dimensions: 10
+    intel_hibench_kmeans_num_of_samples: 5000000
+    intel_hibench_kmeans_samples_per_inputfile: 25000
+    intel_hibench_kmeans_max_iteration: 5
+    intel_hibench_kmeans_k: 5
+    intel_hibench_kmeans_convergedist: 0.5
+
+  hibench_scalaspark_kmeans_quick_run_static: &hibench_scalaspark_kmeans_quick_run_static
+    benchmarks: intel_hibench
+    intel_hibench_workloads: kmeans
+    intel_hibench_mountpoints: "/data/data0"
+    intel_hibench_hibench_scale_profile: "tiny"
+    intel_hibench_kmeans_num_of_clusters: 5
+    intel_hibench_kmeans_dimensions: 10
+    intel_hibench_kmeans_num_of_samples: 5000000
+    intel_hibench_kmeans_samples_per_inputfile: 25000
+    intel_hibench_kmeans_max_iteration: 5
+    intel_hibench_kmeans_k: 5
+    intel_hibench_kmeans_convergedist: 0.5
+
+################################################################################
+# Tests
+################################################################################
+tests:
+  RunQuickSparkKmeansTestGeneric: &RunQuickSparkKmeansTestGeneric
+    pkb: *pkb-basic 
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+
+  RunQuickSparkKmeansTestAWSCentOS7: &RunQuickSparkKmeansTestAWSCentOS7
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *aws-centos-7
+
+  RunQuickSparkKmeansTestAzureCentOS7: &RunQuickSparkKmeansTestAzureCentOS7
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *azure-centos-7 
+
+  RunQuickSparkKmeansTestGCPCentOS7: &RunQuickSparkKmeansTestGCPCentOS7
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *gcp-centos-7 
+
+  RunQuickSparkKmeansTestAWSUbuntu1804: &RunQuickSparkKmeansTestAWSUbuntu1804
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *aws-ubuntu-1804
+
+  RunQuickSparkKmeansTestAzureUbuntu1804: &RunQuickSparkKmeansTestAzureUbuntu1804
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *azure-ubuntu-1804
+
+  RunQuickSparkKmeansTestGCPUbuntu1804: &RunQuickSparkKmeansTestGCPUbuntu1804
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *gcp-ubuntu-1804
+
+  RunQuickSparkKmeansTestAWSUbuntu2004: &RunQuickSparkKmeansTestAWSUbuntu2004
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *aws-ubuntu-2004
+
+  RunQuickSparkKmeansTestAzureUbuntu2004: &RunQuickSparkKmeansTestAzureUbuntu2004
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *azure-ubuntu-2004
+
+  RunQuickSparkKmeansTestGCPUbuntu2004: &RunQuickSparkKmeansTestGCPUbuntu2004
+    pkb: *pkb-collect-and-publish
+    benchmark: *hibench_scalaspark_kmeans_quick_run
+    platform: *gcp-ubuntu-2004
+
+  RunSparkKmeansDefault: &RunSparkKmeansDefault
+    pkb: *pkb-basic    
+    benchmark: *hibench_scalaspark_kmeans_defaults
+  
+  RunSparkKmeansDefault_Pub: &RunSparkKmeansDefault_Pub
+    pkb: *pkb-collect-and-publish    
+    benchmark: *hibench_scalaspark_kmeans_defaults_pub
+  
+  RunSparkKmeansDefault_SvrInfo: &RunSparkKmeansDefault_SvrInfo
+    pkb: *pkb-collect-svrinfo    
+    benchmark: *hibench_scalaspark_kmeans_defaults
+
+  RunSparkTerasortDefault: &RunSparkTerasortDefault
+    pkb: *pkb-basic    
+    benchmark: *hibench_scalaspark_terasort_defaults
+
+  RunSparkTerasortDefault_Pub: &RunSparkTerasortDefault_Pub
+    pkb: *pkb-collect-and-publish    
+    benchmark: *hibench_scalaspark_terasort_defaults_pub
+
+  RunSparkTerasortDefault_SvrInfo: &RunSparkTerasortDefault_SvrInfo
+    pkb: *pkb-collect-svrinfo    
+    benchmark: *hibench_scalaspark_kmeans_defaults
+
+  RunSparkKmeansMultiMntPtUbuntu2004Baremetal: &RunSparkKmeansMultiMntPtUbuntu2004Baremetal
+    pkb: *pkb-basic    
+    benchmark: *hibench_scalaspark_kmeans_multimntpt
+    platform: *baremetal-ubuntu2004
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/intel_hibench_kmeans/hibench_scalaspark_kmeans_defaults_mntpt_ubuntu2004_testing.yaml
+
+  RunSparkMultiMntPtTerasort2004Baremetal: &RunSparkMultiMntPtTerasort2004Baremetal
+    pkb: *pkb-basic    
+    benchmark: *hibench_scalaspark_terasort_multimntpt
+    platform: *baremetal-ubuntu2004
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/intel_hibench_terasort/hibench_scalaspark_terasort_defaults_mntpt_ubuntu2004_testing.yaml 
+
+  RunSparkTerasort2004Baremetal: &RunSparkTerasort2004Baremetal
+    pkb: *pkb-basic    
+    benchmark: *hibench_scalaspark_terasort_defaults
+    platform: *baremetal-ubuntu2004
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/intel_hibench_terasort/hibench_scalaspark_terasort_defaults_mntpt_ubuntu2004_testing.yaml 
+
+  RunSparkKmeansScaleProfileOverride: &RunSparkKmeansScaleProfileOverride
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_sp_override
+    platform: *aws-centos-7-east-1 
+
+  RunSparkKmeansTuneOverride: &RunSparkKmeansTuneOverride
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_tune_override
+    platform: *aws-centos-7-east-2 
+
+  RunSparkKmeansDefaultSmall: &RunSparkKmeansDefaultSmall
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *aws-centos-7-small
+
+  RunSparkKmeansDefaultLarge: &RunSparkKmeansDefaultLarge
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *aws-centos-7-large
+
+  RunSparkKmeansDefaultHuge: &RunSparkKmeansDefaultHuge
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *aws-centos-7-huge
+
+  DefaultCSPRun: &DefaultCSPRun
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+
+  CentOs7Azure: &CentOs7Azure
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *azure-centos-7
+
+  CentOs7AWS: &CentOs7AWS
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *aws-centos-7
+
+  CentOs7GCP: &CentOs7GCP
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *gcp-centos-7
+
+  Ubuntu1804AWS: &Ubuntu1804AWS
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *aws-ubuntu-1804
+
+  Ubuntu1804Azure: &Ubuntu1804Azure
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *azure-ubuntu-1804   
+
+  Ubuntu1804GCP: &Ubuntu1804GCP
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *gcp-ubuntu-1804
+
+  Ubuntu2004AWS: &Ubuntu2004AWS
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *aws-ubuntu-2004
+
+  Ubuntu2004Azure: &Ubuntu2004Azure
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *azure-ubuntu-2004   
+
+  Ubuntu2004GCP: &Ubuntu2004GCP
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_defaults
+    platform: *gcp-ubuntu-2004
+
+  RunSparkKmeansUbuntu1604Baremetal: &RunSparkKmeansUbuntu1604Baremetal
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_quick_run_static
+    platform: *baremetal-ubuntu1604
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/intel_hibench_kmeans/hibench_scalaspark_kmeans_defaults_ubuntu1604_testing.yaml 
+
+  RunSparkKmeansUbuntu1804Baremetal: &RunSparkKmeansUbuntu1804Baremetal
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_quick_run_static
+    platform: *baremetal-ubuntu1804
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/intel_hibench_kmeans/hibench_scalaspark_kmeans_defaults_ubuntu1804_testing.yaml 
+
+  RunSparkKmeansUbuntu2004Baremetal: &RunSparkKmeansUbuntu2004Baremetal
+    pkb: *pkb-basic
+    benchmark: *hibench_scalaspark_kmeans_quick_run_static
+    platform: *baremetal-ubuntu2004
+    config: https://gitlab.devtools.intel.com/cumulus/cumulus_scripts/-/raw/master/PKB_config_files/intel_hibench_kmeans/hibench_scalaspark_kmeans_defaults_ubuntu2004_testing.yaml
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+
+test-suites:
+
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  developer:
+    RunQuickSparkKmeansTestAWSCentOS7: *RunQuickSparkKmeansTestAWSCentOS7
+    #RunQuickSparkKmeansTestAzureCentOS7: *RunQuickSparkKmeansTestAzureCentOS7
+    #RunQuickSparkKmeansTestGCPCentOS7: *RunQuickSparkKmeansTestGCPCentOS7
+
+    #RunQuickSparkKmeansTestAWSUbuntu1804: *RunQuickSparkKmeansTestAWSUbuntu1804
+    RunQuickSparkKmeansTestAzureUbuntu1804: *RunQuickSparkKmeansTestAzureUbuntu1804
+    # RunQuickSparkKmeansTestGCPUbuntu1804: *RunQuickSparkKmeansTestGCPUbuntu1804
+
+    # RunQuickSparkKmeansTestAWSUbuntu2004: *RunQuickSparkKmeansTestAWSUbuntu2004
+    # RunQuickSparkKmeansTestAzureUbuntu2004: *RunQuickSparkKmeansTestAzureUbuntu2004
+    RunQuickSparkKmeansTestGCPUbuntu2004: *RunQuickSparkKmeansTestGCPUbuntu2004
+    # RunSparkKmeansUbuntu1804Baremetal: *RunSparkKmeansUbuntu1804Baremetal
+    # RunSparkKmeansUbuntu2004Baremetal: *RunSparkKmeansUbuntu2004Baremetal
+    # RunSparkKmeansMultiMntPtUbuntu2004Baremetal: *RunSparkKmeansMultiMntPtUbuntu2004Baremetal
+    # RunSparkTerasortUbuntu2004Baremetal: *RunSparkTerasort2004Baremetal
+    # RunSparkMultiMntPtTerasort2004Baremetal: *RunSparkMultiMntPtTerasort2004Baremetal
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  benchmark:
+    RunQuickSparkKmeansTestAWSCentOS7: *RunQuickSparkKmeansTestAWSCentOS7
+    RunQuickSparkKmeansTestAzureCentOS7: *RunQuickSparkKmeansTestAzureCentOS7
+    RunQuickSparkKmeansTestGCPCentOS7: *RunQuickSparkKmeansTestGCPCentOS7
+
+    RunQuickSparkKmeansTestAWSUbuntu1804: *RunQuickSparkKmeansTestAWSUbuntu1804
+    RunQuickSparkKmeansTestAzureUbuntu1804: *RunQuickSparkKmeansTestAzureUbuntu1804
+    RunQuickSparkKmeansTestGCPUbuntu1804: *RunQuickSparkKmeansTestGCPUbuntu1804
+
+    RunQuickSparkKmeansTestAWSUbuntu2004: *RunQuickSparkKmeansTestAWSUbuntu2004
+    RunQuickSparkKmeansTestAzureUbuntu2004: *RunQuickSparkKmeansTestAzureUbuntu2004
+    RunQuickSparkKmeansTestGCPUbuntu2004: *RunQuickSparkKmeansTestGCPUbuntu2004
+
+    RunSparkKmeansDefault_Pub: *RunSparkKmeansDefault_Pub
+    RunSparkTerasortDefault_Pub: *RunSparkTerasortDefault_Pub
+
+    RunSparkKmeansScaleProfileOverride: *RunSparkKmeansScaleProfileOverride
+    RunSparkKmeansTuneOverride: *RunSparkKmeansTuneOverride
+    RunSparkKmeansDefaultSmall: *RunSparkKmeansDefaultSmall
+    RunSparkKmeansDefaultLarge: *RunSparkKmeansDefaultLarge
+    RunSparkKmeansDefaultHuge: *RunSparkKmeansDefaultHuge
+
+    RunSparkKmeansUbuntu1604Baremetal: *RunSparkKmeansUbuntu1604Baremetal
+    RunSparkKmeansUbuntu1804Baremetal: *RunSparkKmeansUbuntu1804Baremetal
+    RunSparkKmeansUbuntu2004Baremetal: *RunSparkKmeansUbuntu2004Baremetal
+    RunSparkKmeansMultiMntPtUbuntu2004Baremetal: *RunSparkKmeansMultiMntPtUbuntu2004Baremetal
+
+    RunSparkKmeansDefault: *RunSparkKmeansDefault
+    RunSparkTerasortDefault: *RunSparkTerasortDefault
+
+    RunSparkKmeansDefault_Pub: *RunSparkKmeansDefault_Pub
+    RunSparkTerasortDefault_Pub: *RunSparkTerasortDefault_Pub
+    RunSparkKmeansDefault_SvrInfo: *RunSparkKmeansDefault_SvrInfo
+
+    RunSparkTerasortUbuntu2004Baremetal: *RunSparkTerasort2004Baremetal
+    RunSparkMultiMntPtTerasort2004Baremetal: *RunSparkMultiMntPtTerasort2004Baremetal
+
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  acceptance:
+    RunSparkKmeansDefault: *RunSparkKmeansDefault
+    RunSparkKmeansMultiMntPtUbuntu2004Baremetal: *RunSparkKmeansMultiMntPtUbuntu2004Baremetal
+    RunSparkTerasortDefault: *RunSparkTerasortDefault
+    RunSparkMultiMntPtTerasort2004Baremetal: *RunSparkMultiMntPtTerasort2004Baremetal
+   
+    RunSparkKmeansDefault_Pub: *RunSparkKmeansDefault_Pub
+    RunSparkTerasortDefault_Pub: *RunSparkTerasortDefault_Pub
+    RunSparkKmeansDefault_SvrInfo: *RunSparkKmeansDefault_SvrInfo
+
+  ################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  
+  regression:
+    RunQuickSparkKmeansTestAWSCentOS7: *RunQuickSparkKmeansTestAWSCentOS7
+    RunQuickSparkKmeansTestAzureCentOS7: *RunQuickSparkKmeansTestAzureCentOS7
+    RunQuickSparkKmeansTestGCPCentOS7: *RunQuickSparkKmeansTestGCPCentOS7
+
+    RunQuickSparkKmeansTestAWSUbuntu1804: *RunQuickSparkKmeansTestAWSUbuntu1804
+    RunQuickSparkKmeansTestAzureUbuntu1804: *RunQuickSparkKmeansTestAzureUbuntu1804
+    RunQuickSparkKmeansTestGCPUbuntu1804: *RunQuickSparkKmeansTestGCPUbuntu1804
+
+    RunQuickSparkKmeansTestAWSUbuntu2004: *RunQuickSparkKmeansTestAWSUbuntu2004
+    RunQuickSparkKmeansTestAzureUbuntu2004: *RunQuickSparkKmeansTestAzureUbuntu2004
+    RunQuickSparkKmeansTestGCPUbuntu2004: *RunQuickSparkKmeansTestGCPUbuntu2004 

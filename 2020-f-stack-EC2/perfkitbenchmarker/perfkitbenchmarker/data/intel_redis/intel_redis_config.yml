@@ -1,0 +1,34 @@
+static_vms:
+  - &vm0
+    ip_address: <ip_address>
+    user_name: pkb
+    ssh_private_key: ~/.ssh/id_rsa
+    internal_ip: <ip_address>
+    disk_specs:
+      - mount_point: /home/pkb
+
+  - &vm1
+    ip_address: <ip_address>
+    user_name: pkb
+    ssh_private_key: ~/.ssh/id_rsa
+    internal_ip: <ip_address>
+    disk_specs:
+      - mount_point: /home/pkb
+
+  - &vm2
+    ip_address: <ip_address>
+    user_name: pkb
+    ssh_private_key: ~/.ssh/id_rsa
+    internal_ip: <ip_address>
+    disk_specs:
+      - mount_point: /home/pkb
+
+intel_redis: {
+    name: intel_redis,
+    vm_groups: {
+        workers: {static_vms: [*vm0],vm_count: 1
+        },
+        clients: {static_vms: [*vm1, *vm2]
+        }
+    }
+}

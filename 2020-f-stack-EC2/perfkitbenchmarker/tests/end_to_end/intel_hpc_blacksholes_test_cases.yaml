@@ -1,0 +1,158 @@
+################################################################################
+# Platforms -- Define the platforms on which the benchmark should run
+################################################################################
+
+platforms:
+  aws-centos7: &aws-centos7
+    cloud: AWS
+    zone: us-east-1
+    os_type: centos7
+    machine_type: c5.2xlarge
+
+  aws-centos7-amd: &aws-centos7-amd
+    cloud: AWS
+    zone: us-east-1
+    os_type: centos7
+    machine_type: c5a.2xlarge
+    image: ami-06cf02a98a61f9f5e
+
+  azure-centos7: &azure-centos7
+    cloud: Azure
+    zone: westus
+    os_type: centos7
+    machine_type: Standard_F16s_v2
+
+  azure-centos7-amd: &azure-centos7-amd
+    cloud: Azure
+    zone: westus
+    os_type: centos7
+    machine_type:  Standard_E8as_v4
+
+  gcp-centos7: &gcp-centos7
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: centos7
+    machine_type: n2-standard-16
+    gce_subnet_region: europe-west4
+
+  gcp-centos7-amd: &gcp-centos7-amd
+    cloud: GCP
+    zone:  europe-west4-c
+    os_type: centos7
+    machine_type: n2d-standard-16
+    gce_subnet_region: europe-west4
+
+################################################################################
+# PKB configurations -- Define various useful PKB configurations
+################################################################################
+
+pkb-configurations:
+  pkb-basic: &pkb-basic
+    file_log_level: debug
+
+  pkb-collect-svrinfo: &pkb-collect-svrinfo
+    file_log_level: debug
+    svrinfo: True
+
+  pkb-collect-collectd: &pkb-collect-collectd
+    file_log_level: debug
+    collectd: True
+
+  pkb-collect-svrinfo-collectd: &pkb-collect-svrinfo-collectd
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+
+  pkb-collect-and-publish: &pkb-collect-and-publish
+    file_log_level: debug
+    svrinfo: True
+    collectd: True
+    kafka_publish: True
+
+##############################################################################################
+# Benchmark configurations -- Define various useful HPC_Blacksholes configurations
+##############################################################################################
+benchmark-configurations:
+
+  blacksholes_single_node_avx512: &blacksholes_single_node_avx512
+    benchmarks: intel_hpc_blacksholes
+    intel_hpc_blacksholes_image_type: avx512
+
+  blacksholes_single_node_amd: &blacksholes_single_node_amd
+    benchmarks: intel_hpc_blacksholes
+    intel_hpc_blacksholes_image_type: amd
+
+################################################################################
+# Tests -- Compose tests from PKB and benchmark options for HPC_Blacksholes
+################################################################################
+tests:
+
+  Run_SingleNode_Blacksholes_Intel_AWS: &Run_SingleNode_Blacksholes_Intel_AWS
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *blacksholes_single_node_avx512
+    platform: *aws-centos7
+
+  Run_SingleNode_Blacksholes_Intel_Azure: &Run_SingleNode_Blacksholes_Intel_Azure
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *blacksholes_single_node_avx512
+    platform: *azure-centos7
+
+  Run_SingleNode_Blacksholes_Intel_GCP: &Run_SingleNode_Blacksholes_Intel_GCP
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *blacksholes_single_node_avx512
+    platform: *gcp-centos7
+
+  Run_SingleNode_Blacksholes_AMD_AWS: &Run_SingleNode_Blacksholes_AMD_AWS
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *blacksholes_single_node_amd
+    platform: *aws-centos7-amd
+
+  Run_SingleNode_Blacksholes_AMD_Azure: &Run_SingleNode_Blacksholes_AMD_Azure
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *blacksholes_single_node_amd
+    platform: *azure-centos7-amd
+
+  Run_SingleNode_Blacksholes_AMD_GCP: &Run_SingleNode_Blacksholes_AMD_GCP
+    pkb: *pkb-collect-svrinfo-collectd
+    benchmark: *blacksholes_single_node_amd
+    platform: *gcp-centos7-amd
+
+################################################################################
+# Test Suites -- Define suites of tests
+################################################################################
+test-suites:
+  ################################################################################
+  # Developer Test -- Tests used for daily development
+  ################################################################################
+  developer:
+    Run_SingleNode_Blacksholes_Intel_AWS: *Run_SingleNode_Blacksholes_Intel_AWS
+    Run_SingleNode_Blacksholes_Intel_Azure: *Run_SingleNode_Blacksholes_Intel_Azure
+    Run_SingleNode_Blacksholes_Intel_GCP: *Run_SingleNode_Blacksholes_Intel_GCP
+
+    Run_SingleNode_Blacksholes_AMD_AWS: *Run_SingleNode_Blacksholes_AMD_AWS
+    Run_SingleNode_Blacksholes_AMD_Azure: *Run_SingleNode_Blacksholes_AMD_Azure
+    Run_SingleNode_Blacksholes_AMD_GCP: *Run_SingleNode_Blacksholes_AMD_GCP
+
+  ################################################################################
+  # Workload Test -- Must pass before submitting a Merge Request
+  ################################################################################
+  benchmark:
+    Run_SingleNode_Blacksholes_Intel_AWS: *Run_SingleNode_Blacksholes_Intel_AWS
+
+  ################################################################################
+  # Acceptance Test -- Must pass before an external release
+  ################################################################################
+  acceptance:
+    Run_SingleNode_Blacksholes_Intel_AWS: *Run_SingleNode_Blacksholes_Intel_AWS
+    Run_SingleNode_Blacksholes_Intel_Azure: *Run_SingleNode_Blacksholes_Intel_Azure
+    Run_SingleNode_Blacksholes_Intel_GCP: *Run_SingleNode_Blacksholes_Intel_GCP
+
+  ################################################################################
+  # Regression Test -- Must pass before an internal release 
+  ################################################################################
+  regression:
+    Run_SingleNode_Blacksholes_Intel_AWS: *Run_SingleNode_Blacksholes_Intel_AWS
+    Run_SingleNode_Blacksholes_Intel_Azure: *Run_SingleNode_Blacksholes_Intel_Azure
+    Run_SingleNode_Blacksholes_Intel_GCP: *Run_SingleNode_Blacksholes_Intel_GCP
+
+    Run_SingleNode_Blacksholes_AMD_GCP: *Run_SingleNode_Blacksholes_AMD_GCP

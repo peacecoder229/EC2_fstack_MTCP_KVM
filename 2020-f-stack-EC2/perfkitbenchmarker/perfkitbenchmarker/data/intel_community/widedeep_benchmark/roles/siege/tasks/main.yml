@@ -1,0 +1,40 @@
+---
+ - name: Get siege
+   get_url:
+     url: http://download.joedog.org/siege/{{siege_pk_name}}
+     dest: "{{download_dir}}"
+   register: result
+   retries: "{{net_retries}}"
+   delay: "{{net_delay}}"
+   until: result is succeeded
+
+ - name: Extract siege
+   shell: |
+     cd {{download_dir}}
+     tar xzvf {{siege_pk_name}}
+   become: yes
+
+ - name: Get machine type
+   shell: uname -m
+   register: uname_m
+
+ - name: Check if this is aarch64
+   include_tasks: "main-aarch.yml"
+   when: '"aarch" in uname_m.stdout'
+
+ - name: Copy siege patch
+   copy:
+     src: "{{siege_patch}}"
+     dest: "{{download_dir}}"
+
+ - name: Install siege
+   shell: |
+     cd {{download_dir}}/{{siege_dir}}
+     for p in ../{{siege_patch}}/*.patch; do patch -p1 < $p; done
+     ./configure
+     make
+     make install
+   become: yes
+   args:
+     creates: "{{ download_dir }}/{{ siege_dir }}/src/siege"
+
